@@ -200,3 +200,23 @@ if (btnCalcular) {
         resultadoCalculo.innerText = `Utilizando sensores inteligentes, sua propriedade economizaria cerca de ${economiaTotal} litros de água por semana! 💧`;
     });
 }
+const contadores = document.querySelectorAll(".contador");
+
+contadores.forEach(contador => {
+    const atualizarContador = () => {
+        const alvo = +contador.getAttribute("data-alvo"); // O sinal de "+" converte texto em número
+        const valorAtual = +contador.innerText;
+
+        // Define a velocidade do incremento
+        const incremento = alvo / 100;
+
+        if (valorAtual < alvo) {
+            contador.innerText = Math.ceil(valorAtual + incremento);
+            setTimeout(atualizarContador, 20); // Executa de novo a cada 20 milissegundos
+        } else {
+            contador.innerText = alvo; // Garante que termine exatamente no número alvo
+        }
+    };
+    
+    atualizarContador();
+});
