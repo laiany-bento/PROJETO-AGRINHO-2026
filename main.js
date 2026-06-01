@@ -144,3 +144,26 @@ function inicializarQuiz() {
     // Inicia a primeira pergunta ao carregar a página
     carregarPergunta();
 }
+// Captura os elementos do simulador de clima
+const inputUmidade = document.getElementById("input-umidade");
+const valorUmidade = document.getElementById("valor-umidade");
+const statusLavoura = document.getElementById("status-lavoura");
+
+if (inputUmidade) {
+    inputUmidade.addEventListener("input", (e) => {
+        const umidade = e.target.value;
+        valorUmidade.innerText = umidade;
+
+        // Lógica para mudar o texto e o visual dinamicamente
+        if (umidade < 30) {
+            statusLavoura.innerText = "Alerta: Solo Seco! Ativando gotejamento automático.";
+            statusLavoura.style.color = "#ff4d4d";
+        } else if (umidade >= 30 && umidade <= 70) {
+            statusLavoura.innerText = "Condição Ideal: Sensores indicam umidade perfeita.";
+            statusLavoura.style.color = "#0077cc";
+        } else {
+            statusLavoura.innerText = "Aviso: Solo Muito Encharcado! Desligando irrigação.";
+            statusLavoura.style.color = "#ffcc00";
+        }
+    });
+}
