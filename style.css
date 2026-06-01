@@ -384,3 +384,15 @@ body {
         padding: 50px 0;
     }
 }
+/* Estado inicial: invisível e ligeiramente abaixo da posição real */
+.animar-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+}
+
+/* Estado ativo: visível e na posição original */
+.animar-scroll.visivel {
+    opacity: 1;
+    transform: translateY(0);
+}
