@@ -167,3 +167,36 @@ if (inputUmidade) {
         }
     });
 }
+// Função que monitora a rolagem da página
+window.addEventListener("scroll", () => {
+    const elementos = document.querySelectorAll(".animar-scroll");
+    
+    elementos.forEach(elemento => {
+        const posicaoElemento = elemento.getBoundingClientRect().top;
+        const alturaTela = window.innerHeight * 0.85; // Dispara a animação um pouco antes do elemento chegar no meio da tela
+
+        if (posicaoElemento < alturaTela) {
+            elemento.classList.add("visivel");
+        }
+    });
+});
+const btnCalcular = document.getElementById("btn-calcular");
+const inputHectares = document.getElementById("hectares");
+const resultadoCalculo = document.getElementById("resultado-calculo");
+
+if (btnCalcular) {
+    btnCalcular.addEventListener("click", () => {
+        const hectares = parseFloat(inputHectares.value);
+        
+        if (isNaN(hectares) || hectares <= 0) {
+            resultadoCalculo.innerText = "Por favor, digite um número válido maior que zero.";
+            resultadoCalculo.style.color = "red";
+            return;
+        }
+
+        // Suposição pedagógica: cada hectare com sensor economiza cerca de 1200 litros de água por semana
+        const economiaTotal = hectares * 1200;
+        resultadoCalculo.style.color = "#0077cc";
+        resultadoCalculo.innerText = `Utilizando sensores inteligentes, sua propriedade economizaria cerca de ${economiaTotal} litros de água por semana! 💧`;
+    });
+}
