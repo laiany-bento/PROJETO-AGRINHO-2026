@@ -1,12 +1,177 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrinho 2026 - O Futuro do Campo</title>
     <link rel="stylesheet" href="style.css">
-    <title>Projeto Agrinho 2026</title>
 </head>
 <body>
- <script src="main.js"></script>   
+
+    <header class="header">
+        <div class="interface header-container">
+            <div class="logo">
+                <h2>Agrinho <span>2026</span></h2>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="#introducao">Introdução</a></li>
+                    <li><a href="#sustentabilidade">Sustentabilidade</a></li>
+                    <li><a href="#tecnologia">Tecnologia</a></li>
+                    <li><a href="#impactos">Impactos</a></li>
+                    <li><a href="#quiz-section">Quiz Agro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="banner">
+            <div class="banner-content interface">
+                <h1>Tecnologia, Agricultura e Sustentabilidade</h1>
+                <p>Conectando inovação e preservação para semear o amanhã no Agrinho 2026.</p>
+                <a href="#introducao" class="btn-primary">Descubra Como</a>
+            </div>
+        </section>
+
+        <section id="introducao" class="section-padding interface">
+            <div class="section-title">
+                <h2>Agrinho 2026: Conectando Saberes</h2>
+                <p>A edição deste ano convida estudantes e comunidades a explorarem como a tecnologia moderna potencializa a produção agrícola enquanto protege o ecossistema.</p>
+            </div>
+        </section>
+
+        <section id="sustentabilidade" class="section-padding bg-light">
+            <div class="interface">
+                <div class="section-title">
+                    <h2>Sustentabilidade no Campo</h2>
+                    <p>Clique nos cards abaixo para descobrir as práticas que mantêm o solo vivo e o futuro garantido.</p>
+                </div>
+
+                <div class="grid-cards">
+                    <div class="card-expand">
+                        <h3>Preservação Ambiental</h3>
+                        <p class="resumo">Proteger matas ciliares e reservas legais garante a biodiversidade...</p>
+                        <div class="conteudo-extra">
+                            <p>Além de proteger a fauna local, a manutenção das florestas nativas auxilia no equilíbrio climático da propriedade, reduzindo pragas e melhorando a qualidade do ar.</p>
+                        </div>
+                        <button class="btn-expand">Ler mais</button>
+                    </div>
+
+                    <div class="card-expand">
+                        <h3>Uso Consciente da Água</h3>
+                        <p class="resumo">A água é o recurso mais precioso da lavoura...</p>
+                        <div class="conteudo-extra">
+                            <p>Com técnicas como o gotejamento localizado e a captação de água da chuva, os produtores evitam o desperdício e mantêm os lençóis freáticos saudáveis.</p>
+                        </div>
+                        <button class="btn-expand">Ler mais</button>
+                    </div>
+
+                    <div class="card-expand">
+                        <h3>Energia Limpa e Reciclagem</h3>
+                        <p class="resumo">Transformando recursos naturais em força motriz...</p>
+                        <div class="conteudo-extra">
+                            <p>O uso de painéis solares para alimentar sistemas de irrigação e a correta destinação ou reciclagem de embalagens de insumos evitam a contaminação da terra.</p>
+                        </div>
+                        <button class="btn-expand">Ler mais</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tecnologia" class="section-padding interface">
+            <div class="section-title">
+                <h2>Tecnologia e Alta Performance</h2>
+                <p>A revolução digital chegou ao campo para transformar dados em alimentos de forma inteligente.</p>
+            </div>
+
+            <div class="grid-tech">
+                <div class="tech-box">
+                    <h4>Drones e Sensores</h4>
+                    <p>Sobrevoam a plantação mapeando pragas, falhas no plantio e áreas que precisam de água, aplicando insumos apenas onde realmente é necessário.</p>
+                </div>
+                <div class="tech-box">
+                    <h4>Inteligência Artificial</h4>
+                    <p>Algoritmos analisam dados meteorológicos e do solo para prever a melhor época de plantio e colheita, minimizando riscos de perdas.</p>
+                </div>
+                <div class="tech-box">
+                    <h4>Automação e Robótica</h4>
+                    <p>Tratores autônomos e colheitadeiras controladas por GPS reduzem a compactação do solo e economizam combustível na operação.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="impactos" class="section-padding bg-light">
+            <div class="interface">
+                <div class="section-title">
+                    <h2>Impactos Positivos de Ponta a Ponta</h2>
+                    <p>Quando o agro se une à tecnologia verde, toda a sociedade colhe os frutos.</p>
+                </div>
+
+                <div class="grid-impactos">
+                    <div class="impacto-item">
+                        <h5>Para os Produtores</h5>
+                        <p>Menos custos com insumos e maior rentabilidade na safra.</p>
+                    </div>
+                    <div class="impacto-item">
+                        <h5>Para as Cidades</h5>
+                        <p>Alimentos mais saudáveis, seguros e preços mais estáveis nas gôndolas.</p>
+                    </div>
+                    <div class="impacto-item">
+                        <h5>Para o Meio Ambiente</h5>
+                        <p>Redução da pegada de carbono e preservação ativa dos recursos naturais.</p>
+                    </div>
+                    <div class="impacto-item">
+                        <h5>Para a Economia</h5>
+                        <p>Geração de novos empregos tecnológicos no setor de bioenergia e desenvolvimento rural.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-section" class="section-padding interface">
+            <div class="quiz-container">
+                <div class="section-title">
+                    <h2>Desafio Sustentável Agrinho</h2>
+                    <p>Teste seus conhecimentos sobre a agricultura do futuro!</p>
+                </div>
+                
+                <div id="quiz-box">
+                    <h3 id="pergunta">Carregando pergunta...</h3>
+                    <div id="opcoes" class="quiz-opcoes">
+                        </div>
+                </div>
+
+                <div id="resultado-quiz" class="resultado-oculto">
+                    <h3>Parabéns por concluir!</h3>
+                    <p id="placar">Você acertou 0 de 0.</p>
+                    <button id="btn-reiniciar" class="btn-primary">Tentar Novamente</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="conclusao section-padding">
+            <div class="interface text-center">
+                <h2>Cultivar o futuro é uma tarefa coletiva!</h2>
+                <p>O Agrinho 2026 nos ensina que a verdadeira tecnologia não é apenas aquela que acelera a produção, mas aquela que protege a nossa casa comum. Seja você também um agente de mudança!</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="interface footer-container">
+            <p>&copy; 2026 Projeto Agrinho Escolar. Desenvolvido para fins educativos.</p>
+            <p>Tecnologia &bull; Agricultura &bull; Sustentabilidade</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>
