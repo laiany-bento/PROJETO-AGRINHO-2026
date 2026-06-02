@@ -1,32 +1,28 @@
 /* ==========================================================================
-   ARQUIVO JAVASCRIPT PRINCIPAL - AGRINHO 2026
-   Contém: Menu responsivo, Cards Expansíveis e o Quiz Interativo.
+   ARQUIVO JAVASCRIPT INTEGRADO - AGRINHO 2026
    ========================================================================== */
 
-// Aguarda todo o HTML carregar na página antes de executar as funções
 document.addEventListener("DOMContentLoaded", () => {
     inicializarMenuMobile();
     inicializarCardsExpansiveis();
+    inicializarSimuladorClima();
+    inicializarCalculadoraEco();
+    inicializarContadoresProgressivos();
+    inicializarAnimacaoScroll();
     inicializarQuiz();
 });
 
-/* ==========================================
-   1. FUNCIONALIDADE: MENU RESPONSIVO MOBILE
-   ========================================== */
+/* 1. MENU RESPONSIVO MOBILE */
 function inicializarMenuMobile() {
     const menuToggle = document.getElementById("menuToggle");
     const navbar = document.getElementById("navbar");
 
     if (menuToggle && navbar) {
         menuToggle.addEventListener("click", () => {
-            // Alterna a classe 'active' para abrir/fechar o menu no CSS
             navbar.classList.toggle("active");
-            
-            // Pequeno efeito visual nas barras do hambúrguer
             menuToggle.classList.toggle("open");
         });
 
-        // Fecha o menu automaticamente quando o usuário clica em algum link
         const links = navbar.querySelectorAll("a");
         links.forEach(link => {
             link.addEventListener("click", () => {
@@ -37,19 +33,15 @@ function inicializarMenuMobile() {
     }
 }
 
-/* ==========================================
-   2. FUNCIONALIDADE: CARDS EXPANSÍVEIS
-   ========================================== */
+/* 2. CARDS EXPANSÍVEIS */
 function inicializarCardsExpansiveis() {
     const botoes = document.querySelectorAll(".btn-expand");
 
     botoes.forEach(botao => {
         botao.addEventListener("click", (evento) => {
-            // Encontra o card ancestral mais próximo do botão clicado
             const card = evento.target.closest(".card-expand");
             const conteudoExtra = card.querySelector(".conteudo-extra");
 
-            // Verifica se o conteúdo extra está visível ou não
             if (conteudoExtra.style.display === "block") {
                 conteudoExtra.style.display = "none";
                 evento.target.innerText = "Ler mais";
@@ -61,25 +53,114 @@ function inicializarCardsExpansiveis() {
     });
 }
 
-/* ==========================================
-   3. FUNCIONALIDADE: QUIZ DE SUSTENTABILIDADE
-   ========================================== */
+/* 3. SIMULADOR DE SENSORES (UMIDADE) */
+function inicializarSimuladorClima() {
+    const inputUmidade = document.getElementById("input-umidade");
+    const valorUmidade = document.getElementById("valor-umidade");
+    const statusLavoura = document.getElementById("status-lavoura");
+
+    if (inputUmidade) {
+        inputUmidade.addEventListener("input", (e) => {
+            const umidade = e.target.value;
+            valorUmidade.innerText = umidade;
+
+            if (umidade < 30) {
+                statusLavoura.innerText = "Alerta: Solo Seco! Irrigação por gotejamento ativada.";
+                statusLavoura.style.color = "#ff4d4d";
+            } else if (umidade >= 30 && umidade <= 70) {
+                statusLavoura.innerText = "Condição Ideal: Níveis adequados detectados pelos sensores.";
+                statusLavoura.style.color = "#0077cc";
+            } else {
+                statusLavoura.innerText = "Aviso: Solo Saturado! Sistemas suspensos preventivamente.";
+                statusLavoura.style.color = "#ffcc00";
+            }
+        });
+    }
+}
+
+/* 4. CALCULADORA ECOLÓGICA */
+function inicializarCalculadoraEco() {
+    const btnCalcular = document.getElementById("btn-calcular");
+    const inputHectares = document.getElementById("hectares");
+    const resultadoCalculo = document.getElementById("resultado-calculo");
+
+    if (btnCalcular) {
+        btnCalcular.addEventListener("click", () => {
+            const hectares = parseFloat(inputHectares.value);
+            
+            if (isNaN(hectares) || hectares <= 0) {
+                resultadoCalculo.innerText = "Por favor, digite um número válido de hectares.";
+                resultadoCalculo.style.color = "red";
+                return;
+            }
+
+            // Estimativa matemática: 1200 litros economizados por hectare
+            const economiaTotal = hectares * 1200;
+            resultadoCalculo.style.color = "var(--cor-secundaria)";
+            resultadoCalculo.innerText = `Sua automação economizaria em média ${economiaTotal} litros de água por semana! 💧`;
+        });
+    }
+}
+
+/* 5. CONTADORES PROGRESSIVOS */
+function inicializarContadoresProgressivos() {
+    const contadores = document.querySelectorAll(".contador");
+
+    contadores.forEach(contador => {
+        const atualizarContador = () => {
+            const alvo = +contador.getAttribute("data-alvo");
+            const valorAtual = +contador.innerText;
+            const incremento = alvo / 80; // Controla a velocidade do ganho
+
+            if (valorAtual < alvo) {
+                contador.innerText = Math.ceil(valorAtual + incremento);
+                setTimeout(atualizarContador, 25);
+            } else {
+                contador.innerText = alvo;
+            }
+        };
+
+        // Dispara a contagem assim que a função é iniciada
+        atualizarContador();
+    });
+}
+
+/* 6. ANIMAÇÃO DE SCROLL (APARECER AO ROLAR) */
+function inicializarAnimacaoScroll() {
+    const dispararAnimacao = () => {
+        const elementos = document.querySelectorAll(".animar-scroll");
+        
+        elementos.forEach(elemento => {
+            const posicaoElemento = elemento.getBoundingClientRect().top;
+            const alturaTela = window.innerHeight * 0.85;
+
+            if (posicaoElemento < alturaTela) {
+                elemento.classList.add("visivel");
+            }
+        });
+    };
+
+    // Executa uma vez no início e depois vincula ao evento de rolagem
+    dispararAnimacao();
+    window.addEventListener("scroll", dispararAnimacao);
+}
+
+/* 7. QUIZ SUSTENTÁVEL */
 function inicializarQuiz() {
-    // Array de objetos contendo as perguntas do Quiz
     const perguntas = [
         {
             pergunta: "Qual tecnologia ajuda a monitorar pragas e economizar água diretamente na plantação?",
-            opcoes: ["Drones e Sensores de Solo", "Tratores antigos sem GPS", "Enxadas manuais"],
+            opcoes: ["Drones e Sensores de Solo", "Tratores antigos sem GPS", "Ferramentas manuais antigas"],
             correta: 0
         },
         {
             pergunta: "O que caracteriza a sustentabilidade no Agrinho 2026?",
-            opcoes: ["Produzir sem se preocupar com as matas", "Equilibrar tecnologia, alta produção e preservação", "Abandonar o uso de energia limpa"],
+            opcoes: ["Produzir sem focar nas matas cilliantes", "Equilibrar tecnologia, alta produção e preservação", "Abandonar o uso de fontes de energia limpa"],
             correta: 1
         },
         {
-            pergunta: "De onde vem a bioenergia ou energia limpa frequentemente usada no campo moderno?",
-            opcoes: ["Combustíveis fósseis puramente", "Painéis Solares e Biomassa", "Geradores a óleo diesel"],
+            pergunta: "De onde vem a energia limpa frequentemente adotada no campo moderno?",
+            opcoes: ["Combustíveis fósseis refinados", "Painéis Solares e Biomassa", "Geradores tradicionais a diesel"],
             correta: 2
         }
     ];
@@ -94,20 +175,16 @@ function inicializarQuiz() {
     const elementoPlacar = document.getElementById("placar");
     const btnReiniciar = document.getElementById("btn-reiniciar");
 
-    // Função interna para renderizar a pergunta atual na tela
     function carregarPergunta() {
         if (indicePerguntaAtual < perguntas.length) {
             const dadosAtual = perguntas[indicePerguntaAtual];
             elementoPergunta.innerText = dadosAtual.pergunta;
-            containerOpcoes.innerHTML = ""; // Limpa as alternativas anteriores
+            containerOpcoes.innerHTML = "";
 
-            // Cria um botão dinâmico para cada alternativa existente
             dadosAtual.opcoes.forEach((opcao, indice) => {
                 const botaoOpcao = document.createElement("button");
-                botaoOpcao.innerText = opacity = opcao;
+                botaoOpcao.innerText = opcao;
                 botaoOpcao.classList.add("quiz-btn-opcao");
-                
-                // Adiciona o evento de clique para validar a resposta
                 botaoOpcao.addEventListener("click", () => verificarResposta(indice));
                 containerOpcoes.appendChild(botaoOpcao);
             });
@@ -116,7 +193,6 @@ function inicializarQuiz() {
         }
     }
 
-    // Função para checar se a opção clicada está correta
     function verificarResposta(indiceSelecionado) {
         if (indiceSelecionado === perguntas[indicePerguntaAtual].correta) {
             pontuacao++;
@@ -125,14 +201,12 @@ function inicializarQuiz() {
         carregarPergunta();
     }
 
-    // Altera a visibilidade do container exibindo a nota final do aluno
     function exibirResultado() {
         containerQuizBox.style.display = "none";
         containerResultado.style.display = "block";
         elementoPlacar.innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
     }
 
-    // Reseta as variáveis de controle para reiniciar o game escolar
     btnReiniciar.addEventListener("click", () => {
         pontuacao = 0;
         indicePerguntaAtual = 0;
@@ -141,82 +215,5 @@ function inicializarQuiz() {
         carregarPergunta();
     });
 
-    // Inicia a primeira pergunta ao carregar a página
     carregarPergunta();
 }
-// Captura os elementos do simulador de clima
-const inputUmidade = document.getElementById("input-umidade");
-const valorUmidade = document.getElementById("valor-umidade");
-const statusLavoura = document.getElementById("status-lavoura");
-
-if (inputUmidade) {
-    inputUmidade.addEventListener("input", (e) => {
-        const umidade = e.target.value;
-        valorUmidade.innerText = umidade;
-
-        // Lógica para mudar o texto e o visual dinamicamente
-        if (umidade < 30) {
-            statusLavoura.innerText = "Alerta: Solo Seco! Ativando gotejamento automático.";
-            statusLavoura.style.color = "#ff4d4d";
-        } else if (umidade >= 30 && umidade <= 70) {
-            statusLavoura.innerText = "Condição Ideal: Sensores indicam umidade perfeita.";
-            statusLavoura.style.color = "#0077cc";
-        } else {
-            statusLavoura.innerText = "Aviso: Solo Muito Encharcado! Desligando irrigação.";
-            statusLavoura.style.color = "#ffcc00";
-        }
-    });
-}
-// Função que monitora a rolagem da página
-window.addEventListener("scroll", () => {
-    const elementos = document.querySelectorAll(".animar-scroll");
-    
-    elementos.forEach(elemento => {
-        const posicaoElemento = elemento.getBoundingClientRect().top;
-        const alturaTela = window.innerHeight * 0.85; // Dispara a animação um pouco antes do elemento chegar no meio da tela
-
-        if (posicaoElemento < alturaTela) {
-            elemento.classList.add("visivel");
-        }
-    });
-});
-const btnCalcular = document.getElementById("btn-calcular");
-const inputHectares = document.getElementById("hectares");
-const resultadoCalculo = document.getElementById("resultado-calculo");
-
-if (btnCalcular) {
-    btnCalcular.addEventListener("click", () => {
-        const hectares = parseFloat(inputHectares.value);
-        
-        if (isNaN(hectares) || hectares <= 0) {
-            resultadoCalculo.innerText = "Por favor, digite um número válido maior que zero.";
-            resultadoCalculo.style.color = "red";
-            return;
-        }
-
-        // Suposição pedagógica: cada hectare com sensor economiza cerca de 1200 litros de água por semana
-        const economiaTotal = hectares * 1200;
-        resultadoCalculo.style.color = "#0077cc";
-        resultadoCalculo.innerText = `Utilizando sensores inteligentes, sua propriedade economizaria cerca de ${economiaTotal} litros de água por semana! 💧`;
-    });
-}
-const contadores = document.querySelectorAll(".contador");
-
-contadores.forEach(contador => {
-    const atualizarContador = () => {
-        const alvo = +contador.getAttribute("data-alvo"); // O sinal de "+" converte texto em número
-        const valorAtual = +contador.innerText;
-
-        // Define a velocidade do incremento
-        const incremento = alvo / 100;
-
-        if (valorAtual < alvo) {
-            contador.innerText = Math.ceil(valorAtual + incremento);
-            setTimeout(atualizarContador, 20); // Executa de novo a cada 20 milissegundos
-        } else {
-            contador.innerText = alvo; // Garante que termine exatamente no número alvo
-        }
-    };
-    
-    atualizarContador();
-});

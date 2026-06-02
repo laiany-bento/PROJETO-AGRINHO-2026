@@ -26,6 +26,7 @@
                     <li><a href="#sustentabilidade">Sustentabilidade</a></li>
                     <li><a href="#tecnologia">Tecnologia</a></li>
                     <li><a href="#impactos">Impactos</a></li>
+                    <li><a href="#simuladores">Simuladores</a></li>
                     <li><a href="#quiz-section">Quiz Agro</a></li>
                 </ul>
             </nav>
@@ -41,7 +42,7 @@
             </div>
         </section>
 
-        <section id="introducao" class="section-padding interface">
+        <section id="introducao" class="section-padding interface animar-scroll">
             <div class="section-title">
                 <h2>Agrinho 2026: Conectando Saberes</h2>
                 <p>A edição deste ano convida estudantes e comunidades a explorarem como a tecnologia moderna potencializa a produção agrícola enquanto protege o ecossistema.</p>
@@ -49,7 +50,7 @@
         </section>
 
         <section id="sustentabilidade" class="section-padding bg-light">
-            <div class="interface">
+            <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>Sustentabilidade no Campo</h2>
                     <p>Clique nos cards abaixo para descobrir as práticas que mantêm o solo vivo e o futuro garantido.</p>
@@ -86,7 +87,7 @@
             </div>
         </section>
 
-        <section id="tecnologia" class="section-padding interface">
+        <section id="tecnologia" class="section-padding interface animar-scroll">
             <div class="section-title">
                 <h2>Tecnologia e Alta Performance</h2>
                 <p>A revolução digital chegou ao campo para transformar dados em alimentos de forma inteligente.</p>
@@ -109,7 +110,7 @@
         </section>
 
         <section id="impactos" class="section-padding bg-light">
-            <div class="interface">
+            <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>Impactos Positivos de Ponta a Ponta</h2>
                     <p>Quando o agro se une à tecnologia verde, toda a sociedade colhe os frutos.</p>
@@ -117,27 +118,52 @@
 
                 <div class="grid-impactos">
                     <div class="impacto-item">
-                        <h5>Para os Produtores</h5>
-                        <p>Menos custos com insumos e maior rentabilidade na safra.</p>
+                        <h5 class="contador" data-alvo="1500">0</h5>
+                        <p>Produtores utilizando tecnologia verde.</p>
                     </div>
                     <div class="impacto-item">
-                        <h5>Para as Cidades</h5>
-                        <p>Alimentos mais saudáveis, seguros e preços mais estáveis nas gôndolas.</p>
+                        <h5 class="contador" data-alvo="85">0</h5>
+                        <p>% de economia de água com gotejamento inteligente.</p>
                     </div>
                     <div class="impacto-item">
-                        <h5>Para o Meio Ambiente</h5>
-                        <p>Redução da pegada de carbono e preservação ativa dos recursos naturais.</p>
+                        <h5 class="contador" data-alvo="40">0</h5>
+                        <p>% de redução na emissão de CO₂ nas fazendas.</p>
                     </div>
                     <div class="impacto-item">
-                        <h5>Para a Economia</h5>
-                        <p>Geração de novos empregos tecnológicos no setor de bioenergia e desenvolvimento rural.</p>
+                        <h5 class="contador" data-alvo="2026">0</h5>
+                        <p>Rumo ao futuro sustentável!</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="quiz-section" class="section-padding interface">
-            <div class="quiz-container">
+        <section id="simuladores" class="section-padding interface animar-scroll">
+            <div class="section-title">
+                <h2>Laboratório Tech Agrinho</h2>
+                <p>Interaja com as ferramentas tecnológicas abaixo para ver a ciência do campo em ação.</p>
+            </div>
+
+            <div class="grid-cards">
+                <div class="card-tech-interativo">
+                    <h4>Simulador de Sensores de Solo</h4>
+                    <p>Ajuste a umidade para simular a resposta dos sensores automáticos:</p>
+                    <input type="range" id="input-umidade" min="0" max="100" value="50" class="slider">
+                    <p class="resultado-painel">Umidade Atual: <span id="valor-umidade">50</span>%</p>
+                    <div id="status-lavoura" class="status-alerta">Condição Ideal: Sensores indicam umidade perfeita.</div>
+                </div>
+
+                <div class="card-tech-interativo">
+                    <h4>Calculadora de Economia de Água</h4>
+                    <p>Insira o tamanho da plantação fictícia (em hectares):</p>
+                    <input type="number" id="hectares" placeholder="Ex: 5" class="input-estilizado">
+                    <button id="btn-calcular" class="btn-primary" style="width: 100%; margin-top: 10px;">Calcular Impacto</button>
+                    <p id="resultado-calculo" class="resultado-painel" style="color: var(--cor-secundaria); font-weight: bold;"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-section" class="section-padding bg-light">
+            <div class="quiz-container animar-scroll">
                 <div class="section-title">
                     <h2>Desafio Sustentável Agrinho</h2>
                     <p>Teste seus conhecimentos sobre a agricultura do futuro!</p>
@@ -158,7 +184,7 @@
         </section>
 
         <section class="conclusao section-padding">
-            <div class="interface text-center">
+            <div class="interface text-center animar-scroll">
                 <h2>Cultivar o futuro é uma tarefa coletiva!</h2>
                 <p>O Agrinho 2026 nos ensina que a verdadeira tecnologia não é apenas aquela que acelera a produção, mas aquela que protege a nossa casa comum. Seja você também um agente de mudança!</p>
             </div>
@@ -175,22 +201,3 @@
     <script src="main.js"></script>
 </body>
 </html>
-<div class="card-tech text-center">
-    <h4>Simulador de Condições de Plantio</h4>
-    <p>Ajuste a umidade do solo para simular a resposta dos sensores:</p>
-    <input type="range" id="input-umidade" min="0" max="100" value="50">
-    <p>Umidade Atual: <span id="valor-umidade">50</span>%</p>
-    <div id="status-lavoura" class="status-alerta">Solo Estável</div>
-</div>
-<div class="tech-box animar-scroll"> ... </div>
-<div class="quiz-container text-center">
-    <h4>Calculadora de Economia de Água</h4>
-    <p>Insira o tamanho da sua plantação fictícia (em hectares):</p>
-    <input type="number" id="hectares" placeholder="Ex: 5" style="padding: 8px; margin: 10px 0; border-radius: 4px; border: 1px solid #ddd;">
-    <button id="btn-calcular" class="btn-primary">Calcular Economia</button>
-    <p id="resultado-calculo" style="margin-top: 15px; font-weight: bold; color: #0077cc;"></p>
-</div>
-<div class="impacto-item">
-    <h5 class="contador" data-alvo="1500">0</h5>
-    <p>Famílias beneficiadas pela tecnologia verde.</p>
-</div>
