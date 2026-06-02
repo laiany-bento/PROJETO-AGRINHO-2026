@@ -21,7 +21,7 @@ body.dark-mode {
     --cor-cinza-claro: #252525;
 }
 body.dark-mode .card-tech-interativo,
-body.dark-mode .tech-box,
+body.dark-mode .card-expand,
 body.dark-mode .quiz-container,
 body.dark-mode .quiz-btn-opcao,
 body.dark-mode .timeline-conteudo,
@@ -42,6 +42,7 @@ body.alto-contraste {
     --cor-cinza-claro: #121212;
 }
 body.alto-contraste .card-tech-interativo,
+body.alto-contraste .card-expand,
 body.alto-contraste .quiz-container,
 body.alto-contraste .quiz-btn-opcao,
 body.alto-contraste .timeline-conteudo,
@@ -52,9 +53,11 @@ body.alto-contraste .card-grafico {
     color: #ffffff !important;
 }
 body.alto-contraste .btn-primary,
+body.alto-contraste .btn-expand,
 body.alto-contraste .btn-filtro.ativo {
     background-color: #ffff00 !important;
     color: #000000 !important;
+    font-weight: bold !important;
 }
 
 /* FONTE DISLEXIA */
@@ -102,11 +105,18 @@ body { font-family: var(--fonte-principal); background-color: var(--cor-fundo); 
 .banner-content h1 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 15px; }
 .btn-primary { display: inline-block; background-color: var(--cor-secundaria); color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; cursor: pointer; border: none; }
 
-/* LINHA DO TEMPO (TIMELINE) */
+/* LINHA DO TEMPO */
 .timeline-container { display: flex; flex-direction: column; gap: 20px; border-left: 4px solid var(--cor-secundaria); padding-left: 20px; margin-left: 10px; }
 .timeline-item { position: relative; }
 .timeline-badge { position: absolute; left: -37px; top: 0; background: var(--cor-secundaria); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; }
 .timeline-conteudo { background: var(--cor-principal); padding: 20px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+/* CARDS EXPANSÍVEIS E INTERATIVOS */
+.grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 20px; }
+.card-expand, .card-tech-interativo { background-color: var(--cor-principal); padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--cor-secundaria); }
+.card-expand .conteudo-extra { display: none; margin-bottom: 15px; padding-top: 10px; border-top: 1px dashed #ddd; }
+.btn-expand { background: transparent; border: 2px solid var(--cor-secundaria); color: var(--cor-secundaria); padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+.btn-expand:hover { background-color: var(--cor-secundaria); color: white; }
 
 /* GALERIA COM FILTROS */
 .galeria-filtros { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
@@ -117,22 +127,22 @@ body { font-family: var(--fonte-principal); background-color: var(--cor-fundo); 
 .galeria-item.esconder { display: none; }
 .galeria-capa { font-weight: bold; color: var(--cor-secundaria); margin-bottom: 8px; font-size: 1.15rem; }
 
-/* GRÁFICOS EM CSS */
-.card-grafico { background: var(--cor-principal); padding: 20px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+/* GRÁFICOS */
+.card-grafico { background: var(--cor-principal); padding: 20px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 5px solid var(--cor-secundaria); }
 .barra-grafico-container { background: #e0e0e0; border-radius: 20px; overflow: hidden; margin-top: 12px; height: 25px; }
-.barra-grafico { height: 100%; color: white; display: flex; align-items: center; padding-left: 15px; font-weight: bold; font-size: 0.85rem; transition: width 1s ease-in-out; }
+.barra-grafico { height: 100%; color: white; display: flex; align-items: center; padding-left: 15px; font-weight: bold; font-size: 0.85rem; }
 
-/* INTERATIVOS */
-.grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.card-tech-interativo { background: var(--cor-principal); padding: 25px; border-radius: 8px; border-top: 5px solid var(--cor-secundaria); }
+/* ELEMENTOS DE FORMULÁRIO DO LAB */
+label { display: block; margin-bottom: 8px; font-weight: 600; }
 .slider { width: 100%; margin: 15px 0; }
-.input-estilizado { width: 100%; padding: 10px; margin: 10px 0; border: 2px solid #ccc; border-radius: 4px; }
+.input-estilizado { width: 100%; padding: 10px; margin: 10px 0; border: 2px solid #ccc; border-radius: 4px; font-size: 1rem; }
 .resultado-painel { margin-top: 10px; font-size: 1.05rem; }
+.status-alerta { font-weight: bold; color: #0077cc; }
 
 /* QUIZ */
-.quiz-container { background: var(--cor-principal); padding: 30px; border-radius: 8px; max-width: 650px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.quiz-container { background: var(--cor-principal); padding: 30px; border-radius: 8px; max-width: 650px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 5px solid var(--cor-secundaria); }
 .quiz-opcoes { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-.quiz-btn-opcao { background: white; border: 2px solid #ccc; padding: 12px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 1rem; }
+.quiz-btn-opcao { background: white; border: 2px solid #ccc; padding: 12px; border-radius: 6px; text-align: left; cursor: pointer; font-size: 1rem; color: var(--cor-texto); }
 .quiz-btn-opcao:hover { border-color: var(--cor-secundaria); background: rgba(0,119,204,0.02); }
 .resultado-oculto { display: none; text-align: center; }
 

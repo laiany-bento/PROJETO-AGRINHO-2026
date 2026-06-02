@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - O Futuro do Campo (Premium)</title>
+    <title>Agrinho 2026 - O Futuro do Campo (Completo)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,6 +32,7 @@
                 <ul>
                     <li><a href="#introducao">Introdução</a></li>
                     <li><a href="#timeline">História</a></li>
+                    <li><a href="#sustentabilidade">Sustentabilidade</a></li>
                     <li><a href="#galeria">Inovações</a></li>
                     <li><a href="#graficos">Dados</a></li>
                     <li><a href="#simuladores">Simuladores</a></li>
@@ -89,86 +90,126 @@
             </div>
         </section>
 
-        <section id="galeria" class="section-padding interface animar-scroll">
-            <div class="section-title">
-                <h2>Vitrine Tecnológica</h2>
-                <p>Filtre e conheça de perto os pilares da modernização sustentável.</p>
-            </div>
-            
-            <div class="galeria-filtros">
-                <button class="btn-filtro ativo" data-filtro="todos">Mostrar Tudo</button>
-                <button class="btn-filtro" data-filtro="robo">Robótica</button>
-                <button class="btn-filtro" data-filtro="monitoramento">Monitoramento</button>
-            </div>
-
-            <div class="galeria-grid">
-                <div class="galeria-item" data-categoria="robo">
-                    <div class="galeria-capa">🤖 Tratores Autônomos</div>
-                    <p>Maquinários guiados por GPS que evitam o esmagamento desnecessário do solo fértil.</p>
-                </div>
-                <div class="galeria-item" data-categoria="monitoramento">
-                    <div class="galeria-capa">📡 Sensores de Solo</div>
-                    <p>Dispositivos enterrados que medem nutrientes e umidade, evitando irrigação excessiva.</p>
-                </div>
-                <div class="galeria-item" data-categoria="monitoramento">
-                    <div class="galeria-capa">🛸 Drones de Mapeamento</div>
-                    <p>Câmeras térmicas aéreas que identificam pragas antes que elas se espalhem pela lavoura.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="graficos" class="section-padding bg-light">
+        <section id="sustentabilidade" class="section-padding">
             <div class="interface animar-scroll">
                 <div class="section-title">
-                    <h2>Dados Práticos de Impacto</h2>
-                    <p>Veja como a tecnologia verde otimiza os recursos nas fazendas inteligentes.</p>
+                    <h2>Sustentabilidade no Campo</h2>
+                    <p>Clique nos cards abaixo para descobrir as práticas que mantêm o solo vivo e o futuro garantido.</p>
                 </div>
+
                 <div class="grid-cards">
-                    <div class="card-grafico">
-                        <h3>Economia de Insumos</h3>
-                        <p>Redução do desperdício de defensivos agrícolas usando aplicação localizada por drones:</p>
-                        <div class="barra-grafico-container">
-                            <div class="barra-grafico" style="width: 75%; background-color: var(--cor-secundaria);">75% de Economia</div>
+                    <div class="card-expand">
+                        <h3>Preservação Ambiental</h3>
+                        <p class="resumo">Proteger matas ciliares e reservas legais garante a biodiversidade...</p>
+                        <div class="conteudo-extra" id="extra-1" aria-hidden="true">
+                            <p>Além de proteger a fauna local, a manutenção das florestas nativas auxilia no equilíbrio climático da propriedade, reduzindo pragas e melhorando a qualidade do ar.</p>
                         </div>
+                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-1">Ler mais sobre preservação ambiental</button>
                     </div>
-                    <div class="card-grafico">
-                        <h3>Matriz Energética</h3>
-                        <p>Uso de energia limpa (solar e biomassa) em comparação com geradores a diesel tradicionais:</p>
-                        <div class="barra-grafico-container">
-                            <div class="barra-grafico" style="width: 85%; background-color: #2ecc71;">85% Renovável</div>
+
+                    <div class="card-expand">
+                        <h3>Uso Consciente da Água</h3>
+                        <p class="resumo">A água é o recurso mais precioso da lavoura...</p>
+                        <div class="conteudo-extra" id="extra-2" aria-hidden="true">
+                            <p>Com técnicas como o gotejamento localizado e a captação de água da chuva, os produtores evitam o desperdício e mantêm os lençóis freáticos saudáveis.</p>
                         </div>
+                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-2">Ler mais sobre uso consciente da água</button>
+                    </div>
+
+                    <div class="card-expand">
+                        <h3>Energia Limpa e Reciclagem</h3>
+                        <p class="resumo">Transformando recursos naturais em força motriz...</p>
+                        <div class="conteudo-extra" id="extra-3" aria-hidden="true">
+                            <p>O uso de painéis solares para alimentar sistemas de irrigação e a correta destinação ou reciclagem de embalagens de insumos evitam a contaminação da terra.</p>
+                        </div>
+                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-3">Ler mais sobre energia limpa</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="simuladores" class="section-padding interface animar-scroll">
+        <section id="galeria" class="section-padding bg-light">
+            <div class="interface animar-scroll">
+                <div class="section-title">
+                    <h2>Vitrine Tecnológica</h2>
+                    <p>Filtre e conheça de perto os pilares da modernização sustentável.</p>
+                </div>
+                
+                <div class="galeria-filtros">
+                    <button class="btn-filtro ativo" data-filtro="todos">Mostrar Tudo</button>
+                    <button class="btn-filtro" data-filtro="robo">Robótica</button>
+                    <button class="btn-filtro" data-filtro="monitoramento">Monitoramento</button>
+                </div>
+
+                <div class="galeria-grid">
+                    <div class="galeria-item" data-categoria="robo">
+                        <div class="galeria-capa">🤖 Tratores Autônomos</div>
+                        <p>Maquinários guiados por GPS que evitam o esmagamento desnecessário do solo fértil.</p>
+                    </div>
+                    <div class="galeria-item" data-categoria="monitoramento">
+                        <div class="galeria-capa">📡 Sensores de Solo</div>
+                        <p>Dispositivos enterrados que medem nutrientes e umidade, evitando irrigação excessiva.</p>
+                    </div>
+                    <div class="galeria-item" data-categoria="monitoramento">
+                        <div class="galeria-capa">🛸 Drones de Mapeamento</div>
+                        <p>Câmeras térmicas aéreas que identificam pragas antes que elas se espalhem pela lavoura.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="graficos" class="section-padding interface animar-scroll">
             <div class="section-title">
-                <h2>Laboratório Tech Agrinho</h2>
-                <p>Interaja com as ferramentas tecnológicas abaixo para ver a ciência do campo em ação.</p>
+                <h2>Dados Práticos de Impacto</h2>
+                <p>Veja como a tecnologia verde otimiza os recursos nas fazendas inteligentes.</p>
             </div>
-
             <div class="grid-cards">
-                <div class="card-tech-interativo">
-                    <h3>Simulador de Sensores de Solo</h3>
-                    <label for="input-umidade">Ajuste a umidade simulada:</label>
-                    <input type="range" id="input-umidade" min="0" max="100" value="50" class="slider">
-                    <p class="resultado-painel">Umidade: <span id="valor-umidade">50</span>%</p>
-                    <div id="status-lavoura" class="status-alerta" aria-live="polite">Condição Ideal.</div>
+                <div class="card-grafico">
+                    <h3>Economia de Insumos</h3>
+                    <p>Redução do desperdício de defensivos agrícolas usando aplicação localizada por drones:</p>
+                    <div class="barra-grafico-container">
+                        <div class="barra-grafico" style="width: 75%; background-color: var(--cor-secundaria);">75% de Economia</div>
+                    </div>
                 </div>
-
-                <div class="card-tech-interativo">
-                    <h3>Calculadora de Economia de Água</h3>
-                    <label for="hectares">Tamanho da plantação (em hectares):</label>
-                    <input type="number" id="hectares" placeholder="Ex: 5" class="input-estilizado">
-                    <button id="btn-calcular" class="btn-primary" style="width: 100%; margin-top: 10px;">Calcular Impacto</button>
-                    <p id="resultado-calculo" class="resultado-painel" style="font-weight: bold;" aria-live="polite"></p>
+                <div class="card-grafico">
+                    <h3>Matriz Energética</h3>
+                    <p>Uso de energia limpa (solar e biomassa) em comparação com geradores a diesel tradicionais:</p>
+                    <div class="barra-grafico-container">
+                        <div class="barra-grafico" style="width: 85%; background-color: #2ecc71;">85% Renovável</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="quiz-section" class="section-padding bg-light">
-            <div class="quiz-container animar-scroll" aria-live="polite">
+        <section id="simuladores" class="section-padding bg-light">
+            <div class="interface animar-scroll">
+                <div class="section-title">
+                    <h2>Laboratório Tech Agrinho</h2>
+                    <p>Interaja com as ferramentas tecnológicas abaixo para ver a ciência do campo em ação.</p>
+                </div>
+
+                <div class="grid-cards">
+                    <div class="card-tech-interativo">
+                        <h3>Simulador de Sensores de Solo</h3>
+                        <label for="input-umidade">Ajuste a umidade simulada:</label>
+                        <input type="range" id="input-umidade" min="0" max="100" value="50" class="slider">
+                        <p class="resultado-painel">Umidade: <span id="valor-umidade">50</span>%</p>
+                        <div id="status-lavoura" class="status-alerta" aria-live="polite">Condição Ideal.</div>
+                    </div>
+
+                    <div class="card-tech-interativo">
+                        <h3>Calculadora de Economia de Água</h3>
+                        <label for="hectares">Tamanho da plantação (em hectares):</label>
+                        <input type="number" id="hectares" placeholder="Ex: 5" class="input-estilizado">
+                        <button id="btn-calcular" class="btn-primary" style="width: 100%; margin-top: 10px;">Calcular Impacto</button>
+                        <p id="resultado-calculo" class="resultado-painel" style="font-weight: bold;" aria-live="polite"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-section" class="section-padding interface animar-scroll">
+            <div class="quiz-container" aria-live="polite">
                 <div class="section-title">
                     <h2>Desafio Sustentável Agrinho</h2>
                     <p>Teste seus conhecimentos e conquiste sua medalha!</p>

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     inicializarAcessibilidadeEModos();
     inicializarMenuMobile();
+    inicializarCardsExpansiveis();
     inicializarGaleriaFiltros();
     inicializarSimuladorClima();
     inicializarCalculadoraEco();
@@ -51,7 +52,31 @@ function inicializarMenuMobile() {
     }
 }
 
-/* 3. FILTROS DA GALERIA VITRINE */
+/* 3. CARDS EXPANSÍVEIS */
+function inicializarCardsExpansiveis() {
+    const botoes = document.querySelectorAll(".btn-expand");
+
+    botoes.forEach(botao => {
+        botao.addEventListener("click", (evento) => {
+            const card = evento.target.closest(".card-expand");
+            const conteudoExtra = card.querySelector(".conteudo-extra");
+
+            if (conteudoExtra.style.display === "block") {
+                conteudoExtra.style.display = "none";
+                conteudoExtra.setAttribute("aria-hidden", "true");
+                evento.target.setAttribute("aria-expanded", "false");
+                evento.target.innerText = "Ler mais";
+            } else {
+                conteudoExtra.style.display = "block";
+                conteudoExtra.setAttribute("aria-hidden", "false");
+                evento.target.setAttribute("aria-expanded", "true");
+                evento.target.innerText = "Ler menos";
+            }
+        });
+    });
+}
+
+/* 4. FILTROS DA GALERIA VITRINE */
 function inicializarGaleriaFiltros() {
     const botoesFiltro = document.querySelectorAll(".btn-filtro");
     const itensGaleria = document.querySelectorAll(".galeria-item");
@@ -75,7 +100,7 @@ function inicializarGaleriaFiltros() {
     });
 }
 
-/* 4. SIMULADOR DE SENSORES */
+/* 5. SIMULADOR DE SENSORES */
 function inicializarSimuladorClima() {
     const inputUmidade = document.getElementById("input-umidade");
     const valorUmidade = document.getElementById("valor-umidade");
@@ -100,7 +125,7 @@ function inicializarSimuladorClima() {
     }
 }
 
-/* 5. CALCULADORA ECOLÓGICA */
+/* 6. CALCULADORA ECOLÓGICA */
 function inicializarCalculadoraEco() {
     const btnCalcular = document.getElementById("btn-calcular");
     const inputHectares = document.getElementById("hectares");
@@ -120,7 +145,7 @@ function inicializarCalculadoraEco() {
     }
 }
 
-/* 6. ANIMAÇÃO SCROLL */
+/* 7. ANIMAÇÃO SCROLL */
 function inicializarAnimacaoScroll() {
     const dispararAnimacao = () => {
         const elementos = document.querySelectorAll(".animar-scroll");
@@ -135,7 +160,7 @@ function inicializarAnimacaoScroll() {
     window.addEventListener("scroll", dispararAnimacao);
 }
 
-/* 7. QUIZ PREMIUM COM SISTEMA DE MEDALHAS GAMIFICADO */
+/* 8. QUIZ PREMIUM COM SISTEMA DE MEDALHAS GAMIFICADO */
 function inicializarQuizComMedalhas() {
     const perguntas = [
         {
