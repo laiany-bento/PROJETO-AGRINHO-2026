@@ -1,28 +1,32 @@
-/* ==========================================================================
-   ARQUIVO JAVASCRIPT PRINCIPAL - AGRINHO 2026 (ACESSIBILIDADE E RESPONSIVO)
-   ========================================================================== */
-
 document.addEventListener("DOMContentLoaded", () => {
-    inicializarAcessibilidade();
+    inicializarAcessibilidadeEModos();
     inicializarMenuMobile();
-    inicializarCardsExpansiveis();
+    inicializarGaleriaFiltros();
     inicializarSimuladorClima();
     inicializarCalculadoraEco();
-    inicializarContadoresProgressivos();
     inicializarAnimacaoScroll();
-    inicializarQuiz();
+    inicializarQuizComMedalhas();
 });
 
-/* 1. CONTROLES DE ACESSIBILIDADE (ALTO CONTRASTE E DISLEXIA) */
-function inicializarAcessibilidade() {
-    const btnAltoContraste = document.getElementById("btn-alto-contraste");
+/* 1. ACESSIBILIDADE, MODO ESCURO E ALTO CONTRASTE */
+function inicializarAcessibilidadeEModos() {
+    const btnDark = document.getElementById("btn-dark-mode");
+    const btnContraste = document.getElementById("btn-alto-contraste");
     const btnDislexia = document.getElementById("btn-dislexia");
 
-    if (btnAltoContraste) {
-        btnAltoContraste.addEventListener("click", () => {
+    if (btnDark) {
+        btnDark.addEventListener("click", () => {
+            const ativo = document.body.classList.toggle("dark-mode");
+            document.body.classList.remove("alto-contraste");
+            btnDark.setAttribute("aria-pressed", ativo);
+        });
+    }
+
+    if (btnContraste) {
+        btnContraste.addEventListener("click", () => {
             const ativo = document.body.classList.toggle("alto-contraste");
-            // Sincroniza o status ativo com leitores de tela para cegos
-            btnAltoContraste.setAttribute("aria-pressed", ativo);
+            document.body.classList.remove("dark-mode");
+            btnContraste.setAttribute("aria-pressed", ativo);
         });
     }
 
@@ -42,48 +46,36 @@ function inicializarMenuMobile() {
     if (menuToggle && navbar) {
         menuToggle.addEventListener("click", () => {
             const ativo = navbar.classList.toggle("active");
-            menuToggle.classList.toggle("open");
-            // Informa se o menu móvel expandiu na leitura de áudio
             menuToggle.setAttribute("aria-expanded", ativo);
-        });
-
-        // Fecha o menu móvel ao clicar em qualquer item
-        const links = navbar.querySelectorAll("a");
-        links.forEach(link => {
-            link.addEventListener("click", () => {
-                navbar.classList.remove("active");
-                menuToggle.classList.remove("open");
-                menuToggle.setAttribute("aria-expanded", "false");
-            });
         });
     }
 }
 
-/* 3. CARDS EXPANSÍVEIS (Com acessibilidade ARIA) */
-function inicializarCardsExpansiveis() {
-    const botoes = document.querySelectorAll(".btn-expand");
+/* 3. FILTROS DA GALERIA VITRINE */
+function inicializarGaleriaFiltros() {
+    const botoesFiltro = document.querySelectorAll(".btn-filtro");
+    const itensGaleria = document.querySelectorAll(".galeria-item");
 
-    botoes.forEach(botao => {
-        botao.addEventListener("click", (evento) => {
-            const card = evento.target.closest(".card-expand");
-            const conteudoExtra = card.querySelector(".conteudo-extra");
+    botoesFiltro.forEach(botao => {
+        botao.addEventListener("click", () => {
+            botoesFiltro.forEach(b => b.classList.remove("ativo"));
+            botao.classList.add("ativo");
 
-            if (conteudoExtra.style.display === "block") {
-                conteudoExtra.style.display = "none";
-                conteudoExtra.setAttribute("aria-hidden", "true");
-                evento.target.setAttribute("aria-expanded", "false");
-                evento.target.innerText = "Ler mais";
-            } else {
-                conteudoExtra.style.display = "block";
-                conteudoExtra.setAttribute("aria-hidden", "false");
-                evento.target.setAttribute("aria-expanded", "true");
-                evento.target.innerText = "Ler menos";
-            }
+            const filtroSelecionado = botao.getAttribute("data-filtro");
+
+            itensGaleria.forEach(item => {
+                const categoria = item.getAttribute("data-categoria");
+                if (filtroSelecionado === "todos" || categoria === filtroSelecionado) {
+                    item.classList.remove("esconder");
+                } else {
+                    item.classList.add("esconder");
+                }
+            });
         });
     });
 }
 
-/* 4. SIMULADOR DE SENSORES (UMIDADE) */
+/* 4. SIMULADOR DE SENSORES */
 function inicializarSimuladorClima() {
     const inputUmidade = document.getElementById("input-umidade");
     const valorUmidade = document.getElementById("valor-umidade");
@@ -95,14 +87,14 @@ function inicializarSimuladorClima() {
             valorUmidade.innerText = umidade;
 
             if (umidade < 30) {
-                statusLavoura.innerText = "Alerta: Solo Seco! Irrigação por gotejamento ativada.";
-                statusLavoura.style.color = document.body.classList.contains("alto-contraste") ? "#ffffff" : "#ff4d4d";
+                statusLavoura.innerText = "Alerta: Solo Seco! Irrigação ativada.";
+                statusLavoura.style.color = "#ff4d4d";
             } else if (umidade >= 30 && umidade <= 70) {
-                statusLavoura.innerText = "Condição Ideal: Níveis adequados detectados pelos sensores.";
-                statusLavoura.style.color = document.body.classList.contains("alto-contraste") ? "#ffff00" : "#0077cc";
+                statusLavoura.innerText = "Condição Ideal: Umidade perfeita.";
+                statusLavoura.style.color = "var(--cor-secundaria)";
             } else {
-                statusLavoura.innerText = "Aviso: Solo Saturado! Sistemas suspensos preventivamente.";
-                statusLavoura.style.color = document.body.classList.contains("alto-contraste") ? "#ffffff" : "#ffcc00";
+                statusLavoura.innerText = "Aviso: Solo Saturado! Sistemas suspensos.";
+                statusLavoura.style.color = "#ffcc00";
             }
         });
     }
@@ -117,119 +109,116 @@ function inicializarCalculadoraEco() {
     if (btnCalcular) {
         btnCalcular.addEventListener("click", () => {
             const hectares = parseFloat(inputHectares.value);
-            
             if (isNaN(hectares) || hectares <= 0) {
-                resultadoCalculo.innerText = "Por favor, digite um número válido de hectares.";
+                resultadoCalculo.innerText = "Digite um valor válido.";
                 resultadoCalculo.style.color = "red";
                 return;
             }
-
-            const economiaTotal = hectares * 1200;
-            resultadoCalculo.style.color = ""; // Mantém cor dinâmica herdada das variáveis principais
-            resultadoCalculo.innerText = `Sua automação economizaria em média ${economiaTotal} litros de água por semana!`;
+            resultadoCalculo.style.color = "";
+            resultadoCalculo.innerText = `Economia estimada: ${hectares * 1200} litros de água por semana! 💧`;
         });
     }
 }
 
-/* 6. CONTADORES PROGRESSIVOS (Otimizado para leitores de tela) */
-function inicializarContadoresProgressivos() {
-    const contadores = document.querySelectorAll(".contador");
-
-    contadores.forEach(contador => {
-        const alvo = +contador.getAttribute("data-alvo");
-        
-        // Em vez de rodar números correndo (que causa confusão auditiva em leitores de tela para cegos),
-        // preenchemos o alvo de forma estática direta para otimizar a leitura acessível.
-        contador.innerText = alvo; 
-    });
-}
-
-/* 7. ANIMAÇÃO AO ROLAR A TELA (SCROLL ANIMATION) */
+/* 6. ANIMAÇÃO SCROLL */
 function inicializarAnimacaoScroll() {
     const dispararAnimacao = () => {
         const elementos = document.querySelectorAll(".animar-scroll");
-        
         elementos.forEach(elemento => {
-            const posicaoElemento = elemento.getBoundingClientRect().top;
-            const alturaTela = window.innerHeight * 0.85;
-
-            if (posicaoElemento < alturaTela) {
+            const posicao = elemento.getBoundingClientRect().top;
+            if (posicao < window.innerHeight * 0.85) {
                 elemento.classList.add("visivel");
             }
         });
     };
-
     dispararAnimacao();
     window.addEventListener("scroll", dispararAnimacao);
 }
 
-/* 8. QUIZ SUSTENTÁVEL DO AGRINHO */
-function inicializarQuiz() {
+/* 7. QUIZ PREMIUM COM SISTEMA DE MEDALHAS GAMIFICADO */
+function inicializarQuizComMedalhas() {
     const perguntas = [
         {
-            pergunta: "Qual tecnologia ajuda a monitorar pragas e economizar água diretamente na plantação?",
-            opcoes: ["Drones e Sensores de Solo", "Tratores antigos sem GPS", "Ferramentas manuais antigas"],
+            pergunta: "Qual tecnologia monitora pragas e ajuda a poupar água diretamente no solo?",
+            opcoes: ["Drones e Sensores", "Tratores antigos sem GPS", "Enxadas manuais"],
             correta: 0
         },
         {
-            pergunta: "O que caracteriza a sustentabilidade no Agrinho 2026?",
-            opcoes: ["Produzir sem focar nas matas ciliares", "Equilibrar tecnologia, alta produção e preservação", "Abandonar o uso de fontes de energia limpa"],
+            pergunta: "O pilar do Agrinho 2026 foca em qual equilíbrio?",
+            opcoes: ["Alta produção ignorando matas", "Tecnologia, produção e preservação ambiental", "Energias poluidoras"],
             correta: 1
         },
         {
-            pergunta: "De onde vem a energia limpa frequentemente adotada no campo moderno?",
-            opcoes: ["Combustíveis fósseis refinados", "Painéis Solares e Biomassa", "Geradores tradicionais a diesel"],
+            pergunta: "Qual fonte de energia limpa cresce nas propriedades modernas?",
+            opcoes: ["Combustíveis fósseis", "Solar e Biomassa", "Geradores tradicionais a diesel"],
             correta: 2
         }
     ];
 
-    let indicePerguntaAtual = 0;
+    let indiceAtual = 0;
     let pontuacao = 0;
 
-    const elementoPergunta = document.getElementById("pergunta");
-    const containerOpcoes = document.getElementById("opcoes");
-    const containerQuizBox = document.getElementById("quiz-box");
-    const containerResultado = document.getElementById("resultado-quiz");
-    const elementoPlacar = document.getElementById("placar");
+    const elPergunta = document.getElementById("pergunta");
+    const elOpcoes = document.getElementById("opcoes");
+    const boxQuiz = document.getElementById("quiz-box");
+    const boxResultado = document.getElementById("resultado-quiz");
+    const elPlacar = document.getElementById("placar");
+    const elBadgeContainer = document.getElementById("badge-container");
     const btnReiniciar = document.getElementById("btn-reiniciar");
 
     function carregarPergunta() {
-        if (indicePerguntaAtual < perguntas.length) {
-            const dadosAtual = perguntas[indicePerguntaAtual];
-            elementoPergunta.innerText = dadosAtual.pergunta;
-            containerOpcoes.innerHTML = "";
+        if (indiceAtual < perguntas.length) {
+            const atual = perguntas[indiceAtual];
+            elPergunta.innerText = atual.pergunta;
+            elOpcoes.innerHTML = "";
 
-            dadosAtual.opcoes.forEach((opcao, indice) => {
-                const botaoOpcao = document.createElement("button");
-                botaoOpcao.innerText = opcao;
-                botaoOpcao.classList.add("quiz-btn-opcao");
-                botaoOpcao.addEventListener("click", () => verificarResposta(indice));
-                containerOpcoes.appendChild(botaoOpcao);
+            atual.opcoes.forEach((opcao, i) => {
+                const btn = document.createElement("button");
+                btn.innerText = opcao;
+                btn.classList.add("quiz-btn-opcao");
+                btn.addEventListener("click", () => {
+                    if (i === atual.correta) pontuacao++;
+                    indiceAtual++;
+                    carregarPergunta();
+                });
+                elOpcoes.appendChild(btn);
             });
         } else {
             exibirResultado();
         }
     }
 
-    function verificarResposta(indiceSelecionado) {
-        if (indiceSelecionado === perguntas[indicePerguntaAtual].correta) {
-            pontuacao++;
-        }
-        indicePerguntaAtual++;
-        carregarPergunta();
-    }
-
     function exibirResultado() {
-        containerQuizBox.style.display = "none";
-        containerResultado.style.display = "block";
-        elementoPlacar.innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
+        boxQuiz.style.display = "none";
+        boxResultado.style.display = "block";
+        elPlacar.innerText = `Você acertou ${pontuacao} de ${perguntas.length} questões.`;
+
+        let medalha = "";
+        let cor = "";
+
+        if (pontuacao === 0) {
+            medalha = "🌱 Semeadora Iniciante";
+            cor = "#888";
+        } else if (pontuacao < perguntas.length) {
+            medalha = "🚜 Técnico Sustentável";
+            cor = "var(--cor-secundaria)";
+        } else {
+            medalha = "🏆 Engenheiro Agrônomo do Futuro!";
+            cor = "#d4af37";
+        }
+
+        elBadgeContainer.innerHTML = `
+            <span style="display:inline-block; padding:10px 20px; background:#fff; border:2px solid ${cor}; color:${cor}; border-radius:20px; font-weight:bold; font-size:1.2rem;">
+                ${medalha}
+            </span>
+        `;
     }
 
     btnReiniciar.addEventListener("click", () => {
         pontuacao = 0;
-        indicePerguntaAtual = 0;
-        containerResultado.style.display = "none";
-        containerQuizBox.style.display = "block";
+        indiceAtual = 0;
+        boxResultado.style.display = "none";
+        boxQuiz.style.display = "block";
         carregarPergunta();
     });
 
