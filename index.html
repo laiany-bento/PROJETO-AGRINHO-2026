@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - O Futuro do Campo (Inclusivo e Gamificado)</title>
+    <title>Agrinho 2026 - O Futuro do Campo (Premium Unificado)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,12 +31,12 @@
             <nav class="navbar" id="navbar" aria-label="Menu Principal">
                 <ul>
                     <li><a href="#introducao">Introdução</a></li>
+                    <li><a href="#comparador-section">Impacto Visual</a></li>
+                    <li><a href="#o-que-e-agro">Sustentabilidade</a></li>
+                    <li><a href="#mapa-agro-section">Mapa Agro</a></li>
                     <li><a href="#timeline">História</a></li>
-                    <li><a href="#sustentabilidade">Sustentabilidade</a></li>
-                    <li><a href="#flashcards-section">Dicionário Agro</a></li>
                     <li><a href="#galeria">Inovações</a></li>
-                    <li><a href="#graficos">Dados</a></li>
-                    <li><a href="#simuladores">Simuladores</a></li>
+                    <li><a href="#simuladores">Laboratório Tech</a></li>
                     <li><a href="#quiz-section">Quiz Agro</a></li>
                 </ul>
             </nav>
@@ -59,11 +59,122 @@
             </div>
         </section>
 
-        <section id="timeline" class="section-padding bg-light">
+        <section id="comparador-section" class="section-padding bg-light">
+            <div class="interface animar-scroll">
+                <div class="section-title">
+                    <h2>O Impacto do Manejo: Degradado vs. Preservado</h2>
+                    <p>Arraste a barra horizontal no centro da imagem para comparar visualmente os efeitos do desmatamento contra a recuperação sustentável do solo.</p>
+                </div>
+
+                <div class="comparador-wrapper">
+                    <div class="img-background">
+                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1200" alt="Área agrícola preservada e sustentável">
+                        <span class="label-imagem label-direita">Área Preservada 🌱</span>
+                    </div>
+                    
+                    <div class="img-foreground" id="foto-degradada">
+                        <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=1200" alt="Solo seco e área degradada">
+                        <span class="label-imagem label-esquerda">Área Degradada 🪵</span>
+                    </div>
+
+                    <input type="range" min="0" max="100" value="50" class="slider-comparador" id="slider-divisor" aria-label="Controle deslizante para comparar área degradada e preservada">
+                </div>
+            </div>
+        </section>
+
+        <section id="o-que-e-agro" class="section-padding">
+            <div class="interface animar-scroll">
+                <div class="section-title">
+                    <h2>O que é o Agro Sustentável?</h2>
+                    <p>Passe o mouse para destacar e clique nos cards para girar e descobrir os pilares fundamentais dessa prática.</p>
+                </div>
+
+                <div class="grid-flashcards">
+                    <div class="card-agro-premium" role="button" tabindex="0" aria-expanded="false">
+                        <div class="card-agro-inner">
+                            <div class="card-agro-front">
+                                <div class="icone-agro">🚜</div>
+                                <h3>Responsabilidade Econômica</h3>
+                                <p>Produzir com eficiência garantindo o sustento do produtor.</p>
+                            </div>
+                            <div class="card-agro-back">
+                                <h3>Viabilidade Financeira</h3>
+                                <p>O agro sustentável reduz o uso de insumos químicos caros através da tecnologia de precisão, garantindo lucros estáveis sem esgotar o patrimônio natural da fazenda.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-agro-premium" role="button" tabindex="0" aria-expanded="false">
+                        <div class="card-agro-inner">
+                            <div class="card-agro-front">
+                                <div class="icone-agro">🌍</div>
+                                <h3>Equilíbrio Ecológico</h3>
+                                <p>Preservar a biodiversidade e os recursos hídricos.</p>
+                            </div>
+                            <div class="card-agro-back">
+                                <h3>Proteção Ambiental</h3>
+                                <p>Envolve rotação de culturas, eliminação do desmatamento ilegal e conservação de nascentes. A natureza trabalha em conjunto com a plantação.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-agro-premium" role="button" tabindex="0" aria-expanded="false">
+                        <div class="card-agro-inner">
+                            <div class="card-agro-front">
+                                <div class="icone-agro">👥</div>
+                                <h3>Justiça Social</h3>
+                                <p>Valorizar a comunidade e o trabalhador do campo.</p>
+                            </div>
+                            <div class="card-agro-back">
+                                <h3>Cuidado Humano</h3>
+                                <p>Garantir condições dignas de trabalho, fixar o jovem no campo através da inclusão digital e apoiar a segurança alimentar da região local.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mapa-agro-section" class="section-padding bg-light">
+            <div class="interface animar-scroll">
+                <div class="section-title">
+                    <h2>Mapa Interativo: O Agro na Nossa Região</h2>
+                    <p>Clique nas diferentes regiões do mapa para descobrir o que elas produzem e suas principais curiosidades tecnológicas.</p>
+                </div>
+
+                <div class="mapa-container-flex">
+                    <div class="mapa-svg-box">
+                        <svg viewBox="0 0 400 300" class="mapa-svg" aria-label="Mapa interativo regional do Paraná">
+                            <path d="M 120 40 L 280 40 L 260 120 L 150 110 Z" class="regiao-path" data-regiao="norte" aria-label="Região Norte" role="button" tabindex="0"/>
+                            <path d="M 40 100 L 150 110 L 120 220 L 30 180 Z" class="regiao-path" data-regiao="oeste" aria-label="Região Oeste" role="button" tabindex="0"/>
+                            <path d="M 150 110 L 260 120 L 340 220 L 120 220 Z" class="regiao-path" data-regiao="sul" aria-label="Região Sul e Campos Gerais" role="button" tabindex="0"/>
+                        </svg>
+                        <div class="mapa-legendas">
+                            <span style="color: #27ae60;">■ Norte</span>
+                            <span style="color: #2980b9;">■ Oeste</span>
+                            <span style="color: #8e44ad;">■ Sul/Campos Gerais</span>
+                        </div>
+                    </div>
+
+                    <div id="painel-info-mapa" class="card-tech-interativo painel-mapa" aria-live="polite">
+                        <h3>🗺️ Central de Informações Regionais</h3>
+                        <p id="mapa-placeholder-texto" style="margin-top: 15px; color: #666;">Selecione uma região no mapa ao lado para carregar os dados de produção e curiosidades sustentáveis em tempo real.</p>
+                        
+                        <div id="mapa-dados-conteudo" style="display: none; margin-top: 15px;">
+                            <h4 id="mapa-nome-regiao" style="color: var(--cor-secundaria); font-size: 1.3rem; margin-bottom: 10px;">Região</h4>
+                            <p><strong>🌾 Principal Produção:</strong> <span id="mapa-producao">...</span></p>
+                            <p style="margin-top: 10px;"><strong>💡 Curiosidade Tech:</strong> <span id="mapa-curiosidade">...</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="section-padding">
             <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>A Evolução do Campo</h2>
-                    <p>Acompanhe a jornada da produção humana até a revolução digital de 2026.</p>
+                    <p>Acompanhe a jornada da produção humana até a revolução digital.</p>
                 </div>
                 <div class="timeline-container">
                     <div class="timeline-item">
@@ -91,95 +202,7 @@
             </div>
         </section>
 
-        <section id="sustentabilidade" class="section-padding">
-            <div class="interface animar-scroll">
-                <div class="section-title">
-                    <h2>Sustentabilidade no Campo</h2>
-                    <p>Clique nos cards abaixo para descobrir as práticas que mantêm o solo vivo e o futuro garantido.</p>
-                </div>
-
-                <div class="grid-cards">
-                    <div class="card-expand">
-                        <h3>Preservação Ambiental</h3>
-                        <p class="resumo">Proteger matas ciliares e reservas legais garante a biodiversidade...</p>
-                        <div class="conteudo-extra" id="extra-1" aria-hidden="true">
-                            <p>Além de proteger a fauna local, a manutenção das florestas nativas auxilia no equilíbrio climático da propriedade, reduzindo pragas e melhorando a qualidade do ar.</p>
-                        </div>
-                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-1">Ler mais sobre preservação ambiental</button>
-                    </div>
-
-                    <div class="card-expand">
-                        <h3>Uso Consciente da Água</h3>
-                        <p class="resumo">A água é o recurso mais precioso da lavoura...</p>
-                        <div class="conteudo-extra" id="extra-2" aria-hidden="true">
-                            <p>Com técnicas como o gotejamento localizado e a captação de água da chuva, os produtores evitam o desperdício e mantêm os lençóis freáticos saudáveis.</p>
-                        </div>
-                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-2">Ler mais sobre uso consciente da água</button>
-                    </div>
-
-                    <div class="card-expand">
-                        <h3>Energia Limpa e Reciclagem</h3>
-                        <p class="resumo">Transformando recursos naturais em força motriz...</p>
-                        <div class="conteudo-extra" id="extra-3" aria-hidden="true">
-                            <p>O uso de painéis solares para alimentar sistemas de irrigação e a correta destinação ou reciclagem de embalagens de insumos evitam a contaminação da terra.</p>
-                        </div>
-                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-3">Ler mais sobre energia limpa</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="flashcards-section" class="section-padding bg-light">
-            <div class="interface animar-scroll">
-                <div class="section-title">
-                    <h2>Dicionário Agro Tech</h2>
-                    <p>Clique ou selecione os cartões abaixo com o teclado para revelar conceitos cruciais da agricultura moderna.</p>
-                </div>
-                
-                <div class="grid-flashcards">
-                    <div class="flashcard" role="button" tabindex="0" aria-expanded="false" aria-label="Flashcard sobre Hidroponia. Clique para ver a definição.">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">
-                                <h3>Hidroponia 🌱</h3>
-                                <span class="flashcard-dica">Clique para virar</span>
-                            </div>
-                            <div class="flashcard-back">
-                                <h3>Definição</h3>
-                                <p>Técnica de cultivar plantas sem solo. As raízes recebem uma solução de água perfeitamente balanceada com todos os nutrientes necessários.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flashcard" role="button" tabindex="0" aria-expanded="false" aria-label="Flashcard sobre Biomassa. Clique para ver a definição.">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">
-                                <h3>Biomassa 🪵</h3>
-                                <span class="flashcard-dica">Clique para virar</span>
-                            </div>
-                            <div class="flashcard-back">
-                                <h3>Definição</h3>
-                                <p>Matéria orgânica (como restos de plantas e esterco) utilizada como fonte de energia limpa. Pode ser transformada em biocombustível ou eletricidade.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flashcard" role="button" tabindex="0" aria-expanded="false" aria-label="Flashcard sobre Agricultura de Precisão. Clique para ver a definição.">
-                        <div class="flashcard-inner">
-                            <div class="flashcard-front">
-                                <h3>Agricultura de Precisão 🎯</h3>
-                                <span class="flashcard-dica">Clique para virar</span>
-                            </div>
-                            <div class="flashcard-back">
-                                <h3>Definição</h3>
-                                <p>Gerenciamento de lavouras baseado em dados exatos. Usa GPS e sensores para aplicar a quantidade exata de água ou insumos no metro quadrado correto.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="galeria" class="section-padding">
+        <section id="galeria" class="section-padding bg-light">
             <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>Vitrine Tecnológica</h2>
@@ -209,52 +232,58 @@
             </div>
         </section>
 
-        <section id="graficos" class="section-padding bg-light">
-            <div class="interface animar-scroll">
-                <div class="section-title">
-                    <h2>Dados Práticos de Impacto</h2>
-                    <p>Veja como a tecnologia verde otimiza os recursos nas fazendas inteligentes.</p>
-                </div>
-                <div class="grid-cards">
-                    <div class="card-grafico">
-                        <h3>Economia de Insumos</h3>
-                        <p>Redução do desperdício de defensivos agrícolas usando aplicação localizada por drones:</p>
-                        <div class="barra-grafico-container" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75 por cento de economia de insumos">
-                            <div class="barra-grafico" style="width: 75%; background-color: var(--cor-secundaria);">75% de Economia</div>
-                        </div>
-                    </div>
-                    <div class="card-grafico">
-                        <h3>Matriz Energética</h3>
-                        <p>Uso de energia limpa (solar e biomassa) em comparação com geradores a diesel tradicionais:</p>
-                        <div class="barra-grafico-container" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="85 por cento de matriz energética renovável">
-                            <div class="barra-grafico" style="width: 85%; background-color: #2ecc71;">85% Renovável</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="simuladores" class="section-padding interface animar-scroll">
             <div class="section-title">
                 <h2>Laboratório Tech Agrinho</h2>
-                <p>Interaja com as ferramentas tecnológicas abaixo para ver a ciência do campo em ação.</p>
+                <p>Explore as ferramentas inteligentes e guie uma propriedade rumo ao equilíbrio sustentável.</p>
             </div>
 
             <div class="grid-cards">
-                <div class="card-tech-interativo">
-                    <h3>Simulador de Sensores de Solo</h3>
-                    <label for="input-umidade">Ajuste a umidade simulada:</label>
+                <div id="simulador-sensor-card" class="card-tech-interativo">
+                    <h3>Painel de Monitoramento de Solo</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Mova o controle ou dispare um evento extremo para testar a automação da fazenda.</p>
+                    
+                    <div class="botoes-clima-container">
+                        <button id="btn-seca" class="btn-clima-evento" style="background-color: #e67e22; color: #fff;">🔥 Onda de Calor</button>
+                        <button id="btn-chuva" class="btn-clima-evento" style="background-color: #3498db; color: #fff;">🌧️ Chuva Forte</button>
+                    </div>
+
+                    <label for="input-umidade" style="margin-top: 15px;">Ajuste manual da umidade do solo:</label>
                     <input type="range" id="input-umidade" min="0" max="100" value="50" class="slider">
-                    <p class="resultado-painel">Umidade: <span id="valor-umidade">50</span>%</p>
-                    <div id="status-lavoura" class="status-alerta" aria-live="polite">Condição Ideal.</div>
+                    
+                    <p class="resultado-painel">Leitura Atual do Sensor: <span id="valor-umidade" style="font-weight: bold;">50</span>%</p>
+                    <div id="status-lavoura" class="status-alerta" aria-live="polite">🌱 Condição Ideal: Solo equilibrado e planta saudável.</div>
                 </div>
 
                 <div class="card-tech-interativo">
-                    <h3>Calculadora de Economia de Água</h3>
-                    <label for="hectares">Tamanho da plantação real ou fictícia (em hectares):</label>
+                    <h3>Simulador de Impacto Ecológico</h3>
+                    <label for="hectares">Quantos hectares sua lavoura possui?</label>
                     <input type="number" id="hectares" placeholder="Ex: 5" class="input-estilizado">
-                    <button id="btn-calcular" class="btn-primary" style="width: 100%; margin-top: 10px;">Calcular Impacto</button>
-                    <p id="resultado-calculo" class="resultado-painel" style="font-weight: bold;" aria-live="polite"></p>
+                    <button id="btn-calcular" class="btn-primary" style="width: 100%; margin-top: 10px;">Calcular Pegada de Água</button>
+                    <p id="resultado-calculo" class="resultado-painel" style="line-height: 1.5;" aria-live="polite"></p>
+                </div>
+
+                <div class="card-tech-interativo" id="card-jornada-rpg">
+                    <h3>Simulador de Gestão: Decisão no Campo</h3>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Tome decisões estratégicas e veja o impacto em seus recursos em tempo real!</p>
+                    
+                    <div class="status-jornada-container">
+                        <div class="status-item">🌾 Produção: <span id="status-producao" style="font-weight:bold; color:#27ae60;">100%</span></div>
+                        <div class="status-item">🌳 Natureza: <span id="status-natureza" style="font-weight:bold; color:#2ecc71;">100%</span></div>
+                        <div class="status-item">💰 Caixa: <span id="status-caixa" style="font-weight:bold; color:#f1c40f;">R$ 50.000</span></div>
+                    </div>
+
+                    <div class="narrativa-box" id="narrativa-texto" aria-live="polite" style="background: var(--cor-cinza-claro); padding: 15px; border-radius: 6px; margin: 15px 0; min-height: 80px; font-weight: 500;">
+                        Fase 1: O início da safra. Você assumiu as terras da fazenda. Qual será o seu primeiro manejo ou investimento tecnológico?
+                    </div>
+
+                    <div id="jornada-botoes" class="quiz-opcoes">
+                        <button class="quiz-btn-opcao" data-escolha="arvores">🌳 Plantar árvores nativas nas margens do rio</button>
+                        <button class="quiz-btn-opcao" data-escolha="desmatar">🪓 Ampliar área útil retirando mata de reserva</button>
+                        <button class="quiz-btn-opcao" data-escolha="irrigacao">💧 Instalar sistema de Irrigação Inteligente</button>
+                    </div>
+
+                    <button id="btn-reiniciar-jornada" class="btn-primary" style="display: none; width: 100%; margin-top: 15px;">Jogar Novamente</button>
                 </div>
             </div>
         </section>
@@ -283,7 +312,7 @@
         <section class="conclusao section-padding">
             <div class="interface animar-scroll">
                 <h2>Cultivar o futuro é uma tarefa coletiva!</h2>
-                <p>O Agrinho 2026 nos ensina que a verdadeira tecnologia protege a nossa casa comum. Seja você também um agente de mudança em sua comunidade!</p>
+                <p>O Agrinho nos ensina que a verdadeira tecnologia protege a nossa casa comum. Seja você também um agente de mudança!</p>
             </div>
         </section>
     </main>
