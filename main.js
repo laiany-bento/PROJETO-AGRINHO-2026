@@ -1,8 +1,9 @@
 /* ==========================================================================
-   ARQUIVO JAVASCRIPT INTEGRADO - AGRINHO 2026
+   ARQUIVO JAVASCRIPT PRINCIPAL - AGRINHO 2026 (ACESSIBILIDADE E RESPONSIVO)
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+    inicializarAcessibilidade();
     inicializarMenuMobile();
     inicializarCardsExpansiveis();
     inicializarSimuladorClima();
@@ -12,28 +13,53 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarQuiz();
 });
 
-/* 1. MENU RESPONSIVO MOBILE */
+/* 1. CONTROLES DE ACESSIBILIDADE (ALTO CONTRASTE E DISLEXIA) */
+function inicializarAcessibilidade() {
+    const btnAltoContraste = document.getElementById("btn-alto-contraste");
+    const btnDislexia = document.getElementById("btn-dislexia");
+
+    if (btnAltoContraste) {
+        btnAltoContraste.addEventListener("click", () => {
+            const ativo = document.body.classList.toggle("alto-contraste");
+            // Sincroniza o status ativo com leitores de tela para cegos
+            btnAltoContraste.setAttribute("aria-pressed", ativo);
+        });
+    }
+
+    if (btnDislexia) {
+        btnDislexia.addEventListener("click", () => {
+            const ativo = document.body.classList.toggle("fonte-dislexia");
+            btnDislexia.setAttribute("aria-pressed", ativo);
+        });
+    }
+}
+
+/* 2. MENU MOBILE RESPONSIVO */
 function inicializarMenuMobile() {
     const menuToggle = document.getElementById("menuToggle");
     const navbar = document.getElementById("navbar");
 
     if (menuToggle && navbar) {
         menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
+            const ativo = navbar.classList.toggle("active");
             menuToggle.classList.toggle("open");
+            // Informa se o menu móvel expandiu na leitura de áudio
+            menuToggle.setAttribute("aria-expanded", ativo);
         });
 
+        // Fecha o menu móvel ao clicar em qualquer item
         const links = navbar.querySelectorAll("a");
         links.forEach(link => {
             link.addEventListener("click", () => {
                 navbar.classList.remove("active");
                 menuToggle.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
             });
         });
     }
 }
 
-/* 2. CARDS EXPANSÍVEIS */
+/* 3. CARDS EXPANSÍVEIS (Com acessibilidade ARIA) */
 function inicializarCardsExpansiveis() {
     const botoes = document.querySelectorAll(".btn-expand");
 
@@ -44,16 +70,20 @@ function inicializarCardsExpansiveis() {
 
             if (conteudoExtra.style.display === "block") {
                 conteudoExtra.style.display = "none";
+                conteudoExtra.setAttribute("aria-hidden", "true");
+                evento.target.setAttribute("aria-expanded", "false");
                 evento.target.innerText = "Ler mais";
             } else {
                 conteudoExtra.style.display = "block";
+                conteudoExtra.setAttribute("aria-hidden", "false");
+                evento.target.setAttribute("aria-expanded", "true");
                 evento.target.innerText = "Ler menos";
             }
         });
     });
 }
 
-/* 3. SIMULADOR DE SENSORES (UMIDADE) */
+/* 4. SIMULADOR DE SENSORES (UMIDADE) */
 function inicializarSimuladorClima() {
     const inputUmidade = document.getElementById("input-umidade");
     const valorUmidade = document.getElementById("valor-umidade");
@@ -66,19 +96,19 @@ function inicializarSimuladorClima() {
 
             if (umidade < 30) {
                 statusLavoura.innerText = "Alerta: Solo Seco! Irrigação por gotejamento ativada.";
-                statusLavoura.style.color = "#ff4d4d";
+                statusLavoura.style.color = document.body.classList.contains("alto-contraste") ? "#ffffff" : "#ff4d4d";
             } else if (umidade >= 30 && umidade <= 70) {
                 statusLavoura.innerText = "Condição Ideal: Níveis adequados detectados pelos sensores.";
-                statusLavoura.style.color = "#0077cc";
+                statusLavoura.style.color = document.body.classList.contains("alto-contraste") ? "#ffff00" : "#0077cc";
             } else {
                 statusLavoura.innerText = "Aviso: Solo Saturado! Sistemas suspensos preventivamente.";
-                statusLavoura.style.color = "#ffcc00";
+                statusLavoura.style.color = document.body.classList.contains("alto-contraste") ? "#ffffff" : "#ffcc00";
             }
         });
     }
 }
 
-/* 4. CALCULADORA ECOLÓGICA */
+/* 5. CALCULADORA ECOLÓGICA */
 function inicializarCalculadoraEco() {
     const btnCalcular = document.getElementById("btn-calcular");
     const inputHectares = document.getElementById("hectares");
@@ -94,38 +124,27 @@ function inicializarCalculadoraEco() {
                 return;
             }
 
-            // Estimativa matemática: 1200 litros economizados por hectare
             const economiaTotal = hectares * 1200;
-            resultadoCalculo.style.color = "var(--cor-secundaria)";
-            resultadoCalculo.innerText = `Sua automação economizaria em média ${economiaTotal} litros de água por semana! 💧`;
+            resultadoCalculo.style.color = ""; // Mantém cor dinâmica herdada das variáveis principais
+            resultadoCalculo.innerText = `Sua automação economizaria em média ${economiaTotal} litros de água por semana!`;
         });
     }
 }
 
-/* 5. CONTADORES PROGRESSIVOS */
+/* 6. CONTADORES PROGRESSIVOS (Otimizado para leitores de tela) */
 function inicializarContadoresProgressivos() {
     const contadores = document.querySelectorAll(".contador");
 
     contadores.forEach(contador => {
-        const atualizarContador = () => {
-            const alvo = +contador.getAttribute("data-alvo");
-            const valorAtual = +contador.innerText;
-            const incremento = alvo / 80; // Controla a velocidade do ganho
-
-            if (valorAtual < alvo) {
-                contador.innerText = Math.ceil(valorAtual + incremento);
-                setTimeout(atualizarContador, 25);
-            } else {
-                contador.innerText = alvo;
-            }
-        };
-
-        // Dispara a contagem assim que a função é iniciada
-        atualizarContador();
+        const alvo = +contador.getAttribute("data-alvo");
+        
+        // Em vez de rodar números correndo (que causa confusão auditiva em leitores de tela para cegos),
+        // preenchemos o alvo de forma estática direta para otimizar a leitura acessível.
+        contador.innerText = alvo; 
     });
 }
 
-/* 6. ANIMAÇÃO DE SCROLL (APARECER AO ROLAR) */
+/* 7. ANIMAÇÃO AO ROLAR A TELA (SCROLL ANIMATION) */
 function inicializarAnimacaoScroll() {
     const dispararAnimacao = () => {
         const elementos = document.querySelectorAll(".animar-scroll");
@@ -140,12 +159,11 @@ function inicializarAnimacaoScroll() {
         });
     };
 
-    // Executa uma vez no início e depois vincula ao evento de rolagem
     dispararAnimacao();
     window.addEventListener("scroll", dispararAnimacao);
 }
 
-/* 7. QUIZ SUSTENTÁVEL */
+/* 8. QUIZ SUSTENTÁVEL DO AGRINHO */
 function inicializarQuiz() {
     const perguntas = [
         {
@@ -155,7 +173,7 @@ function inicializarQuiz() {
         },
         {
             pergunta: "O que caracteriza a sustentabilidade no Agrinho 2026?",
-            opcoes: ["Produzir sem focar nas matas cilliantes", "Equilibrar tecnologia, alta produção e preservação", "Abandonar o uso de fontes de energia limpa"],
+            opcoes: ["Produzir sem focar nas matas ciliares", "Equilibrar tecnologia, alta produção e preservação", "Abandonar o uso de fontes de energia limpa"],
             correta: 1
         },
         {

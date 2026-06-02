@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - O Futuro do Campo</title>
+    <title>Agrinho 2026 - O Futuro do Campo (Acessível e Responsivo)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <div class="barra-acessibilidade" role="complementary" aria-label="Ferramentas de Acessibilidade">
+        <div class="interface barra-acessibilidade-container">
+            <button id="btn-alto-contraste" class="btn-acessibilidade" aria-pressed="false">
+                🌓 Alternar Alto Contraste
+            </button>
+            <button id="btn-dislexia" class="btn-acessibilidade" aria-pressed="false">
+                📖 Fonte para Dislexia
+            </button>
+        </div>
+    </div>
 
     <header class="header">
         <div class="interface header-container">
@@ -14,13 +25,13 @@
                 <h2>Agrinho <span>2026</span></h2>
             </div>
             
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbar">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
 
-            <nav class="navbar" id="navbar">
+            <nav class="navbar" id="navbar" aria-label="Menu Principal">
                 <ul>
                     <li><a href="#introducao">Introdução</a></li>
                     <li><a href="#sustentabilidade">Sustentabilidade</a></li>
@@ -33,8 +44,8 @@
         </div>
     </header>
 
-    <main>
-        <section class="banner">
+    <main id="conteudo-principal">
+        <section class="banner" role="img" aria-label="Banner decorativo: Planta jovem crescendo em um campo ensolarado com gráficos digitais sutis">
             <div class="banner-content interface">
                 <h1>Tecnologia, Agricultura e Sustentabilidade</h1>
                 <p>Conectando inovação e preservação para semear o amanhã no Agrinho 2026.</p>
@@ -60,28 +71,28 @@
                     <div class="card-expand">
                         <h3>Preservação Ambiental</h3>
                         <p class="resumo">Proteger matas ciliares e reservas legais garante a biodiversidade...</p>
-                        <div class="conteudo-extra">
+                        <div class="conteudo-extra" id="extra-1" aria-hidden="true">
                             <p>Além de proteger a fauna local, a manutenção das florestas nativas auxilia no equilíbrio climático da propriedade, reduzindo pragas e melhorando a qualidade do ar.</p>
                         </div>
-                        <button class="btn-expand">Ler mais</button>
+                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-1">Ler mais sobre preservação ambiental</button>
                     </div>
 
                     <div class="card-expand">
                         <h3>Uso Consciente da Água</h3>
                         <p class="resumo">A água é o recurso mais precioso da lavoura...</p>
-                        <div class="conteudo-extra">
+                        <div class="conteudo-extra" id="extra-2" aria-hidden="true">
                             <p>Com técnicas como o gotejamento localizado e a captação de água da chuva, os produtores evitam o desperdício e mantêm os lençóis freáticos saudáveis.</p>
                         </div>
-                        <button class="btn-expand">Ler mais</button>
+                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-2">Ler mais sobre uso consciente da água</button>
                     </div>
 
                     <div class="card-expand">
                         <h3>Energia Limpa e Reciclagem</h3>
                         <p class="resumo">Transformando recursos naturais em força motriz...</p>
-                        <div class="conteudo-extra">
+                        <div class="conteudo-extra" id="extra-3" aria-hidden="true">
                             <p>O uso de painéis solares para alimentar sistemas de irrigação e a correta destinação ou reciclagem de embalagens de insumos evitam a contaminação da terra.</p>
                         </div>
-                        <button class="btn-expand">Ler mais</button>
+                        <button class="btn-expand" aria-expanded="false" aria-controls="extra-3">Ler mais sobre energia limpa</button>
                     </div>
                 </div>
             </div>
@@ -94,18 +105,18 @@
             </div>
 
             <div class="grid-tech">
-                <div class="tech-box">
-                    <h4>Drones e Sensores</h4>
+                <article class="tech-box">
+                    <h3>Drones e Sensores</h3>
                     <p>Sobrevoam a plantação mapeando pragas, falhas no plantio e áreas que precisam de água, aplicando insumos apenas onde realmente é necessário.</p>
-                </div>
-                <div class="tech-box">
-                    <h4>Inteligência Artificial</h4>
+                </article>
+                <article class="tech-box">
+                    <h3>Inteligência Artificial</h3>
                     <p>Algoritmos analisam dados meteorológicos e do solo para prever a melhor época de plantio e colheita, minimizando riscos de perdas.</p>
-                </div>
-                <div class="tech-box">
-                    <h4>Automação e Robótica</h4>
+                </article>
+                <article class="tech-box">
+                    <h3>Automação e Robótica</h3>
                     <p>Tratores autônomos e colheitadeiras controladas por GPS reduzem a compactação do solo e economizam combustível na operação.</p>
-                </div>
+                </article>
             </div>
         </section>
 
@@ -118,19 +129,19 @@
 
                 <div class="grid-impactos">
                     <div class="impacto-item">
-                        <h5 class="contador" data-alvo="1500">0</h5>
+                        <span class="contador" id="cont-1" data-alvo="1500" aria-label="1500 produtores">0</span>
                         <p>Produtores utilizando tecnologia verde.</p>
                     </div>
                     <div class="impacto-item">
-                        <h5 class="contador" data-alvo="85">0</h5>
-                        <p>% de economia de água com gotejamento inteligente.</p>
+                        <span class="contador" id="cont-2" data-alvo="85" aria-label="85 por cento">0</span><span>%</span>
+                        <p>De economia de água com gotejamento inteligente.</p>
                     </div>
                     <div class="impacto-item">
-                        <h5 class="contador" data-alvo="40">0</h5>
-                        <p>% de redução na emissão de CO₂ nas fazendas.</p>
+                        <span class="contador" id="cont-3" data-alvo="40" aria-label="40 por cento">0</span><span>%</span>
+                        <p>De redução na emissão de CO₂ nas fazendas.</p>
                     </div>
                     <div class="impacto-item">
-                        <h5 class="contador" data-alvo="2026">0</h5>
+                        <span class="contador" id="cont-4" data-alvo="2026" aria-label="Ano de 2026">0</span>
                         <p>Rumo ao futuro sustentável!</p>
                     </div>
                 </div>
@@ -145,25 +156,25 @@
 
             <div class="grid-cards">
                 <div class="card-tech-interativo">
-                    <h4>Simulador de Sensores de Solo</h4>
-                    <p>Ajuste a umidade para simular a resposta dos sensores automáticos:</p>
+                    <h3>Simulador de Sensores de Solo</h3>
+                    <label for="input-umidade">Ajuste o controle deslizante para definir a umidade simulada do solo:</label>
                     <input type="range" id="input-umidade" min="0" max="100" value="50" class="slider">
                     <p class="resultado-painel">Umidade Atual: <span id="valor-umidade">50</span>%</p>
-                    <div id="status-lavoura" class="status-alerta">Condição Ideal: Sensores indicam umidade perfeita.</div>
+                    <div id="status-lavoura" class="status-alerta" aria-live="polite">Condição Ideal: Sensores indicam umidade perfeita.</div>
                 </div>
 
                 <div class="card-tech-interativo">
-                    <h4>Calculadora de Economia de Água</h4>
-                    <p>Insira o tamanho da plantação fictícia (em hectares):</p>
+                    <h3>Calculadora de Economia de Água</h3>
+                    <label for="hectares">Insira o tamanho da plantação fictícia (em hectares):</label>
                     <input type="number" id="hectares" placeholder="Ex: 5" class="input-estilizado">
                     <button id="btn-calcular" class="btn-primary" style="width: 100%; margin-top: 10px;">Calcular Impacto</button>
-                    <p id="resultado-calculo" class="resultado-painel" style="color: var(--cor-secundaria); font-weight: bold;"></p>
+                    <p id="resultado-calculo" class="resultado-painel" style="font-weight: bold;" aria-live="polite"></p>
                 </div>
             </div>
         </section>
 
         <section id="quiz-section" class="section-padding bg-light">
-            <div class="quiz-container animar-scroll">
+            <div class="quiz-container animar-scroll" aria-live="polite">
                 <div class="section-title">
                     <h2>Desafio Sustentável Agrinho</h2>
                     <p>Teste seus conhecimentos sobre a agricultura do futuro!</p>
@@ -178,7 +189,7 @@
                 <div id="resultado-quiz" class="resultado-oculto">
                     <h3>Parabéns por concluir!</h3>
                     <p id="placar">Você acertou 0 de 0.</p>
-                    <button id="btn-reiniciar" class="btn-primary">Tentar Novamente</button>
+                    <button id="btn-reiniciar" class="btn-primary">Tentar Novamente o Quiz</button>
                 </div>
             </div>
         </section>
@@ -193,7 +204,7 @@
 
     <footer class="footer">
         <div class="interface footer-container">
-            <p>&copy; 2026 Projeto Agrinho Escolar. Desenvolvido para fins educativos.</p>
+            <p>&copy; 2026 Projeto Agrinho Escolar. Desenvolvido para fins educativos, acessível e responsivo.</p>
             <p>Tecnologia &bull; Agricultura &bull; Sustentabilidade</p>
         </div>
     </footer>
