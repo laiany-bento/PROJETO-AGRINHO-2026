@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+    inicializarClimaDinamico();
     carregarConfiguracoesSalvas();
     inicializarAcessibilidadeEModos();
     inicializarMenuMobile();
     inicializarComparadorImagens();
     inicializarCardsAgroPremium();
-    inicializarMapaInterativo();
+    inicializarAbasEMapasUnificados();
     inicializarGaleriaFiltros();
     inicializarSimuladorSensorSolo();
     inicializarCalculadoraEco();
@@ -13,7 +14,23 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarQuizComMedalhas();
 });
 
-/* 1. PERSISTÊNCIA DE CONFIGURAÇÕES */
+/* 1. CLIMA DINÂMICO BASEADO NO HORÁRIO */
+function inicializarClimaDinamico() {
+    const hora = new Date().getHours();
+    const corpo = document.body;
+
+    corpo.classList.remove("clima-manha", "clima-tarde", "clima-noite");
+
+    if (hora >= 6 && hora < 12) {
+        corpo.classList.add("clima-manha");
+    } else if (hora >= 12 && hora < 18) {
+        corpo.classList.add("clima-tarde");
+    } else {
+        corpo.classList.add("clima-noite");
+    }
+}
+
+/* 2. ACESSIBILIDADE */
 function carregarConfiguracoesSalvas() {
     if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
     if (localStorage.getItem("contrast") === "active") document.body.classList.add("alto-contraste");
@@ -49,7 +66,7 @@ function inicializarAcessibilidadeEModos() {
     }
 }
 
-/* 2. MENU MOBILE RESPONSIVO */
+/* 3. MENU MOBILE */
 function inicializarMenuMobile() {
     const menuToggle = document.getElementById("menuToggle");
     const navbar = document.getElementById("navbar");
@@ -60,7 +77,7 @@ function inicializarMenuMobile() {
     }
 }
 
-/* 3. COMPARADOR DE IMAGENS (SLIDER ANTES/DEPOIS) */
+/* 4. COMPARADOR DE IMAGENS */
 function inicializarComparadorImagens() {
     const slider = document.getElementById("slider-divisor");
     const fotoDegradada = document.getElementById("foto-degradada");
@@ -68,9 +85,7 @@ function inicializarComparadorImagens() {
 
     if (!slider || !fotoDegradada || !container) return;
 
-    const moverDivisor = () => {
-        fotoDegradada.style.width = `${slider.value}%`;
-    };
+    const moverDivisor = () => { fotoDegradada.style.width = `${slider.value}%`; };
     slider.addEventListener("input", moverDivisor);
 
     const redimensionarCorte = () => {
@@ -82,92 +97,141 @@ function inicializarComparadorImagens() {
     window.addEventListener("resize", redimensionarCorte);
 }
 
-/* 4. CARDS PREMIUM 3D FLIP */
+/* 5. CARDS PREMIUM FLIP */
 function inicializarCardsAgroPremium() {
     const cards = document.querySelectorAll(".card-agro-premium");
     cards.forEach(card => {
         const virarCard = () => card.classList.toggle("virado");
         card.addEventListener("click", virarCard);
         card.addEventListener("keydown", (e) => {
-            if (e.key === " " || e.key === "Enter") {
-                e.preventDefault();
-                virarCard();
-            }
+            if (e.key === " " || e.key === "Enter") { e.preventDefault(); virarCard(); }
         });
     });
 }
 
-/* 5. MAPA REGIONAL INTERATIVO */
-function inicializarMapaInterativo() {
-    const dadosRegioes = {
-        norte: {
-            nome: "Região Norte (Pioneiro e Central)",
-            producao: "Cafés especiais certificados, grãos rastreados e fruticultura integrada.",
-            curiosidade: "Uso ativo de drones autônomos para pulverização localizada e controle biológico de pragas."
+/* 6. CENTRAL DE INDICADORES AGRO (SUBSTITUIÇÃO DO MAPA) */
+function inicializarAbasEMapasUnificados() {
+    const dadosBrasil = {
+        PR: {
+            nome: "Paraná 🌾",
+            producao: "Grande destaque na produção de soja, milho, trigo e aves. É referência nacional em cooperativismo agroindustrial.",
+            ambiental: "Pioneiro no uso do Sistema de Plantio Direto, que retém carbono orgânico e protege o solo da erosão hídrica.",
+            curiosidade: "A região Norte Pioneira possui certificação de indicação geográfica por seus cafés especiais finos."
         },
-        oeste: {
-            nome: "Região Oeste (Polo de Proteínas)",
-            producao: "Líder em piscicultura, avicultura e safras tecnológicas de milho e soja.",
-            curiosidade: "Pioneira na conversão de dejetos animais em biogás e biomassa para autossuficiência energética."
+        MT: {
+            nome: "Mato Grosso 🚜",
+            producao: "Maior produtor nacional isolado de grãos, com lavouras colossais de soja, algodão e milho safrinha.",
+            ambiental: "Adoção maciça de bioinsumos microbiológicos nativos para regenerar a microfauna do solo.",
+            curiosidade: "Propriedades usam inteligência artificial de satélite para guiar frotas pesadas de colheita sem sobreposição."
         },
-        sul: {
-            nome: "Região Sul e Campos Gerais",
-            producao: "Grandes plantações de trigo, cevada e a maior bacia leiteira tecnificada.",
-            curiosidade: "Berço do Sistema de Plantio Direto na Palha, referência mundial em conservação de solos."
+        SP: {
+            nome: "São Paulo 🍊",
+            producao: "Líder mundial em suco de laranja concentrado, cana-de-açúcar e cinturões verdes de hortaliças.",
+            ambiental: "Cogeração de energia limpa injetada na rede elétrica externa a partir da queima controlada da palha e bagaço de cana.",
+            curiosidade: "Abriga os maiores ecossistemas de startups agro tecnológicas (AgTechs) da América Latina."
         }
     };
 
-    const caminhos = document.querySelectorAll(".regiao-path");
+    const dadosParana = {
+        norte: {
+            nome: "Região Norte (Pioneiro e Central) 🟢",
+            producao: "Cafés finos especiais, grãos de alta precisão e fruticultura integrada de cooperativas.",
+            ambiental: "Utilização estratégica de manejos biológicos contra pragas para diminuir defensivos químicos tradicionais.",
+            curiosidade: "Uso ativo de drones com câmeras termais para identificar falhas no plantio exatamente no início do broto."
+        },
+        oeste: {
+            nome: "Região Oeste (Gigante Proteico) 🔵",
+            producao: "Destaque supremo na piscicultura (criação de tilápias), avicultura integrada e grãos.",
+            ambiental: "Tratamento biológico completo de dejetos de animais para produção de Biogás e biofertilizante líquido.",
+            curiosidade: "Pequenas propriedades familiares geram sua própria luz usando motores alimentados por resíduos animais orgânicos."
+        },
+        sul: {
+            nome: "Região Sul e Campos Gerais 🟣",
+            producao: "Culturas de inverno como cevada para malte, trigo e bacia leiteira de ponta.",
+            ambiental: "Conservação contínua de mananciais de água através de reflorestamento de matas ciliares nativas.",
+            curiosidade: "É a região berço histórico do plantio direto na palha na América do Sul, mudando o manejo de solos."
+        }
+    };
+
+    const btnBrasil = document.getElementById("btn-aba-brasil");
+    const btnParana = document.getElementById("btn-aba-parana");
+    const wrapBrasil = document.getElementById("wrapper-mapa-brasil");
+    const wrapParana = document.getElementById("wrapper-mapa-parana");
+
     const placeholder = document.getElementById("mapa-placeholder-texto");
     const caixaConteudo = document.getElementById("mapa-dados-conteudo");
     const elNome = document.getElementById("mapa-nome-regiao");
     const elProd = document.getElementById("mapa-producao");
+    const elAmb = document.getElementById("mapa-ambiental");
     const elCurio = document.getElementById("mapa-curiosidade");
+    const blocoAmb = document.getElementById("bloco-ambiental-extra");
 
-    caminhos.forEach(caminho => {
-        const atualizarPainel = () => {
-            const info = dadosRegioes[caminho.getAttribute("data-regiao")];
-            if (info && placeholder) {
-                placeholder.style.display = "none";
-                caixaConteudo.style.display = "block";
-                elNome.innerText = info.nome;
-                elProd.innerText = info.producao;
-                elCurio.innerText = info.curiosidade;
-            }
-        };
-        caminho.addEventListener("click", atualizarPainel);
-        caminho.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                atualizarPainel();
-            }
-        });
+    if (!btnBrasil || !btnParana) return;
+
+    btnBrasil.addEventListener("click", () => {
+        btnBrasil.classList.add("ativo"); btnParana.classList.remove("ativo");
+        wrapBrasil.style.display = "block"; wrapParana.style.display = "none";
+        resetarPainel();
+    });
+
+    btnParana.addEventListener("click", () => {
+        btnParana.classList.add("ativo"); btnBrasil.classList.remove("ativo");
+        wrapParana.style.display = "block"; wrapBrasil.style.display = "none";
+        resetarPainel();
+    });
+
+    function resetarPainel() {
+        placeholder.style.display = "block";
+        caixaConteudo.style.display = "none";
+    }
+
+    function preencherPainel(dados, chave) {
+        const info = dados[chave];
+        if (info) {
+            placeholder.style.display = "none";
+            caixaConteudo.style.display = "block";
+            elNome.innerText = info.nome;
+            elProd.innerText = info.producao;
+            elCurio.innerText = info.curiosidade;
+            elAmb.innerText = info.ambiental;
+            blocoAmb.style.display = "block";
+        }
+    }
+
+    document.querySelectorAll(".estado-path").forEach(btn => {
+        btn.addEventListener("click", () => preencherPainel(dadosBrasil, btn.getAttribute("data-estado")));
+    });
+
+    document.querySelectorAll(".regiao-path").forEach(btn => {
+        btn.addEventListener("click", () => preencherPainel(dadosParana, btn.getAttribute("data-regiao")));
     });
 }
 
-/* 6. VITRINE DE PRODUTOS COM FILTRO */
+/* 7. FILTROS DA VITRINE */
 function inicializarGaleriaFiltros() {
     const botoes = document.querySelectorAll(".btn-filtro");
     const itens = document.querySelectorAll(".galeria-item");
 
     botoes.forEach(botao => {
-        botao.addEventListener("click", () => {
-            botoes.forEach(b => b.classList.remove("ativo"));
-            botao.classList.add("ativo");
-            const filtro = botao.getAttribute("data-filtro");
+        if(botao.hasAttribute("data-filtro")){
+            botao.addEventListener("click", () => {
+                botoes.forEach(b => { if(b.hasAttribute("data-filtro")) b.classList.remove("ativo"); });
+                botao.classList.add("ativo");
+                const filtro = botao.getAttribute("data-filtro");
 
-            itens.forEach(item => {
-                if (filtro === "todos" || item.getAttribute("data-categoria") === filtro) {
-                    item.classList.remove("esconder");
-                } else {
-                    item.classList.add("esconder");
-                }
+                itens.forEach(item => {
+                    if (filtro === "todos" || item.getAttribute("data-categoria") === filtro) {
+                        item.classList.remove("esconder");
+                    } else {
+                        item.classList.add("esconder");
+                    }
+                });
             });
-        });
+        }
     });
 }
 
-/* 7. SIMULADOR DE MONITORAMENTO DE SOLO */
+/* 8. SIMULADOR SENSOR DE SOLO */
 function inicializarSimuladorSensorSolo() {
     const input = document.getElementById("input-umidade");
     const valor = document.getElementById("valor-umidade");
@@ -183,16 +247,13 @@ function inicializarSimuladorSensorSolo() {
 
         if (umidade < 30) {
             status.innerHTML = "🥀 <b>Alerta: Solo Seco!</b> Irrigação automatizada disparada.";
-            status.style.color = "#d35400";
-            card.style.backgroundColor = "#fff5eb";
+            status.style.color = "#ea580c";
         } else if (umidade >= 30 && umidade <= 70) {
             status.innerHTML = "🌱 <b>Condição Ideal:</b> Umidade balanceada por dados ecológicos.";
-            status.style.color = "#27ae60";
-            card.style.backgroundColor = "#f4fbf7";
+            status.style.color = "#16a34a";
         } else {
-            status.innerHTML = "💧 <b>Aviso: Solo Saturado!</b> Risco de asfixia radicular. Fluxo suspenso.";
-            status.style.color = "#2980b9";
-            card.style.backgroundColor = "#ebf5fb";
+            status.innerHTML = "💧 <b>Aviso: Solo Saturado!</b> Risco detectado. Fluxo de água suspenso.";
+            status.style.color = "#2563eb";
         }
     }
 
@@ -201,9 +262,8 @@ function inicializarSimuladorSensorSolo() {
     if (btnChuva) btnChuva.addEventListener("click", () => renderizar(95));
 }
 
-/* 8. CALCULADORA DE PEGADA HÍDRICA */
+/* 9. CALCULADORA ECO */
 function inicializarCalculadoraEco() {
-    const btn = document.getElementById("btn-primary");
     const calcBtn = document.getElementById("btn-calcular");
     const input = document.getElementById("hectares");
     const resultado = document.getElementById("resultado-calculo");
@@ -222,7 +282,7 @@ function inicializarCalculadoraEco() {
     }
 }
 
-/* 9. SIMULADOR DE GESTÃO (RPG DO FAZENDEIRO) */
+/* 10. MINI RPG - JORNADA DO FAZENDEIRO */
 function inicializarJornadaFazendeiro() {
     let prod = 100, nat = 100, caixa = 50000;
     const elP = document.getElementById("status-producao");
@@ -234,15 +294,15 @@ function inicializarJornadaFazendeiro() {
 
     const rotas = {
         arvores: {
-            txt: "🌲 <b>Manejo Sustentável Eficaz!</b> A proteção das margens evitou o assoreamento do rio e reduziu pragas por equilíbrio ecológico. O selo verde valorizou seu produto.",
+            txt: "🌲 <b>Manejo Sustentável Eficaz!</b> A proteção das margens evitou o assoreamento do rio e equilibrou a presença de pragas. O selo verde valorizou seu produto.",
             dP: +5, dN: +20, dC: -5000
         },
         desmatar: {
-            txt: "🪓 <b>Foco em Lucro Imediato:</b> A expansão gerou receita rápida, mas a remoção da mata gerou voçorocas e erosões severas na chuva seguinte, reduzindo a fertilidade da terra.",
+            txt: "🪓 <b>Foco em Lucro Imediato:</b> A expansão gerou receita rápida, mas a remoção da mata gerou erosões severas na chuva seguinte, reduzindo a fertilidade da terra no longo prazo.",
             dP: -15, dN: -35, dC: +15000
         },
         irrigacao: {
-            txt: "💧 <b>Upgrade Tecnológico Concluído!</b> Os sensores gotejam com exatidão matemática. Sua linha de colheita deu salto produtivo com máxima economia de água.",
+            txt: "💧 <b>Upgrade Tecnológico Concluído!</b> Os sensores distribuem água com exatidão matemática. Sua produção deu um grande salto com máxima economia de água.",
             dP: +25, dN: +10, dC: -12000
         }
     };
@@ -279,7 +339,7 @@ function inicializarJornadaFazendeiro() {
     }
 }
 
-/* 10. ANIMAÇÃO DE ENTRADA SCROLL */
+/* 11. ANIMAÇÃO SCROLL */
 function inicializarAnimacaoScroll() {
     const checar = () => {
         document.querySelectorAll(".animar-scroll").forEach(el => {
@@ -292,7 +352,7 @@ function inicializarAnimacaoScroll() {
     window.addEventListener("scroll", checar);
 }
 
-/* 11. QUIZ INTERATIVO COM MEDALHAS */
+/* 12. QUIZ SUSTENTÁVEL */
 function inicializarQuizComMedalhas() {
     const perguntas = [
         { q: "Qual tecnologia monitora pragas e ajuda a poupar água diretamente no solo?", o: ["Drones e Sensores", "Tratores antigos sem GPS", "Enxadas manuais comuns"], c: 0 },
@@ -322,12 +382,10 @@ function inicializarQuizComMedalhas() {
                     elO.querySelectorAll(".quiz-btn-opcao").forEach(btn => btn.disabled = true);
                     if (i === perguntas[atual].c) {
                         pontos++;
-                        b.style.backgroundColor = "#2ecc71"; b.style.color = "#fff";
-                        b.innerText += " (Correto!)";
+                        b.style.backgroundColor = "#10b981"; b.style.color = "#fff";
                     } else {
-                        b.style.backgroundColor = "#e74c3c"; b.style.color = "#fff";
-                        b.innerText += " (Incorreto)";
-                        elO.querySelectorAll(".quiz-btn-opcao")[perguntas[atual].c].style.backgroundColor = "#2ecc71";
+                        b.style.backgroundColor = "#ef4444"; b.style.color = "#fff";
+                        elO.querySelectorAll(".quiz-btn-opcao")[perguntas[atual].c].style.backgroundColor = "#10b981";
                         elO.querySelectorAll(".quiz-btn-opcao")[perguntas[atual].c].style.color = "#fff";
                     }
                     setTimeout(() => { atual++; render(); }, 1500);
@@ -339,7 +397,7 @@ function inicializarQuizComMedalhas() {
                 boxQ.style.display = "none"; boxR.style.display = "block";
                 elPlacar.innerText = `Você obteve ${pontos} acertos de ${perguntas.length}.`;
                 let medalha = pontos === 3 ? "🏆 Engenheiro Agrônomo do Futuro!" : pontos === 2 ? "🚜 Técnico Sustentável" : "🌱 Semeadora Iniciante";
-                let cor = pontos === 3 ? "#d4af37" : pontos === 2 ? "#0077cc" : "#888";
+                let cor = pontos === 3 ? "#eab308" : pontos === 2 ? "#0284c7" : "#64748b";
                 elBadge.innerHTML = `<span style="display:inline-block; padding:10px 20px; border:3px solid ${cor}; color:${cor}; border-radius:20px; font-weight:bold;">${medalha}</span>`;
             }
         }
