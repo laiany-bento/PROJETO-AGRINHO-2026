@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - O Futuro do Campo (Premium Unificado)</title>
+    <title>Agrinho 2026 - Tecnologia e Sustentabilidade</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
                 <h2>Agrinho <span>2026</span></h2>
             </div>
             
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbar">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbar">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -33,7 +33,7 @@
                     <li><a href="#introducao">Introdução</a></li>
                     <li><a href="#comparador-section">Impacto Visual</a></li>
                     <li><a href="#o-que-e-agro">Sustentabilidade</a></li>
-                    <li><a href="#mapa-agro-section">Mapa Agro</a></li>
+                    <li><a href="#mapa-agro-section">Indicadores Agro</a></li>
                     <li><a href="#timeline">História</a></li>
                     <li><a href="#galeria">Inovações</a></li>
                     <li><a href="#simuladores">Laboratório Tech</a></li>
@@ -44,7 +44,7 @@
     </header>
 
     <main id="conteudo-principal">
-        <section class="banner" role="img" aria-label="Banner decorativo campo moderno com tecnologia sustentável">
+        <section class="banner" role="img" aria-label="Campo tecnológico">
             <div class="banner-content interface">
                 <h1>Tecnologia, Agricultura e Sustentabilidade</h1>
                 <p>Conectando inovação e preservação para semear o amanhã no Agrinho 2026.</p>
@@ -55,7 +55,7 @@
         <section id="introducao" class="section-padding interface animar-scroll">
             <div class="section-title">
                 <h2>Agrinho 2026: Conectando Saberes</h2>
-                <p>A edição deste ano convida estudantes a explorarem como a tecnologia moderna potencializa a produção agrícola enquanto protege o ecossistema local do Paraná.</p>
+                <p>A edição deste ano convida estudantes a explorarem como a tecnologia moderna potencializa a produção agrícola enquanto protege o ecossistema local do Paraná e do Brasil.</p>
             </div>
         </section>
 
@@ -63,21 +63,21 @@
             <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>O Impacto do Manejo: Degradado vs. Preservado</h2>
-                    <p>Arraste a barra horizontal no centro da imagem para comparar visualmente os efeitos do desmatamento contra a recuperação sustentável do solo.</p>
+                    <p>Arraste a barra no centro da imagem para comparar os efeitos do desmatamento contra a recuperação sustentável do solo.</p>
                 </div>
 
                 <div class="comparador-wrapper">
                     <div class="img-background">
-                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1200" alt="Área agrícola preservada e sustentável">
+                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1200" alt="Área preservada">
                         <span class="label-imagem label-direita">Área Preservada 🌱</span>
                     </div>
                     
                     <div class="img-foreground" id="foto-degradada">
-                        <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=1200" alt="Solo seco e área degradada">
+                        <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=1200" alt="Solo seco">
                         <span class="label-imagem label-esquerda">Área Degradada 🪵</span>
                     </div>
 
-                    <input type="range" min="0" max="100" value="50" class="slider-comparador" id="slider-divisor" aria-label="Controle deslizante para comparar área degradada e preservada">
+                    <input type="range" min="0" max="100" value="50" class="slider-comparador" id="slider-divisor" aria-label="Controle deslizante de comparação">
                 </div>
             </div>
         </section>
@@ -86,7 +86,7 @@
             <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>O que é o Agro Sustentável?</h2>
-                    <p>Passe o mouse para destacar e clique nos cards para girar e descobrir os pilares fundamentais dessa prática.</p>
+                    <p>Clique nos cards para girar e descobrir os pilares fundamentais dessa prática.</p>
                 </div>
 
                 <div class="grid-flashcards">
@@ -138,32 +138,48 @@
         <section id="mapa-agro-section" class="section-padding bg-light">
             <div class="interface animar-scroll">
                 <div class="section-title">
-                    <h2>Mapa Interativo: O Agro na Nossa Região</h2>
-                    <p>Clique nas diferentes regiões do mapa para descobrir o que elas produzem e suas principais curiosidades tecnológicas.</p>
+                    <h2>Central de Indicadores Geográficas</h2>
+                    <p>Escolha entre os indicadores Nacionais ou Regionais e selecione uma localidade para carregar os dados agrícolas em tempo real.</p>
+                </div>
+
+                <div class="abas-mapa-container">
+                    <button id="btn-aba-brasil" class="btn-filtro ativo">🌐 Indicadores do Brasil</button>
+                    <button id="btn-aba-parana" class="btn-filtro">🌱 Regiões do Paraná</button>
                 </div>
 
                 <div class="mapa-container-flex">
-                    <div class="mapa-svg-box">
-                        <svg viewBox="0 0 400 300" class="mapa-svg" aria-label="Mapa interativo regional do Paraná">
-                            <path d="M 120 40 L 280 40 L 260 120 L 150 110 Z" class="regiao-path" data-regiao="norte" aria-label="Região Norte" role="button" tabindex="0"/>
-                            <path d="M 40 100 L 150 110 L 120 220 L 30 180 Z" class="regiao-path" data-regiao="oeste" aria-label="Região Oeste" role="button" tabindex="0"/>
-                            <path d="M 150 110 L 260 120 L 340 220 L 120 220 Z" class="regiao-path" data-regiao="sul" aria-label="Região Sul e Campos Gerais" role="button" tabindex="0"/>
-                        </svg>
-                        <div class="mapa-legendas">
-                            <span style="color: #27ae60;">■ Norte</span>
-                            <span style="color: #2980b9;">■ Oeste</span>
-                            <span style="color: #8e44ad;">■ Sul/Campos Gerais</span>
+                    <div class="mapa-svg-box" style="display: flex; flex-direction: column; gap: 15px; justify-content: center; min-height: 220px;">
+                        
+                        <div id="wrapper-mapa-brasil" class="mapa-wrapper-dinamico">
+                            <p style="margin-bottom: 15px; font-weight: bold;">Selecione um Estado:</p>
+                            <div class="quiz-opcoes" style="margin-top: 0;">
+                                <button class="quiz-btn-opcao estado-path" data-estado="PR">🌾 Paraná (PR)</button>
+                                <button class="quiz-btn-opcao estado-path" data-estado="MT">🚜 Mato Grosso (MT)</button>
+                                <button class="quiz-btn-opcao estado-path" data-estado="SP">🍊 São Paulo (SP)</button>
+                            </div>
+                        </div>
+
+                        <div id="wrapper-mapa-parana" class="mapa-wrapper-dinamico" style="display: none;">
+                            <p style="margin-bottom: 15px; font-weight: bold;">Selecione uma Macrorregião do PR:</p>
+                            <div class="quiz-opcoes" style="margin-top: 0;">
+                                <button class="quiz-btn-opcao regiao-path" data-regiao="norte">🟢 Região Norte</button>
+                                <button class="quiz-btn-opcao regiao-path" data-regiao="oeste">🔵 Região Oeste</button>
+                                <button class="quiz-btn-opcao regiao-path" data-regiao="sul">🟣 Região Sul & Campos Gerais</button>
+                            </div>
                         </div>
                     </div>
 
                     <div id="painel-info-mapa" class="card-tech-interativo painel-mapa" aria-live="polite">
-                        <h3>🗺️ Central de Informações Regionais</h3>
-                        <p id="mapa-placeholder-texto" style="margin-top: 15px; color: #666;">Selecione uma região no mapa ao lado para carregar os dados de produção e curiosidades sustentáveis em tempo real.</p>
+                        <h3>📋 Painel de Indicadores Agro</h3>
+                        <p id="mapa-placeholder-texto" style="margin-top: 15px; color: #666;">Clique em qualquer localidade ao lado para carregar dados de produção, sustentabilidade e curiosidades tech.</p>
                         
                         <div id="mapa-dados-conteudo" style="display: none; margin-top: 15px;">
-                            <h4 id="mapa-nome-regiao" style="color: var(--cor-secundaria); font-size: 1.3rem; margin-bottom: 10px;">Região</h4>
-                            <p><strong>🌾 Principal Produção:</strong> <span id="mapa-producao">...</span></p>
-                            <p style="margin-top: 10px;"><strong>💡 Curiosidade Tech:</strong> <span id="mapa-curiosidade">...</span></p>
+                            <h4 id="mapa-nome-regiao" style="color: var(--cor-secundaria); font-size: 1.3rem; margin-bottom: 10px;">Região Selecionada</h4>
+                            <hr style="margin-bottom: 15px; border: 0; height: 1px; background: #ddd;">
+                            
+                            <p class="bloco-info-mapa"><strong>🌾 Produção Agrícola:</strong> <span id="mapa-producao">...</span></p>
+                            <p class="bloco-info-mapa" id="bloco-ambiental-extra" style="margin-top: 10px;"><strong>🌳 Informações Ambientais:</strong> <span id="mapa-ambiental">...</span></p>
+                            <p class="bloco-info-mapa" style="margin-top: 10px;"><strong>💡 Curiosidade Tech:</strong> <span id="mapa-curiosidade">...</span></p>
                         </div>
                     </div>
                 </div>
@@ -273,7 +289,7 @@
                         <div class="status-item">💰 Caixa: <span id="status-caixa" style="font-weight:bold; color:#f1c40f;">R$ 50.000</span></div>
                     </div>
 
-                    <div class="narrativa-box" id="narrativa-texto" aria-live="polite" style="background: var(--cor-cinza-claro); padding: 15px; border-radius: 6px; margin: 15px 0; min-height: 80px; font-weight: 500;">
+                    <div class="narrativa-box" id="narrativa-texto" aria-live="polite" style="background: rgba(0,0,0,0.04); padding: 15px; border-radius: 6px; margin: 15px 0; min-height: 80px; font-weight: 500;">
                         Fase 1: O início da safra. Você assumiu as terras da fazenda. Qual será o seu primeiro manejo ou investimento tecnológico?
                     </div>
 
