@@ -10,13 +10,13 @@
 
     <a href="#conteudo-principal" class="atalho-conteudo">Ir para o conteúdo principal</a>
 
-    <div class="nuvem-acessibilidade" role="dialog" aria-label="Painel Flutuante de Acessibilidade de Texto">
-        <button class="btn-nuvem-toggle" id="btnNuvemToggle" aria-expanded="false" aria-label="Abrir opções de tamanho de texto e contraste">⚙️ Acessibilidade</button>
+    <div class="nuvem-acessibilidade" role="dialog" aria-label="Painel Flutuante de Acessibilidade">
+        <button class="btn-nuvem-toggle" id="btnNuvemToggle" aria-expanded="false">⚙️ Painel de Acessibilidade</button>
         <div class="nuvem-conteudo" id="nuvemConteudo">
-            <p class="nuvem-titulo">Ajuste de Texto</p>
+            <p class="nuvem-titulo">Ajustar Texto</p>
             <div class="nuvem-botoes-grupo">
-                <button id="btn-aumentar-texto" class="btn-ctrl-texto" aria-label="Aumentar o tamanho da letra">A+</button>
-                <button id="btn-diminuir-texto" class="btn-ctrl-texto" aria-label="Diminuir o tamanho da letra">A-</button>
+                <button id="btn-aumentar-texto" class="btn-ctrl-texto" aria-label="Aumentar texto">A+</button>
+                <button id="btn-diminuir-texto" class="btn-ctrl-texto" aria-label="Diminuir texto">A-</button>
             </div>
             <hr class="nuvem-divisor">
             <button id="btn-dark-mode" class="btn-acessibilidade-opcao">🌙 Modo Escuro</button>
@@ -32,7 +32,7 @@
                 <h2>Agrinho <span>2026</span></h2>
             </div>
             
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação principal" aria-expanded="false" aria-controls="navbar">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbar">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -53,8 +53,7 @@
 
     <main id="conteudo-principal" tabindex="-1">
         
-        <section class="banner" role="img" aria-label="Plantação jovem de soja sob a luz do sol com grafismo digital sobreposto representando tecnologia.">
-            <div class="banner-overlay"></div>
+        <section class="banner" role="img" aria-label="Painel digital representando inovação tecnológica e sustentabilidade no campo.">
             <div class="banner-content interface">
                 <h1>Tecnologia, Agricultura <br>e <span>Inclusão Digital</span></h1>
                 <p>Cultivando um ecossistema digital onde o conhecimento sobre o campo é acessível, claro e disponível para todas as pessoas.</p>
@@ -65,7 +64,7 @@
         <section id="introducao" class="section-padding interface animar-scroll">
             <div class="section-title">
                 <h2>Agrinho 2026: Conectando Saberes para Todos</h2>
-                <p>A evolução no campo só é completa quando a informação que gera sustentabilidade quebra barreiras e alcança a todos de forma igualitária.</p>
+                <p>A evolução no campo só é completa quando a informação que gera sustentabilidade quebra barreiras e alcança a todos de forma igualitária. Este portal foi construído sob as diretrizes do Desenho Universal, garantindo que estudantes da rede pública, produtores rurais e pesquisadores com diferentes capacidades naveguem no mesmo nível de autonomia.</p>
             </div>
         </section>
 
@@ -73,31 +72,34 @@
             <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>1. Acessibilidade Visual e Leitores de Tela</h2>
-                    <p>Garantindo que pessoas cegas, com baixa visão ou daltonismo compreendam perfeitamente cada detalhe do site.</p>
+                    <p>Garantindo que pessoas cegas, com baixa visão, daltonismo ou visão subnormal compreendam perfeitamente cada detalhe do ecossistema agrícola.</p>
                 </div>
 
                 <div class="comparador-wrapper">
-                    <div class="img-background">
-                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1200" alt="Fotografia aérea de uma plantação verdejante e saudável, representando o manejo preservado.">
-                        <span class="label-imagem label-direita">Solo Preservado 🌱</span>
+                    <div class="img-background-fallback">
+                        <div class="label-imagem label-direita">Solo Preservado 🌱</div>
                     </div>
-                    
-                    <div class="img-foreground" id="foto-degradada">
-                        <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=1200" alt="Fotografia em plano fechado de solo seco, rachado e sem vegetação, representando a área degradada.">
-                        <span class="label-imagem label-esquerda">Solo Degradado 🪵</span>
+                    <div class="img-foreground-fallback" id="foto-degradada">
+                        <div class="label-imagem label-esquerda">Solo Degradado 🪵</div>
                     </div>
-
                     <input type="range" min="0" max="100" value="50" class="slider-comparador" id="slider-divisor" aria-label="Controle deslizante para comparar visualmente a área de solo degradada à esquerda com a preservada à direita.">
                 </div>
 
                 <div class="grid-recursos-acessibilidade">
                     <div class="recurso-card">
-                        <h3>Texto Alternativo (alt)</h3>
-                        <p>Todas as mídias possuem descrições detalhadas para que softwares leitores de tela guiem usuários cegos com precisão.</p>
+                        <div class="icone-box">👁️</div>
+                        <h3>Texto Alternativo Descritivo (Attributes 'alt')</h3>
+                        <p>Nossos códigos trazem descrições detalhadas em vez de termos vagos. Leitores de tela como NVDA e JAWS conseguem traduzir gráficos complexos de safras e imagens de manejo para estudantes cegos, transformando dados visuais em conhecimento tátil e auditivo.</p>
                     </div>
                     <div class="recurso-card">
-                        <h3>Contraste e Fontes Flexíveis</h3>
-                        <p>O layout utiliza unidades em <code>rem</code> que se adaptam ao zoom do navegador, sem perder o alinhamento das cores com alto contraste.</p>
+                        <div class="icone-box">📐</div>
+                        <h3>Arquitetura Fluida em Unidades Flexíveis (rem)</h3>
+                        <p>Evitamos o uso de pixels engessados. Todo o dimensionamento do portal utiliza a unidade proporcional ao sistema. Isso impede o truncamento de textos ou quebras de caixas quando usuários com baixa visão aplicam zoom nativo de até 200%.</p>
+                    </div>
+                    <div class="recurso-card">
+                        <div class="icone-box">🌓</div>
+                        <h3>Paleta de Alto Contraste Validada</h3>
+                        <p>A combinação de cores atende aos critérios internacionais do WCAG. O contraste nítido ajuda pessoas com daltonismo (como deuteranopia e protanopia) ou idosos a discernirem botões de ação e links sem esforço visual.</p>
                     </div>
                 </div>
             </div>
@@ -117,39 +119,39 @@
 
                 <div class="mapa-container-flex">
                     <div class="mapa-svg-box">
-                        <svg id="wrapper-mapa-brasil" class="mapa-svg" viewBox="0 0 400 300" aria-label="Mapa Interativo do Brasil. Selecione os estados usando as setas ou clique para carregar dados.">
-                            <rect x="60" y="80" width="100" height="90" rx="8" class="estado-path" data-estado="MT" role="button" tabindex="0" aria-label="Mato Grosso, polo produtor de grãos." />
-                            <text x="110" y="130" class="mapa-label-text">MT</text>
+                        <svg id="wrapper-mapa-brasil" class="mapa-svg" viewBox="0 0 400 300" aria-label="Mapa Interativo do Brasil.">
+                            <rect x="50" y="50" width="90" height="80" rx="8" class="estado-path" data-estado="MT" role="button" tabindex="0" aria-label="Mato Grosso" />
+                            <text x="95" y="95" class="mapa-label-text">MT</text>
                             
-                            <rect x="170" y="140" width="100" height="70" rx="8" class="estado-path" data-estado="SP" role="button" tabindex="0" aria-label="São Paulo, líder em cana de açúcar e citros." />
-                            <text x="220" y="180" class="mapa-label-text">SP</text>
+                            <rect x="160" y="110" width="90" height="70" rx="8" class="estado-path" data-estado="SP" role="button" tabindex="0" aria-label="São Paulo" />
+                            <text x="205" y="150" class="mapa-label-text">SP</text>
                             
-                            <rect x="130" y="220" width="120" height="65" rx="8" class="estado-path" data-estado="PR" role="button" tabindex="0" aria-label="Paraná, destaque em cooperativas e grãos de inverno." />
-                            <text x="190" y="255" class="mapa-label-text">PR</text>
+                            <rect x="120" y="200" width="100" height="70" rx="8" class="estado-path" data-estado="PR" role="button" tabindex="0" aria-label="Paraná" />
+                            <text x="170" y="240" class="mapa-label-text">PR</text>
                         </svg>
 
-                        <svg id="wrapper-mapa-parana" class="mapa-svg" viewBox="0 0 400 300" aria-label="Mapa de Regiões do Paraná. Navegue pelas divisões estaduais." style="display: none;">
-                            <path d="M 20,70 L 150,70 L 120,260 L 20,260 Z" class="regiao-path" data-regiao="oeste" role="button" tabindex="0" aria-label="Região Oeste, polo de piscicultura e biogás." />
-                            <text x="75" y="170" class="mapa-label-text">OESTE</text>
+                        <svg id="wrapper-mapa-parana" class="mapa-svg" viewBox="0 0 400 300" aria-label="Mapa de Regiões do Paraná." style="display: none;">
+                            <rect x="30" y="70" width="100" height="150" rx="6" class="regiao-path" data-regiao="oeste" role="button" tabindex="0" aria-label="Região Oeste" />
+                            <text x="80" y="155" class="mapa-label-text">OESTE</text>
                             
-                            <path d="M 155,70 L 370,70 L 370,160 L 140,160 Z" class="regiao-path" data-regiao="norte" role="button" tabindex="0" aria-label="Região Norte, produtora de cafés especiais." />
-                            <text x="250" y="120" class="mapa-label-text">NORTE</text>
+                            <rect x="150" y="50" width="200" height="90" rx="6" class="regiao-path" data-regiao="norte" role="button" tabindex="0" aria-label="Região Norte" />
+                            <text x="250" y="100" class="mapa-label-text">NORTE</text>
                             
-                            <path d="M 145,165 L 370,165 L 370,260 L 125,260 Z" class="regiao-path" data-regiao="sul" role="button" tabindex="0" aria-label="Região Sul e Campos Gerais, berço do plantio direto." />
-                            <text x="240" y="220" class="mapa-label-text">SUL</text>
+                            <rect x="150" y="160" width="200" height="90" rx="6" class="regiao-path" data-regiao="sul" role="button" tabindex="0" aria-label="Região Sul" />
+                            <text x="250" y="210" class="mapa-label-text">SUL</text>
                         </svg>
                     </div>
 
-                    <div id="painel-info-mapa" class="card-tech-interativo painel-mapa" aria-live="polite">
-                        <h3>📋 Painel Adaptável de Indicadores</h3>
-                        <p id="mapa-placeholder-texto" style="margin-top: 15px; color: #cbd5e1;">Aguardando seleção. Clique em um estado ou use o teclado para carregar as estatísticas ecológicas estruturadas.</p>
+                    <div id="painel-info-mapa" class="painel-mapa card-tech-interativo" aria-live="polite">
+                        <h3>📋 Painel de Indicadores</h3>
+                        <p id="mapa-placeholder-texto" style="margin-top: 15px; color: #cbd5e1;">Aguardando seleção. Clique em uma região do mapa ou use a tecla TAB para carregar dados agronômicos.</p>
                         
                         <div id="mapa-dados-conteudo" style="display: none; margin-top: 15px;">
                             <h4 id="mapa-nome-regiao" style="color: var(--cor-verde-agua); font-size: 1.3rem; margin-bottom: 10px;">Localidade</h4>
                             <hr style="margin-bottom: 15px; border: 0; height: 1px; background: var(--cor-borda-tech);">
-                            <p class="bloco-info-mapa"><strong>🌾 Produção Agrícola:</strong> <span id="mapa-producao">...</span></p>
-                            <p class="bloco-info-mapa" style="margin-top: 10px;"><strong>🌳 Gestão Ambiental:</strong> <span id="mapa-ambiental">...</span></p>
-                            <p class="bloco-info-mapa" style="margin-top: 10px;"><strong>💡 Tecnologia:</strong> <span id="mapa-curiosidade">...</span></p>
+                            <p><strong>🌾 Produção Agrícola:</strong> <span id="mapa-producao">...</span></p>
+                            <p style="margin-top: 10px;"><strong>🌳 Gestão Ambiental:</strong> <span id="mapa-ambiental">...</span></p>
+                            <p style="margin-top: 10px;"><strong>💡 Tecnologia:</strong> <span id="mapa-curiosidade">...</span></p>
                         </div>
                     </div>
                 </div>
@@ -159,20 +161,25 @@
         <section id="navegacao-teclado" class="section-padding bg-light">
             <div class="interface animar-scroll">
                 <div class="section-title">
-                    <h2>2. Navegação Completa por Teclado</h2>
-                    <p>Garantindo total autonomia para quem possui limitações motoras e utiliza apenas o teclado para navegar.</p>
+                    <h2>2. Navegação Completa por Teclado e Acessibilidade Motora</h2>
+                    <p>Garantindo total autonomia para usuários com paralisia cerebral, amputações, tremores ou que temporariamente não podem usar o mouse.</p>
                 </div>
 
                 <div class="grid-recursos-quatro">
                     <div class="card-pilar-tech">
-                        <div class="icone-pilar">⌨️</div>
-                        <h3>Foco Altamente Visível</h3>
-                        <p>Links, botões e elementos interativos do mapa exibem bordas brilhantes verde-água ao receber foco via tabulação.</p>
+                        <div class="icone-box">⌨️</div>
+                        <h3>Foco Altamente Visível e Brilhante</h3>
+                        <p>Eliminar o contorno do teclado é um erro grave de acessibilidade. Implementamos uma borda sólida com a cor verde-água brilhante e deslocamento que destaca com precisão cirúrgica qual elemento, link ou botão está selecionado no momento da tabulação.</p>
                     </div>
                     <div class="card-pilar-tech">
-                        <div class="icone-pilar">🔄</div>
-                        <h3>Ordem Lógica (Tab)</h3>
-                        <p>O fluxo de navegação respeita rigorosamente a leitura natural ocidental da esquerda para a direita, de cima para baixo.</p>
+                        <div class="icone-box">🔄</div>
+                        <h3>Ordem Lógica de Tabulação (DOM sequencial)</h3>
+                        <p>A árvore de código foi desenhada para seguir o fluxo natural de leitura humana. O usuário caminha pelo menu, banners e conteúdos sequencialmente usando a tecla Tab, impedindo armadilhas de teclado (Keyboard Traps) onde o cursor fica preso sem saída.</p>
+                    </div>
+                    <div class="card-pilar-tech">
+                        <div class="icone-box">🚀</div>
+                        <h3>Links de Salto de Conteúdo Ocultos</h3>
+                        <p>No topo da página, existe um link invisível para usuários de mouse, mas que é o primeiro a receber foco no teclado. Ele permite pular todo o menu de navegação repetitivo diretamente para o texto central da página, poupando dezenas de cliques mecânicos.</p>
                     </div>
                 </div>
             </div>
@@ -181,8 +188,21 @@
         <section id="inclusao-auditiva" class="section-padding">
             <div class="interface animar-scroll">
                 <div class="section-title">
-                    <h2>3. Inclusão para Surdos e Deficientes Auditivos</h2>
-                    <p>Eliminando barreiras de linguagem para garantir o amplo acesso à informação agrícola.</p>
+                    <h2>3. Inclusão para Surdos, Deficientes Auditivos e VLibras</h2>
+                    <p>Eliminando a barreira linguística enfrentada por cidadãos alfabetizados primariamente na Língua Brasileira de Sinais.</p>
+                </div>
+
+                <div class="grid-recursos-acessibilidade" style="margin-bottom: 30px;">
+                    <div class="recurso-card">
+                        <div class="icone-box">🤟</div>
+                        <h3>Integração Nativa com o VLibras Widget</h3>
+                        <p>O português escrito muitas vezes funciona como uma segunda língua para a comunidade surda. O widget acoplado traduz termos técnicos da agricultura sustentável para LIBRAS instantaneamente através de avatares 3D digitais hiperrealistas.</p>
+                    </div>
+                    <div class="recurso-card">
+                        <div class="icone-box">📝</div>
+                        <h3>Transcrições Textuais Síncronas</h3>
+                        <p>Qualquer material em áudio, instruções de rádio do campo ou podcasts educacionais anexados trazem caixas de texto literais logo abaixo, servindo tanto para pessoas surdas quanto para ambientes de estudo barulhentos.</p>
+                    </div>
                 </div>
 
                 <div class="container-audio-acessivel">
@@ -190,7 +210,7 @@
                     <p class="sub-audio-info">Abaixo você encontra a descrição textual completa para conteúdos com mídias sonoras ou podcasts integrados à nossa plataforma.</p>
                     
                     <blockquote class="transcricao-box">
-                        <strong>Transcrição Completa do Episódio:</strong> "A tecnologia de precisão no campo utiliza drones com sensores termails para identificar plantas estressadas por falta de irrigação. Isso permite aplicar água apenas no local correto, poupando até 40% dos mananciais dos rios paranaenses."
+                        <strong>Transcrição Completa do Episódio:</strong> "A tecnologia de precisão no campo utiliza drones com sensores termais para identificar plantas estressadas por falta de irrigação. Isso permite aplicar água apenas no local correto, poupando até 40% dos mananciais dos rios paranaenses."
                     </blockquote>
                 </div>
             </div>
@@ -200,21 +220,24 @@
             <div class="interface animar-scroll">
                 <div class="section-title">
                     <h2>4. Design Limpo e Acessibilidade Cognitiva</h2>
-                    <p>Uma navegação tranquila e previsível, pensada para pessoas com TDAH, dislexia, autismo, idosos e estudantes.</p>
+                    <p>Estrutura focada no processamento neural tranquilo, ideal para estudantes com TDAH, dislexia, espectro autista ou idosos.</p>
                 </div>
 
                 <div class="grid-flashcards">
                     <div class="card-agro-premium-estatico">
-                        <h3>Controle de Movimento</h3>
-                        <p>O usuário dita o ritmo. Criamos a função para interromper gradientes e transições visuais a qualquer momento através do menu superior.</p>
+                        <div class="icone-box">⏸️</div>
+                        <h3>Controle Absoluto de Movimento</h3>
+                        <p>Elementos piscando ou rolagens automáticas geram severa distração cognitiva ou crises em pessoas neurodivergentes. Nossa nuvenzinha oferece um botão para paralisar totalmente efeitos visuais e transições, fixando o layout estático.</p>
                     </div>
                     <div class="card-agro-premium-estatico">
-                        <h3>Linguagem Direta</h3>
-                        <p>Comunicação sem rodeios, termos truncados ou jargões complexos desnecessários. Informação científica explicada de forma amigável.</p>
+                        <div class="icone-box">✍️</div>
+                        <h3>Linguagem Clara e Direta</h3>
+                        <p>Eliminamos textos excessivamente literários, metáforas confusas e jargões agronômicos sem explicação prévia. Frases mais curtas e diretas aumentam a taxa de retenção de conhecimento pedagógico do programa Agrinho.</p>
                     </div>
                     <div class="card-agro-premium-estatico">
-                        <h3>Links Explicativos</h3>
-                        <p>Esqueça o genérico "Clique aqui". Todos os nossos botões de ação trazem destinos claros e transparentes ao usuário.</p>
+                        <div class="icone-box">🔗</div>
+                        <h3>Rótulos de Destinos Previsíveis</h3>
+                        <p>Botoes com textos ambíguos geram ansiedade e confusão. No desenho inclusivo, cada link enuncia exatamente para onde o usuário será direcionado e se uma nova aba externa ou arquivo PDF será aberto.</p>
                     </div>
                 </div>
 

@@ -1,48 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
-    inicializarClimaDinamico();
-    carregarConfiguracoesAcessibilidade();
-    inicializarBotoesAcessibilidade();
     inicializarNuvemFlutuante();
+    inicializarBotoesAcessibilidade();
     inicializarMenuMobile();
     inicializarComparadorImagens();
     inicializarAbasEMapasUnificados();
     inicializarAnimacaoScroll();
 });
 
-/* 1. CLIMA DINÂMICO AUTOMÁTICO */
-function inicializarClimaDinamico() {
-    if (document.body.classList.contains("sem-animacoes")) return;
-    
-    const hora = new Date().getHours();
-    const corpo = document.body;
-    corpo.classList.remove("clima-manha", "clima-tarde", "clima-noite");
+let tamanhoAtualFonte = 100;
 
-    if (hora >= 6 && hora < 12) {
-        corpo.classList.add("clima-manha");
-    } else if (hora >= 12 && hora < 18) {
-        corpo.classList.add("clima-tarde");
-    } else {
-        corpo.classList.add("clima-noite");
-    }
-}
-
-/* 2. CONTROLES DE CONFIGURAÇÃO SALVA */
-let tamanhoAtualFonte = 100; // Representa 100% (1rem)
-
-function carregarConfiguracoesAcessibilidade() {
-    if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
-    if (localStorage.getItem("contrast") === "active") document.body.classList.add("alto-contraste");
-    if (localStorage.getItem("dyslexia") === "active") document.body.classList.add("fonte-dislexia");
-    if (localStorage.getItem("animations") === "paused") document.body.classList.add("sem-animacoes");
-    
-    const fonteSalva = localStorage.getItem("fontSize");
-    if (fonteSalva) {
-        tamanhoAtualFonte = parseInt(fonteSalva, 10);
-        document.documentElement.style.setProperty("--tamanho-base-fonte", `${tamanhoAtualFonte / 100}rem`);
-    }
-}
-
-/* 3. GERENCIADOR DA NUVENZINHA FLUTUANTE */
 function inicializarNuvemFlutuante() {
     const toggle = document.getElementById("btnNuvemToggle");
     const conteudo = document.getElementById("nuvemConteudo");
@@ -54,7 +20,6 @@ function inicializarNuvemFlutuante() {
             toggle.setAttribute("aria-expanded", aberto);
         });
 
-        // Fecha a janelinha ao clicar fora dela
         document.addEventListener("click", (e) => {
             if (!conteudo.contains(e.target) && e.target !== toggle) {
                 conteudo.classList.remove("aberto");
@@ -64,7 +29,6 @@ function inicializarNuvemFlutuante() {
     }
 }
 
-/* 4. RECURSOS DA NUVEM (TEXTO E CONTRASTES) */
 function inicializarBotoesAcessibilidade() {
     const btnAumentar = document.getElementById("btn-aumentar-texto");
     const btnDiminuir = document.getElementById("btn-diminuir-texto");
@@ -73,139 +37,63 @@ function inicializarBotoesAcessibilidade() {
     const btnDislexia = document.getElementById("btn-dislexia");
     const btnPausa = document.getElementById("btn-pausar-animacao");
 
-    // Controle de Tamanho de Letra (A+ / A-)
     if (btnAumentar && btnDiminuir) {
         btnAumentar.addEventListener("click", () => {
-            if (tamanhoAtualFonte < 140) { // Máximo de 140%
+            if (tamanhoAtualFonte < 130) {
                 tamanhoAtualFonte += 10;
                 document.documentElement.style.setProperty("--tamanho-base-fonte", `${tamanhoAtualFonte / 100}rem`);
-                localStorage.setItem("fontSize", tamanhoAtualFonte);
             }
         });
-
         btnDiminuir.addEventListener("click", () => {
-            if (tamanhoAtualFonte > 85) { // Mínimo de 85%
+            if (tamanhoAtualFonte > 90) {
                 tamanhoAtualFonte -= 10;
                 document.documentElement.style.setProperty("--tamanho-base-fonte", `${tamanhoAtualFonte / 100}rem`);
-                localStorage.setItem("fontSize", tamanhoAtualFonte);
             }
         });
     }
 
-    if (btnDark) {
-        btnDark.addEventListener("click", () => {
-            const ativo = document.body.classList.toggle("dark-mode");
-            document.body.classList.remove("alto-contraste");
-            localStorage.setItem("theme", ativo ? "dark" : "light");
-            localStorage.setItem("contrast", "inactive");
-        });
-    }
-
-    if (btnContraste) {
-        btnContraste.addEventListener("click", () => {
-            const ativo = document.body.classList.toggle("alto-contraste");
-            document.body.classList.remove("dark-mode");
-            localStorage.setItem("contrast", ativo ? "active" : "inactive");
-            localStorage.setItem("theme", "light");
-        });
-    }
-
-    if (btnDislexia) {
-        btnDislexia.addEventListener("click", () => {
-            const ativo = document.body.classList.toggle("fonte-dislexia");
-            localStorage.setItem("dyslexia", ativo ? "active" : "inactive");
-        });
-    }
-
+    if (btnDark) btnDark.addEventListener("click", () => document.body.classList.toggle("dark-mode"));
+    if (btnContraste) btnContraste.addEventListener("click", () => document.body.classList.toggle("alto-contraste"));
+    if (btnDislexia) btnDislexia.addEventListener("click", () => document.body.classList.toggle("fonte-dislexia"));
     if (btnPausa) {
         btnPausa.addEventListener("click", () => {
             const ativo = document.body.classList.toggle("sem-animacoes");
             btnPausa.innerText = ativo ? "▶️ Ativar Animações" : "⏸️ Pausar Animações";
-            localStorage.setItem("animations", ativo ? "paused" : "active");
-            
-            if (ativo) {
-                document.body.classList.remove("clima-manha", "clima-tarde", "clima-noite");
-            } else {
-                inicializarClimaDinamico();
-            }
         });
     }
 }
 
-/* 5. MENU MOBILE */
 function inicializarMenuMobile() {
     const menuToggle = document.getElementById("menuToggle");
     const navbar = document.getElementById("navbar");
     if (menuToggle && navbar) {
         menuToggle.addEventListener("click", () => {
-            const expandido = navbar.classList.toggle("active");
-            menuToggle.setAttribute("aria-expanded", expandido);
+            navbar.classList.toggle("active");
         });
     }
 }
 
-/* 6. COMPARADOR DE IMAGENS */
 function inicializarComparadorImagens() {
     const slider = document.getElementById("slider-divisor");
     const fotoDegradada = document.getElementById("foto-degradada");
-    const container = document.querySelector(".comparador-wrapper");
-
-    if (!slider || !fotoDegradada || !container) return;
-
-    const moverDivisor = () => { fotoDegradada.style.width = `${slider.value}%`; };
-    slider.addEventListener("input", moverDivisor);
-
-    const redimensionarCorte = () => {
-        const largura = container.offsetWidth;
-        const img = fotoDegradada.querySelector("img");
-        if (img) img.style.width = `${largura}px`;
-    };
-    redimensionarCorte();
-    window.addEventListener("resize", redimensionarCorte);
+    if (slider && fotoDegradada) {
+        slider.addEventListener("input", () => {
+            fotoDegradada.style.width = `${slider.value}%`;
+        });
+    }
 }
 
-/* 7. MAPA INTERATIVO ADAPTADO */
 function inicializarAbasEMapasUnificados() {
     const dadosBrasil = {
-        PR: {
-            nome: "Estado do Paraná 🌾",
-            producao: "Destaque nacional robusto na colheita de soja, milho safrinha e trigo.",
-            ambiental: "Referência no Plantio Direto e preservação integrada de microbacias hidrográficas.",
-            curiosidade: "União completa de tecnologia com agricultura familiar através de cooperativas locais."
-        },
-        MT: {
-            nome: "Mato Grosso 🚜",
-            producao: "Maior produtor nacional de grãos e fibra de algodão em larga escala.",
-            ambiental: "Uso estendido de insumos de base biológica para regenerar a microbiologia da terra.",
-            curiosidade: "Frotas usam telemetria em tempo real para evitar sobreposição e desperdício de insumos."
-        },
-        SP: {
-            nome: "São Paulo 🍊",
-            producao: "Líder absoluto na produção de cana-de-açúcar e citros de alta qualidade.",
-            ambiental: "Reaproveitamento completo do bagaço de cana para geração interna de energia termoelétrica limpa.",
-            curiosidade: "Abriga o maior arranjo de AgTechs e startups voltadas ao agronegócio do país."
-        }
+        PR: { nome: "Estado do Paraná 🌾", producao: "Líder regional em soja, milho safrinha e trigo.", ambiental: "Referência em Plantio Direto.", curio: "Forte cultura cooperativista tecnológica." },
+        MT: { nome: "Mato Grosso 🚜", producao: "Maior produtor nacional de grãos de larga escala.", ambiental: "Uso massivo de bioinsumos.", curio: "Telemetria avançada em tratores." },
+        SP: { nome: "São Paulo 🍊", producao: "Referência em cana-de-açúcar e citros de exportação.", ambiental: "Geração de bioenergia limpa.", curio: "Maior ecossistema de Agtechs do país." }
     };
 
     const dadosParana = {
-        norte: {
-            nome: "Macrorregião Norte do PR 🟢",
-            producao: "Polo de cafés especiais de alto valor e diversificação de grãos.",
-            ambiental: "Projetos voltados para recomposição de matas ciliares nativas.",
-            curiosidade: "Drones mapeiam falhas de linhas de plantio utilizando imagens aéreas térmicas."
-        },
-        oeste: {
-            nome: "Macrorregião Oeste do PR 🔵",
-            producao: "Grande polo de piscicultura de precisão e avicultura integrada.",
-            ambiental: "Transformação de dejetos orgânicos em biogás para autogeração de energia limpa.",
-            curiosidade: "Sensores autônomos gerenciam oxigenação de viveiros sem manipulação humana desnecessária."
-        },
-        sul: {
-            nome: "Região Sul e Campos Gerais 🟣",
-            producao: "Líder em grãos de inverno e bacia leiteira de alto rendimento tecnológico.",
-            ambiental: "Adoção sistêmica de rotação de culturas para quebrar ciclos biológicos de pragas.",
-            curiosidade: "Reconhecido como o grande berço histórico da conservação produtiva do solo no Brasil."
-        }
+        norte: { nome: "Norte do Paraná 🟢", producao: "Cafés especiais premiados mundialmente.", ambiental: "Recuperação ativa de matas ciliares.", curio: "Uso de drones para mapeamento térmico." },
+        oeste: { nome: "Oeste do Paraná 🔵", producao: "Polo de piscicultura e avicultura automatizada.", ambiental: "Conversão de biomassa em biogás energético.", curio: "Alimentadores controlados por sensores." },
+        sul: { nome: "Sul e Campos Gerais 🟣", producao: "Alta produtividade de grãos e bacia leiteira premium.", ambiental: "Sistemas consolidados de rotação de culturas.", curio: "Berço da agricultura de conservação do solo." }
     };
 
     const btnBrasil = document.getElementById("btn-aba-brasil");
@@ -222,54 +110,41 @@ function inicializarAbasEMapasUnificados() {
 
     if (!btnBrasil || !btnParana) return;
 
-    const mudarAba = (exibirBrasil) => {
-        btnBrasil.classList.toggle("ativo", exibirBrasil);
-        btnParana.classList.toggle("ativo", !exibirBrasil);
-        mapaBrasil.style.display = exibirBrasil ? "block" : "none";
-        mapaParana.style.display = exibirBrasil ? "none" : "block";
-        placeholder.style.display = "block";
-        conteudo.style.display = "none";
-    };
+    btnBrasil.addEventListener("click", () => {
+        btnBrasil.classList.add("ativo"); btnParana.classList.remove("ativo");
+        mapaBrasil.style.display = "block"; mapaParana.style.display = "none";
+        conteudo.style.display = "none"; placeholder.style.display = "block";
+    });
 
-    btnBrasil.addEventListener("click", () => mudarAba(true));
-    btnParana.addEventListener("click", () => mudarAba(false));
+    btnParana.addEventListener("click", () => {
+        btnParana.classList.add("ativo"); btnBrasil.classList.remove("ativo");
+        mapaBrasil.style.display = "none"; mapaParana.style.display = "block";
+        conteudo.style.display = "none"; placeholder.style.display = "block";
+    });
 
-    function exibirInfo(banco, chave) {
-        const item = banco[chave];
+    function renderizar(dados, chave) {
+        const item = dados[chave];
         if (item) {
-            placeholder.style.display = "none";
-            conteudo.style.display = "block";
-            elNome.innerText = item.nome;
-            elProd.innerText = item.producao;
-            elAmb.innerText = item.ambiental;
-            elCurio.innerText = item.curiosidade;
+            placeholder.style.display = "none"; conteudo.style.display = "block";
+            elNome.innerText = item.nome; elProd.innerText = item.producao;
+            elAmb.innerText = item.ambiental; elCurio.innerText = item.curio;
         }
     }
 
-    document.querySelectorAll(".estado-path").forEach(alvo => {
-        const acao = () => exibirInfo(dadosBrasil, alvo.getAttribute("data-estado"));
-        alvo.addEventListener("click", acao);
-        alvo.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); acao(); } });
+    document.querySelectorAll(".estado-path").forEach(el => {
+        el.addEventListener("click", () => renderizar(dadosBrasil, el.getAttribute("data-estado")));
     });
-
-    document.querySelectorAll(".regiao-path").forEach(alvo => {
-        const acao = () => exibirInfo(dadosParana, alvo.getAttribute("data-regiao"));
-        alvo.addEventListener("click", acao);
-        alvo.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); acao(); } });
+    document.querySelectorAll(".regiao-path").forEach(el => {
+        el.addEventListener("click", () => renderizar(dadosParana, el.getAttribute("data-regiao")));
     });
 }
 
-/* 8. ANIMAÇÃO DE ROLAGEM SUAVE */
 function inicializarAnimacaoScroll() {
-    if (document.body.classList.contains("sem-animacoes")) return;
-
-    const checarScroll = () => {
+    const checar = () => {
         document.querySelectorAll(".animar-scroll").forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight * 0.88) {
-                el.classList.add("visivel");
-            }
+            if (el.getBoundingClientRect().top < window.innerHeight * 0.9) el.classList.add("visivel");
         });
     };
-    checarScroll();
-    window.addEventListener("scroll", checarScroll);
+    window.addEventListener("scroll", checar);
+    checar();
 }
