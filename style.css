@@ -1,381 +1,573 @@
 /* ==========================================================================
-   PALETA DE CORES ORIGINAL DO SEU SITE (Tons de Azul, Escuros e Gradientes)
+   CONFIGURAÇÃO DE VARIÁVEIS E TEMAS (:ROOT)
    ========================================================================== */
 :root {
-    --bg-gradiente-topo: #1a2a6c;
-    --bg-gradiente-meio: #275d8c;
-    --bg-gradiente-fim: #0f2027;
-    --azul-card: rgba(255, 255, 255, 0.07);
-    --azul-card-borda: rgba(255, 255, 255, 0.15);
-    --cor-texto: #ffffff;
-    --cor-texto-sub: #b0bec5;
-    --verde-agua-foco: #00e5ff;
-    --botao-mapa-bg: #40c4ff;
-    --fonte-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Paleta Padrão: Agro Tecnológico */
+    --cor-principal: #1b4332;
+    --cor-secundaria: #40916c;
+    --cor-fundo: #ffffff;
+    --cor-fundo-alt: #f4f9f4;
+    --cor-texto: #2d3748;
+    --cor-botao: #52b788;
+    --cor-botao-hover: #2d6a4f;
+    --cor-alerta: #ffb703;
+    --cor-perigo: #e63946;
+    --fonte-padrao: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* RESET E CONFIGURAÇÃO GERAL */
+/* Alteração de variáveis via Classes de Acessibilidade gerenciadas pelo JS */
+body.dark-mode {
+    --cor-principal: #0d1f14;
+    --cor-secundaria: #52b788;
+    --cor-fundo: #121212;
+    --cor-fundo-alt: #1a1a1a;
+    --cor-texto: #e2e8f0;
+    --cor-botao: #40916c;
+}
+
+body.high-contrast {
+    --cor-principal: #000000;
+    --cor-secundaria: #ffff00;
+    --cor-fundo: #000000;
+    --cor-fundo-alt: #111111;
+    --cor-texto: #ffffff;
+    --cor-botao: #ffff00;
+    --cor-botao-hover: #ffffff;
+}
+
+body.dyslexia-font {
+    --fonte-padrao: 'Comic Sans MS', 'Open Dyslexic', sans-serif !important;
+}
+
+/* ==========================================================================
+   RESETS E ESTILOS GERAIS
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: var(--fonte-principal);
-    background: linear-gradient(to bottom, #111e38, #182848);
+    font-family: var(--fonte-padrao);
+    background-color: var(--cor-fundo);
     color: var(--cor-texto);
-    min-height: 100vh;
     line-height: 1.6;
-    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
+    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 40px 0;
 }
 
-/* OUTLINE BRILHANTE EXIGIDO NA SUA NAVEGAÇÃO MOTORIZADA */
+.section {
+    padding: 60px 0;
+}
+
+.bg-light {
+    background-color: var(--cor-fundo-alt);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-title h2 {
+    color: var(--cor-principal);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.text-center { text-align: center; }
+
+/* FOCO PARA NAVEGAÇÃO POR TECLADO */
 *:focus-visible {
-    outline: 3px solid var(--verde-agua-foco) !important;
+    outline: 3px solid var(--cor-alerta);
     outline-offset: 2px;
 }
 
-/* CLASSES DE ACESSIBILIDADE ATIVADAS POR JS */
-body.dark-mode {
-    background: #05050a !important;
-    --azul-card: #121214;
-    --azul-card-borda: #26262b;
-}
-
-body.alto-contraste {
-    background: #000000 !important;
-    color: #ffff00 !important;
-}
-body.alto-contraste .card-recurso, 
-body.alto-contraste .card-cognitivo, 
-body.alto-contraste .caixa-transcricao,
-body.alto-contraste .painel-indicators {
-    background: #000000 !important;
-    border: 2px solid #ffff00 !important;
-    color: #ffff00 !important;
-}
-body.alto-contraste a, body.alto-contraste button {
-    color: #ffff00 !important;
-    border: 2px solid #ffff00 !important;
-    background: #000000 !important;
-}
-
-body.fonte-dislexia {
-    font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
-}
-
-body.sem-animacao * {
-    transition: none !important;
-    animation: none !important;
-}
-
-/* BARRA DE FERRAMENTAS SUPERIOR */
-.barra-acessibilidade-topo {
-    background-color: #0b1326;
-    padding: 5px 20px;
+/* ==========================================================================
+   BARRA DE ACESSIBILIDADE E HEADER
+   ========================================================================== */
+.accessibility-bar {
+    background-color: var(--cor-principal);
     display: flex;
+    justify-content: flex-end;
     gap: 10px;
-    border-bottom: 1px solid var(--azul-card-borda);
+    padding: 8px 5%;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.barra-acessibilidade-topo button {
+.accessibility-bar button {
     background: transparent;
-    border: 1px solid var(--azul-card-borda);
+    border: 1px solid rgba(255,255,255,0.3);
     color: #ffffff;
-    padding: 3px 10px;
+    padding: 4px 10px;
     font-size: 0.8rem;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
-.barra-acessibilidade-topo button:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* HEADER DO SITE ORIGINAL */
-header {
+.header {
+    background-color: var(--cor-fundo);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    background-color: rgba(13, 23, 42, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--azul-card-borda);
+    padding: 15px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.logo-agrinho {
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #ffffff;
+.logo h2 {
+    color: var(--cor-principal);
 }
 
-header nav ul {
+.logo h2 span {
+    color: var(--cor-secundaria);
+}
+
+.nav-menu ul {
     display: flex;
     list-style: none;
     gap: 20px;
 }
 
-header nav a {
-    color: #ffffff;
+.nav-menu a {
+    color: var(--cor-texto);
     text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    opacity: 0.85;
-    transition: opacity 0.2s;
+    font-weight: 600;
+    transition: color 0.2s;
 }
 
-header nav a:hover {
-    opacity: 1;
+.nav-menu a:hover {
+    color: var(--cor-secundaria);
 }
 
-/* HERO BANNER - COM SUPORTE ÀS IMAGENS DE FUNDO POR HORÁRIO */
-.banner-hero {
-    padding: 80px 40px;
-    text-align: center;
-    background-size: cover !important;
-    background-position: center !important;
-    border-bottom: 1px solid var(--azul-card-borda);
-    transition: background 0.8s ease;
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.hero-conteudo h1 {
-    font-size: 3rem;
-    line-height: 1.2;
-    margin-bottom: 20px;
-    font-weight: bold;
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--cor-principal);
+    display: block;
 }
 
-.hero-conteudo p {
-    font-size: 1.15rem;
-    max-width: 800px;
-    margin: 0 auto 30px;
-    color: var(--cor-texto-sub);
-}
-
-.btn-explorar {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: #38b6ff;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 6px;
-    box-shadow: 0 4px 15px rgba(56, 182, 255, 0.3);
-}
-
-/* SUB BANNER (Abaixo do Hero) */
-.sub-banner {
-    text-align: center;
-    margin: 40px 0;
-}
-
-.sub-banner h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-.sub-banner p {
-    color: var(--cor-texto-sub);
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-/* ESTRUTURAÇÃO DOS CARDS DO SEU DESIGN ORIGINAL */
-.secao-recurso {
-    margin-bottom: 50px;
-}
-
-.titulo-numerado {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.sub-titulo-secao {
-    color: var(--cor-texto-sub);
-    margin-bottom: 25px;
-}
-
-.grid-dois-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.card-recurso {
-    background: var(--azul-card);
-    border: 1px solid var(--azul-card-borda);
-    padding: 30px;
-    border-radius: 12px;
-}
-
-.card-recurso h3 {
-    font-size: 1.3rem;
-    margin-bottom: 12px;
-}
-
-/* MAPA DE INDICADORES INCLUSIVO */
-.secao-mapa {
-    background: var(--azul-card);
-    border: 1px solid var(--azul-card-borda);
-    padding: 40px;
-    border-radius: 16px;
-    margin-bottom: 50px;
-}
-
-.instrucao-mapa {
-    color: var(--cor-texto-sub);
-    margin-bottom: 20px;
-}
-
-.botoes-mapa-controle {
+/* ==========================================================================
+   BANNER HERO
+   ========================================================================== */
+.hero {
+    min-height: 70vh;
     display: flex;
-    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ffffff;
+    padding: 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.badge {
+    background-color: var(--cor-botao);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin: 20px 0;
+}
+
+.hero p {
+    font-size: 1.2rem;
     margin-bottom: 30px;
 }
 
-.btn-mapa {
-    padding: 10px 25px;
-    border: none;
-    background-color: rgba(255, 255, 255, 0.1);
+.btn-main {
+    background-color: var(--cor-botao);
     color: #ffffff;
-    border-radius: 6px;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 5px;
     font-weight: bold;
-    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-.btn-mapa.ativo {
-    background-color: #00e5ff;
-    color: #0d1b2a;
+.btn-main:hover {
+    background-color: var(--cor-botao-hover);
+    transform: translateY(-2px);
 }
 
-.mapa-flex-container {
+/* ==========================================================================
+   SLIDER ANTES E DEPOIS
+   ========================================================================== */
+.intro-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.comparison-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.comparison-container img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+.image-before, .image-after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.image-after {
+    width: 50%; /* Controlado dinamicamente pelo JS */
+    overflow: hidden;
+    z-index: 2;
+}
+
+.label-box {
+    position: absolute;
+    bottom: 15px;
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    z-index: 3;
+}
+
+.label-box.before { right: 15px; }
+.label-box.after { left: 15px; white-space: nowrap; }
+
+.slider-comparison {
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 4;
+    cursor: ew-resize;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
+
+.slider-comparison::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 5px;
+    height: 350px;
+    background: var(--cor-alerta);
+    cursor: ew-resize;
+}
+
+/* ==========================================================================
+   MURAL ECO E ACCORDION TECH
+   ========================================================================== */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card-eco {
+    background-color: var(--cor-fundo);
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 5px solid var(--cor-secundaria);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.card-eco h3 { margin-bottom: 12px; color: var(--cor-principal); }
+
+.tech-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}
+
+.accordion-header {
+    width: 100%;
+    background: var(--cor-fundo-alt);
+    border: none;
+    text-align: left;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--cor-principal);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-content {
+    padding: 0 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+}
+
+/* ==========================================================================
+   PAINEL DE INDICADORES REGIONAIS
+   ========================================================================== */
+.indicators-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
     gap: 30px;
 }
 
-/* Representação das caixas do mapa da foto */
-.mapa-grafico-box {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 12px;
-    height: 250px;
-    position: relative;
-    padding: 20px;
+.buttons-panel {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
-.bloco-mapa {
-    width: 100px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 6px;
+.buttons-panel h4 {
+    margin-bottom: 5px;
+    color: var(--cor-texto);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.btn-geo {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-secundaria);
+    color: var(--cor-texto);
+    padding: 10px;
     cursor: pointer;
-    transition: background 0.2s;
+    border-radius: 4px;
+    text-align: left;
+    font-weight: 500;
 }
 
-.bloco-mapa:hover, .bloco-mapa:focus {
-    background-color: #00e5ff;
+.btn-geo.active, .btn-geo:hover {
+    background-color: var(--cor-secundaria);
+    color: #ffffff;
 }
 
-.painel-indicadores {
-    background: rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--azul-card-borda);
-    padding: 25px;
-    border-radius: 12px;
+.display-panel {
+    background-color: var(--cor-fundo);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.painel-indicadores h3 {
+/* ==========================================================================
+   SIMULADORES, QUIZ E RPG
+   ========================================================================== */
+.simulators-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.sim-card {
+    background-color: var(--cor-fundo);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-top: 4px solid var(--cor-principal);
+}
+
+.sim-card h3 { margin-bottom: 15px; color: var(--cor-principal); }
+
+.form-group {
     margin-bottom: 15px;
 }
 
-/* RECURSOS DA SEÇÃO DE SURDOS (Podcast) */
-.card-unico-largo {
-    background: var(--azul-card);
-    border: 1px solid var(--azul-card-borda);
-    padding: 35px;
-    border-radius: 12px;
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
 }
 
-.caixa-transcricao {
-    background: rgba(0, 0, 0, 0.25);
-    border-left: 4px solid #38b6ff;
-    padding: 20px;
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.2);
     border-radius: 4px;
-    margin-top: 20px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
 }
 
-/* DESIGN COGNITIVO */
-.lista-cards-cognitivos {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.card-cognitivo {
-    background: var(--azul-card);
-    border: 1px solid var(--azul-card-borda);
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.botoes-rodape-acoes {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.btn-pdf {
-    display: inline-block;
-    padding: 12px 35px;
-    background-color: #a7ffeb;
-    color: #004d40;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 6px;
-}
-
-/* BOTOES FLUTUANTES ADICIONAIS DAS IMAGENS */
-.botao-flutuante-acessibilidade {
-    position: fixed;
-    bottom: 20px;
-    right: 90px; /* Para não colidir com o botão nativo do VLibras */
-    background-color: #00e5ff;
-    color: #000;
+.btn-action {
+    width: 100%;
+    background-color: var(--cor-botao);
+    color: #fff;
     border: none;
-    padding: 12px 20px;
-    border-radius: 30px;
+    padding: 12px;
+    border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
-    z-index: 9999;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
+.btn-action:hover { background-color: var(--cor-botao-hover); }
+
+.result-box {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: var(--cor-fundo-alt);
+    border-radius: 4px;
+    border-left: 4px solid var(--cor-botao);
 }
 
-/* RESPONSIVIDADE */
+.btn-clima-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-weather {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+#btn-calor { background-color: #ffe3e3; color: #c92a2a; }
+#btn-chuva { background-color: #e7f5ff; color: #1c7ed6; }
+
+.sensor-display {
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.status-ideal { background-color: #d4edda; color: #155724; }
+.status-alerta { background-color: #fff3cd; color: #856404; }
+.status-perigo { background-color: #f8d7da; color: #721c24; }
+
+/* GAMIFICAÇÃO EXCLUSIVOS */
+.card-gamification { border-top-color: var(--cor-alerta); }
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-opt {
+    background-color: var(--cor-fundo-alt);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: var(--cor-texto);
+    padding: 12px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.btn-opt:hover { background-color: rgba(0,0,0,0.05); }
+.btn-opt.correct { background-color: #d4edda !important; color: #155724; border-color: #c3e6cb; }
+.btn-opt.wrong { background-color: #f8d7da !important; color: #721c24; border-color: #f5c6cb; }
+
+.rpg-dashboard {
+    display: flex;
+    justify-content: space-between;
+    background: var(--cor-fundo-alt);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   ANIMAÇÃO DE SCROLL (REQUISITO TÉCNICO)
+   ========================================================================== */
+.animar-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animar-scroll.ativo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer {
+    background-color: var(--cor-principal);
+    color: #ffffff;
+    padding: 30px 0;
+    margin-top: 40px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE (MOBILE FIRST / ADAPTAÇÕES)
+   ========================================================================== */
 @media (max-width: 768px) {
-    header { flex-direction: column; gap: 15px; }
-    .grid-dois-cards, .mapa-flex-container { grid-template-columns: 1fr; }
-    .hero-conteudo h1 { font-size: 2rem; }
+    .nav-menu {
+        display: none; /* Escondido por padrão no mobile */
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: var(--cor-fundo);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-menu.active { display: block; }
+    
+    .nav-menu ul {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+    }
+    
+    .menu-toggle { display: flex; }
+    
+    .intro-grid, .indicators-layout, .simulators-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero h1 { font-size: 2rem; }
 }

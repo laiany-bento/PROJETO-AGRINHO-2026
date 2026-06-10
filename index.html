@@ -3,157 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - Tecnologia, Agricultura e Inclusão Digital</title>
+    <title>Agrinho 2026 - Inovação, Campo e Sustentabilidade</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <a href="#conteudo-principal" class="sr-only">Ir para o conteúdo principal</a>
-
-    <div class="barra-acessibilidade-topo">
-        <button onclick="alternarModoEscuro()">Modo Escuro</button>
-        <button onclick="alternarAltoContraste()">Alto Contraste</button>
-        <button onclick="alternarDislexia()">Fonte Dislexia</button>
-        <button onclick="alternarAnimacoes()">Pausar Animações</button>
+    <div class="accessibility-bar" role="complementary" aria-label="Ferramentas de Acessibilidade">
+        <button id="btn-dark" aria-label="Alternar Modo Escuro">🌓 Modo Escuro</button>
+        <button id="btn-contrast" aria-label="Alternar Alto Contraste">⚫ Alto Contraste</button>
+        <button id="btn-dyslexia" aria-label="Alternar Fonte para Dislexia">🔤 Fonte Dislexia</button>
     </div>
 
-    <header>
-        <div class="logo-area">
-            <span class="logo-agrinho">Agrinho 2026</span>
+    <header class="header">
+        <div class="logo">
+            <h2>Agrinho <span>2026</span></h2>
         </div>
-        <nav>
+        <button class="menu-toggle" aria-label="Abrir Menu de Navegação" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu">
             <ul>
                 <li><a href="#introducao">Introdução</a></li>
-                <li><a href="#acessibilidade-visual">Acessibilidade Visual</a></li>
-                <li><a href="#mapa-interativo">Mapa Interativo</a></li>
-                <li><a href="#navegacao-motora">Navegação Motora</a></li>
-                <li><a href="#inclusao-surdos">Inclusão para Surdos</a></li>
-                <li><a href="#design-cognitivo">Design Cognitivo</a></li>
+                <li><a href="#sustentabilidade">Sustentabilidade</a></li>
+                <li><a href="#tecnologia">Tecnologia</a></li>
+                <li><a href="#indicadores">Indicadores</a></li>
+                <li><a href="#laboratorio">Laboratório Tech</a></li>
+                <li><a href="#quiz">Quiz & Jogo</a></li>
             </ul>
         </nav>
     </header>
 
-    <section class="banner-hero" id="bannerHero">
-        <div class="hero-conteudo" id="introducao">
-            <h1>Tecnologia, Agricultura<br>e Inclusão Digital</h1>
-            <p>Cultivando um ecossistema digital onde o conhecimento sobre o campo é acessível, claro e disponível para todas as pessoas.</p>
-            <a href="#mapa-interativo" class="btn-explorar">Explorar Plataforma</a>
+    <section class="hero" style="background: linear-gradient(135deg, rgba(16,42,23,0.85), rgba(24,78,41,0.7)), url('https://images.unsplash.com/photo-1592982537447-744077110b90?q=80&w=1200') center/cover no-repeat;">
+        <div class="hero-content animar-scroll">
+            <span class="badge">Agrinho 2026</span>
+            <h1>Cultivando o Futuro com Tecnologia e Sustentabilidade</h1>
+            <p>Descubra como a robótica, a inteligência artificial e a preservação ambiental estão transformando o campo brasileiro.</p>
+            <a href="#laboratorio" class="btn-main">Explorar Simuladores</a>
         </div>
     </section>
 
-    <main id="conteudo-principal" class="container">
-
-        <section class="sub-banner">
-            <h2>Agrinho 2026: Conectando Saberes para Todos</h2>
-            <p>A evolução no campo só é completa quando a informação que gera sustentabilidade quebra barreiras e alcança a todos de forma igualitária.</p>
-        </section>
-
-        <section id="acessibilidade-visual" class="secao-recurso">
-            <div class="grid-dois-cards">
-                <div class="card-recurso">
-                    <h3>Texto Alternativo (alt)</h3>
-                    <p>Todas as mídias possuem descrições detalhadas para que softwares leitores de tela guiem usuários cegos com precisão.</p>
+    <main>
+        <section id="introducao" class="section container animar-scroll">
+            <div class="section-title">
+                <h2>O Projeto Agrinho 2026</h2>
+                <p>Conectando a nova geração de estudantes ao agro do amanhã.</p>
+            </div>
+            <div class="intro-grid">
+                <div>
+                    <p>O Agrinho 2026 traz como missão central a harmonia entre a <strong>produção de alimentos</strong> e a <strong>preservação ambiental</strong>. Em um mundo em constante evolução tecnológica, o campo se tornou um polo de inovação digital.</p>
+                    <p>O objetivo deste site é servir como um laboratório prático para demonstrar que a robótica, os bioinsumos e a gestão consciente de recursos não são apenas o futuro — eles já são o presente da agricultura sustentável brasileira.</p>
                 </div>
-                <div class="card-recurso">
-                    <h3>Contraste e Fontes Flexíveis</h3>
-                    <p>O layout utiliza unidades em rem que se adaptam ao zoom do navegador, sem perder o alinhamento das cores com alto contraste.</p>
+                <div class="comparison-container" aria-label="Comparativo de Solo: Humano vs Sustentável">
+                    <div class="image-before">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=600" alt="Solo degradado">
+                        <div class="label-box before">Manejo Incorreto</div>
+                    </div>
+                    <div class="image-after">
+                        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad451?q=80&w=600" alt="Solo saudável com plantio direto">
+                        <div class="label-box after">Plantio Direto & Sustentável</div>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider-comparison" id="slider-solo" aria-label="Controlar visualização do antes e depois">
                 </div>
             </div>
         </section>
 
-        <section id="mapa-interativo" class="secao-mapa">
-            <h2>Mapa de Indicadores Inclusivo</h2>
-            <p class="instrucao-mapa">Navegue com o mouse ou utilize a tecla Tab para selecionar os estados ou macrorregiões do Paraná e ler os indicadores ambientais.</p>
-            
-            <div class="botoes-mapa-controle">
-                <button class="btn-mapa" onclick="carregarIndicadores('brasil')">Visão Brasil</button>
-                <button class="btn-mapa ativo" onclick="carregarIndicadores('pr')">📍 Macrorregiões PR</button>
-            </div>
-
-            <div class="mapa-flex-container">
-                <div class="mapa-grafico-box">
-                    <div class="bloco-mapa bloco-1" tabindex="0" onclick="carregarIndicadores('norte')" onkeypress="carregarIndicadores('norte')"></div>
-                    <div class="bloco-mapa bloco-2" tabindex="0" onclick="carregarIndicadores('centro')" onkeypress="carregarIndicadores('centro')"></div>
-                    <div class="bloco-mapa bloco-3" tabindex="0" onclick="carregarIndicadores('sul')" onkeypress="carregarIndicadores('sul')"></div>
+        <section id="sustentabilidade" class="section bg-light">
+            <div class="container animar-scroll">
+                <div class="section-title">
+                    <h2>Mural de Práticas Agroecológicas</h2>
+                    <p>Os três pilares fundamentais da agricultura que respeita o meio ambiente.</p>
                 </div>
-
-                <div class="painel-indicadores">
-                    <h3>📋 Painel Adaptável de Indicadores</h3>
-                    <div id="conteudo-painel">
-                        <p class="placeholder-text">Aguardando seleção. Clique em um estado ou use o teclado para carregar as estatísticas ecológicas estruturadas.</p>
+                <div class="cards-grid">
+                    <div class="card-eco">
+                        <h3>Plantio Direto na Palhada</h3>
+                        <p>A terra nunca fica descoberta. Os restos da colheita anterior servem como um escudo protetor contra erosões, retêm a umidade e nutrem o solo naturalmente.</p>
+                    </div>
+                    <div class="card-eco">
+                        <h3>Rotação de Culturas</h3>
+                        <p>Alternar o cultivo de soja, milho e leguminosas na mesma área evita a exaustão de nutrientes específicos e quebra o ciclo biológico de pragas.</p>
+                    </div>
+                    <div class="card-eco">
+                        <h3>Controle Biológico</h3>
+                        <p>Utilização de inimigos naturais (como microvespas e fungos benéficos) para combater insetos danosos, reduzindo drasticamente o uso de defensivos químicos.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="navegacao-motora" class="secao-recurso">
-            <div class="titulo-numerado">2. Navegação Completa por Teclado</div>
-            <p class="sub-titulo-secao">Garantindo total autonomia para quem possui limitações motoras e utiliza apenas o teclado para navegar.</p>
-            
-            <div class="grid-dois-cards">
-                <div class="card-recurso">
-                    <h3>Foco Altamente Visível</h3>
-                    <p>Links, botões e elementos interativos do mapa exibem bordas brilhantes verde-água ao receber foco via tabulação.</p>
+        <section id="tecnologia" class="section container animar-scroll">
+            <div class="section-title">
+                <h2>Tecnologia de Ponta no Campo</h2>
+                <p>Clique nos cards para expandir o conhecimento técnico aplicado.</p>
+            </div>
+            <div class="tech-accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">🛸 Drones e Sensoriamento Remoto</button>
+                    <div class="accordion-content">
+                        <p>Mapeiam plantações inteiras em minutos usando câmeras multiespectrais. Detectam focos de pragas, falhas de plantio e estresse hídrico com precisão centimétrica.</p>
+                    </div>
                 </div>
-                <div class="card-recurso">
-                    <h3>Ordem Lógica (Tab)</h3>
-                    <p>O fluxo de navegação respeita rigorosamente a leitura natural ocidental da esquerda para a direita, de cima para baixo.</p>
+                <div class="accordion-item">
+                    <button class="accordion-header">🤖 Inteligência Artificial e Automação</button>
+                    <div class="accordion-content">
+                        <p>Algoritmos analisam dados de satélites e sensores de solo para prever a produtividade da safra e automatizar tratores e colheitadeiras sem motoristas.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">💧 Irrigação por Gotejamento Inteligente</button>
+                    <div class="accordion-content">
+                        <p>Sistemas controlados por computador liberam a quantidade exata de água e nutrientes na raiz de cada planta, gerando economia de até 60% de recursos hídricos.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="inclusao-surdos" class="secao-recurso">
-            <div class="titulo-numerado">3. Inclusão para Surdos e Deficientes Auditivos</div>
-            <p class="sub-titulo-secao">Eliminando barreiras de linguagem para garantir o amplo acesso à informação agrícola.</p>
-            
-            <div class="card-unico-largo">
-                <h3>Inovações do Campo (Versão em Áudio e Texto)</h3>
-                <p class="obs-texto">Abaixo você encontra a descrição textual completa para conteúdos com mídias sonoras ou podcasts integrados à nossa plataforma.</p>
-                
-                <div class="caixa-transcricao">
-                    <strong>Transcrição Completa do Episódio:</strong> "A tecnologia de precisão no campo utiliza drones com sensores termais para identificar plantas estressadas por falta de irrigação. Isso permite aplicar água apenas no local correto, poupando até 40% dos mananciais dos rios paranaenses."
+        <section id="indicadores" class="section bg-light">
+            <div class="container animar-scroll">
+                <div class="section-title">
+                    <h2>Central de Indicadores Agro 2026</h2>
+                    <p>Selecione uma região geográfica para carregar os dados de produção e inovação em tempo real.</p>
+                </div>
+                <div class="indicators-layout">
+                    <div class="buttons-panel">
+                        <h4>Nível Nacional</h4>
+                        <button class="btn-geo active" data-region="pr">Paraná</button>
+                        <button class="btn-geo" data-region="mt">Mato Grosso</button>
+                        <button class="btn-geo" data-region="sp">São Paulo</button>
+                        <h4 style="margin-top: 15px;">Macrorregiões do PR</h4>
+                        <button class="btn-geo" data-region="pr-norte">Norte do PR</button>
+                        <button class="btn-geo" data-region="pr-oeste">Oeste do PR</button>
+                        <button class="btn-geo" data-region="pr-sul">Sul / Campos Gerais</button>
+                    </div>
+                    <div class="display-panel" id="painel-indicadores" aria-live="polite">
+                        <h3>Carregando dados...</h3>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="design-cognitivo" class="secao-recurso">
-            <div class="titulo-numerado">4. Design Limpo e Acessibilidade Cognitiva</div>
-            <p class="sub-titulo-secao">Uma navegação tranquila e previsível, pensada para pessoas com TDAH, dislexia, autismo, idosos e estudantes.</p>
-            
-            <div class="lista-cards-cognitivos">
-                <div class="card-cognitivo">
-                    <strong>Controle de Movimento:</strong> O usuário dita o ritmo. Criamos a função para interromper gradientes e transições visuais a qualquer momento através do menu superior.
-                </div>
-                <div class="card-cognitivo">
-                    <strong>Linguagem Direta:</strong> Comunicação sem rodeios, termos truncados ou jargões complexos desnecessários. Informação científica explicada de forma amigável.
-                </div>
-                <div class="card-cognitivo">
-                    <strong>Links Explicativos:</strong> Esqueça o genérico "Clique aqui". Todos os nossos botões de ação trazem destinos claros e transparentes ao usuário.
-                </div>
+        <section id="laboratorio" class="section container animar-scroll">
+            <div class="section-title">
+                <h2>Laboratório Tech Interativo</h2>
+                <p>Explore as ferramentas de engenharia agronômica digital através do código.</p>
             </div>
 
-            <div class="botoes-rodape-acoes">
-                <a href="#" class="btn-pdf">Acessar Regulamento Agrinho em PDF</a>
+            <div class="simulators-grid">
+                <div class="sim-card">
+                    <h3>🧮 Calculadora de Bioinsumos</h3>
+                    <p>Calcule a dosagem ecológica ideal com base no tamanho da área de plantio.</p>
+                    <div class="form-group">
+                        <label for="calc-hec">Tamanho da Área (Hectares):</label>
+                        <input type="number" id="calc-hec" min="1" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="calc-cultura">Cultura Agrícola:</label>
+                        <select id="calc-cultura">
+                            <option value="soja">Soja</option>
+                            <option value="milho">Milho</option>
+                            <option value="trigo">Trigo</option>
+                        </select>
+                    </div>
+                    <button id="btn-calcular" class="btn-action">Calcular Insumos</button>
+                    <div id="result-calc" class="result-box" style="display:none;"></div>
+                </div>
+
+                <div class="sim-card">
+                    <h3>🌡️ Simulador de Sensor de Solo</h3>
+                    <p>Ajuste a umidade ou dispare eventos climáticos extremos para ler os alertas de campo.</p>
+                    <div class="form-group">
+                        <label for="slider-umidade">Umidade do Solo: <span id="val-umidade">50</span>%</label>
+                        <input type="range" id="slider-umidade" min="0" max="100" value="50">
+                    </div>
+                    <div class="btn-clima-group">
+                        <button id="btn-calor" class="btn-weather">☀️ Onda de Calor</button>
+                        <button id="btn-chuva" class="btn-weather">🌧️ Chuva Forte</button>
+                    </div>
+                    <div id="sensor-status" class="sensor-display status-ideal" aria-live="polite">
+                        Status: Ideal para o Plantio
+                    </div>
+                </div>
             </div>
         </section>
 
+        <section id="quiz" class="section bg-light">
+            <div class="container animar-scroll">
+                <div class="section-title">
+                    <h2>Gamificação Educativa</h2>
+                    <p>Teste seus conhecimentos e tome decisões críticas na pele de um produtor rural.</p>
+                </div>
+
+                <div class="simulators-grid">
+                    <div class="sim-card card-gamification">
+                        <h3>🌱 Quiz Agrinho 2026</h3>
+                        <div id="quiz-body">
+                            <p id="quiz-question" style="font-weight: bold; margin-bottom: 15px;"></p>
+                            <div id="quiz-options" class="options-container"></div>
+                        </div>
+                        <div id="quiz-result" style="display: none; text-align: center;">
+                            <h4 id="medal-title"></h4>
+                            <p id="medal-desc" style="font-size: 1.2rem; font-weight: bold; margin: 10px 0;"></p>
+                            <button id="btn-reset-quiz" class="btn-action">Refazer Quiz</button>
+                        </div>
+                    </div>
+
+                    <div class="sim-card card-gamification">
+                        <h3>🚜 Mini-RPG: Jornada do Produtor</h3>
+                        <div id="rpg-stats" class="rpg-dashboard">
+                            <div>🌾 Safra: <span id="rpg-safra">50</span>%</div>
+                            <div>🍃 Eco: <span id="rpg-eco">50</span>%</div>
+                            <div>💰 Caixa: R$ <span id="rpg-caixa">5000</span></div>
+                        </div>
+                        <div id="rpg-body">
+                            <p id="rpg-text" style="margin-bottom: 15px; font-style: italic;"></p>
+                            <div id="rpg-choices" class="options-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <button class="botao-flutuante-acessibilidade" onclick="abrirPainelAcessibilidade()" aria-label="Abrir recursos de acessibilidade">
-        Acessibilidade
-    </button>
-
-    <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Projeto Agrinho. Desenvolvido para a feira de Ciências e Tecnologia.</p>
+            <p style="font-size: 0.85rem; color: var(--cor-secundaria); margin-top: 5px;">Tecnologia, Agricultura e Sustentabilidade para um Futuro Melhor.</p>
         </div>
-    </div>
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
-    </script>
+    </footer>
 
-    <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
