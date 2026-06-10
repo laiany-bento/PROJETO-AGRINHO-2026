@@ -3,264 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrinho 2026 - Gestão Agroecológica e Sustentabilidade</title>
+    <title>Projeto Agrinho 2026 - Inovação e Sustentabilidade no Campo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="barra-acessibilidade" role="complementary" aria-label="Ferramentas de Acessibilidade">
-        <div class="interface barra-acessibilidade-container">
-            <button id="btn-dark-mode" class="btn-acessibilidade" aria-pressed="false">🌙 Modo Escuro</button>
-            <button id="btn-alto-contraste" class="btn-acessibilidade" aria-pressed="false">🌓 Alto Contraste</button>
-            <button id="btn-dislexia" class="btn-acessibilidade" aria-pressed="false">📖 Fonte Dislexia</button>
-        </div>
+    <div class="barra-acessibilidade" role="complementary" aria-label="Opções de Acessibilidade">
+        <button class="btn-acessivel" onclick="alternarModoEscuro()" aria-label="Alternar Modo Escuro">Modo Escuro</button>
+        <button class="btn-acessivel" onclick="alternarAltoContraste()" aria-label="Alternar Alto Contraste">Alto Contraste</button>
+        <button class="btn-acessivel" onclick="alternarDislexia()" aria-label="Alternar Fonte para Dislexia">Fonte para Dislexia</button>
     </div>
 
-    <header class="header">
-        <div class="interface header-container">
-            <div class="logo">
-                <h2>Agrinho <span>2026</span></h2>
-            </div>
-            
-            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navbar">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-
-            <nav class="navbar" id="navbar" aria-label="Menu Principal">
-                <ul>
-                    <li><a href="#contexto">Manejo de Solo</a></li>
-                    <li><a href="#calculadora">Calculadora de Insumos</a></li>
-                    <li><a href="#mapa-agro-section">Indicadores Regionais</a></li>
-                    <li><a href="#flashcards">Práticas Agroecológicas</a></li>
-                    <li><a href="#simuladores">Laboratório e Decisões</a></li>
-                    <li><a href="#quiz-section">Desafio Agrinho</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header>
+        <div class="logo">Agrinho Tech 2026</div>
+        <button class="menu-sanduiche" onclick="toggleMenu()" aria-label="Abrir menu de navegação" aria-expanded="false" id="btn-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav id="nav-principal">
+            <ul id="menu-links">
+                <li><a href="#comparacao" onclick="toggleMenu()">Comparação de Solo</a></li>
+                <li><a href="#indicadores" onclick="toggleMenu()">Indicadores Regionais</a></li>
+                <li><a href="#mural" onclick="toggleMenu()">Práticas Agroecológicas</a></li>
+                <li><a href="#calculadora" onclick="toggleMenu()">Calculadora Tech</a></li>
+                <li><a href="#sensor" onclick="toggleMenu()">Simulador de Sensor</a></li>
+                <li><a href="#rpg" onclick="toggleMenu()">RPG do Campo</a></li>
+                <li><a href="#quiz" onclick="toggleMenu()">Quiz Agrinho</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main id="conteudo-principal">
-        <section class="banner" role="img" aria-label="Plantação sustentável sob monitoramento tecnológico">
-            <div class="banner-content interface">
-                <h1>Sustentabilidade e Inovação no Campo</h1>
-                <p>Entenda como o manejo correto do solo, a rotação de culturas e a tecnologia de precisão aumentam a produtividade protegendo os recursos naturais do Paraná.</p>
-                <a href="#contexto" class="btn-primary">Estudar Conteúdo</a>
-            </div>
-        </section>
+    <section class="banner-hero" id="hero-banner">
+        <div class="hero-conteudo">
+            <h1>Inovação Tecnológica e Sustentabilidade</h1>
+            <p>Conectando a tecnologia do futuro com o manejo responsável do nosso solo.</p>
+        </div>
+    </section>
 
-        <section id="contexto" class="section-padding interface animar-scroll">
-            <div class="section-title">
-                <h2>O Cenário da Agricultura e o Manejo de Solo</h2>
-                <p>A produção agrícola moderna enfrenta o desafio de alimentar uma população crescente mantendo o equilíbrio ecológico. O uso indiscriminado de fertilizantes químicos sem análise prévia causa a degradação da microbiota da terra e a lixiviação de nutrientes para os rios.</p>
-            </div>
+    <main class="container">
 
-            <div class="comparador-wrapper">
-                <div class="img-background">
-                    <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?q=80&w=1200" alt="Solo saudável protegido por cobertura vegetal e plantio direto">
-                    <span class="label-imagem label-direita">Solo Saudável (Plantio Direto) 🌱</span>
-                </div>
-                
-                <div class="img-foreground" id="foto-degradada">
-                    <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?q=80&w=1200" alt="Solo compactado, seco e com rachaduras por falta de manejo sustentável">
-                    <span class="label-imagem label-esquerda">Solo Compactado e Degradado 🪵</span>
-                </div>
-
-                <input type="range" min="0" max="100" value="50" class="slider-comparador" id="slider-divisor" aria-label="Controle deslizante para comparar solo degradado e saudável">
-            </div>
-        </section>
-
-        <section id="calculadora" class="section-padding bg-light">
-            <div class="interface animar-scroll">
-                <div class="section-title">
-                    <h2>🧮 Calculadora de Manejo Ecológico</h2>
-                    <p>Insira a área total da sua propriedade para descobrir a dosagem ideal de insumos biológicos e compostos orgânicos necessários para equilibrar sua lavoura.</p>
-                </div>
-
-                <div class="calculadora-box">
-                    <div class="calc-form">
-                        <label for="calc-area">Área da Plantação (em Hectares):</label>
-                        <input type="number" id="calc-area" min="1" placeholder="Ex: 10" aria-required="true">
-                        
-                        <label for="calc-cultura">Tipo de Cultura Alvo:</label>
-                        <select id="calc-cultura">
-                            <option value="soja">Soja (Fixação de Nitrogênio)</option>
-                            <option value="milho">Milho (Alta Demanda de Matéria Orgânica)</option>
-                            <option value="trigo">Trigo / Cereais de Inverno</option>
-                        </select>
-
-                        <button id="btn-calcular-insumos" class="btn-primary" style="margin-top: 15px; width: 100%;">Calcular Insumos Recomendados</button>
-                    </div>
-
-                    <div id="calc-resultado" class="calc-resultado-painel" aria-live="polite">
-                        <h4>📋 Recomendação Balizada de Bioinsumos:</h4>
-                        <p id="resultado-vazio">Insira a quantidade de hectares ao lado para gerar as estimativas de insumo biológico.</p>
-                        <div id="resultado-dados" style="display: none;">
-                            <p><strong>Composto Orgânico Sólido:</strong> <span id="res-composto" style="font-weight: bold; color: var(--cor-secundaria);">0</span> toneladas.</p>
-                            <p><strong>Biofertilizante Líquido Regenerador:</strong> <span id="res-liquido" style="font-weight: bold; color: var(--cor-secundaria);">0</span> litros.</p>
-                            <p class="nota-sustentavel">💡 *Esta dosagem biológica reduz em até 35% a dependência de NPK químico mineral e evita a contaminação crônica de lençóis freáticos.</p>
-                        </div>
-                    </div>
+        <section id="comparacao" class="animar-scroll card-section">
+            <h2>Efeito Slide de Comparação: O Impacto no Solo</h2>
+            <p class="descricao-contexto">Arraste a barra central para ver o contraste direto entre um solo degradado (Antes) e um solo saudável manejado por plantio direto (Depois).</p>
+            <div class="slider-container" onmousemove="moverSlider(event)" ontouchmove="moverSlider(event)">
+                <div class="slider-img img-depois" aria-label="Solo saudável com cobertura vegetal e plantio direto"></div>
+                <div class="slider-img img-antes" id="imgAntes" aria-label="Solo degradado exposto à erosão"></div>
+                <div class="slider-barra" id="barraSlider">
+                    <div class="slider-botao" aria-hidden="true">&#x21C4;</div>
                 </div>
             </div>
         </section>
 
-        <section id="mapa-agro-section" class="section-padding">
-            <div class="interface animar-scroll">
-                <div class="section-title">
-                    <h2>Central de Indicadores e Dados Agronômicos</h2>
-                    <p>Navegue entre as abas e selecione os polos produtivos para analisar os dados de safra, conservação ambiental e tecnologias aplicadas.</p>
+        <section id="indicadores" class="animar-scroll card-section">
+            <h2>Abas de Indicadores Regionais por Botões</h2>
+            <p class="descricao-contexto">Selecione uma região polo agrícola para analisar instantaneamente seus dados no painel dinâmico.</p>
+            <div class="abas-botoes" role="tablist">
+                <button class="btn-aba ativo" role="tab" aria-selected="true" onclick="mostrarAba('pr', this)">Paraná (PR)</button>
+                <button class="btn-aba" role="tab" aria-selected="false" onclick="mostrarAba('mt', this)">Mato Grosso (MT)</button>
+                <button class="btn-aba" role="tab" aria-selected="false" onclick="mostrarAba('sp', this)">São Paulo (SP)</button>
+            </div>
+            <div id="painel-exibicao" aria-live="polite">
+                <h3>Paraná (Macro polo do Sul)</h3>
+                <p><strong>Produção:</strong> Líder nacional na produção integrada de soja, milho safrinha e cooperativismo forte.</p>
+                <p><strong>Gestão Ambiental:</strong> Referência em Plantio Direto na Palhada, protegendo microbacias hidrográficas contra a erosão.</p>
+                <p><strong>Inovações Tech:</strong> Uso de sensores de telemetria em tempo real para controle de insumos e drones agrícolas de pulverização precisa.</p>
+            </div>
+        </section>
+
+        <section id="mural" class="animar-scroll card-section">
+            <h2>Mural de Práticas Agroecológicas</h2>
+            <p class="descricao-contexto">Conheça os três grandes pilares modernos que protegem o ecossistema do campo enquanto garantem altas safras.</p>
+            <div class="mural-grid">
+                <div class="card-pratica">
+                    <div class="icone-pratica">🌾</div>
+                    <h3>Plantio Direto na Palhada</h3>
+                    <p>A terra nunca fica exposta. Os restos da colheita anterior formam um cobertor que mantém a umidade, reduz o calor e impede a erosão da chuva.</p>
                 </div>
-
-                <div class="abas-mapa-container">
-                    <button id="btn-aba-brasil" class="btn-filtro ativo">🌐 Visão Geral Estados</button>
-                    <button id="btn-aba-parana" class="btn-filtro">🌱 Macrorregiões do PR</button>
+                <div class="card-pratica">
+                    <div class="icone-pratica">🔄</div>
+                    <h3>Rotação de Culturas</h3>
+                    <p>Alternar espécies diferentes na mesma área quebra o ciclo de pragas, melhora os nutrientes da terra e dispensa adubos químicos pesados.</p>
                 </div>
-
-                <div class="mapa-container-flex">
-                    <div class="mapa-svg-box">
-                        <div id="wrapper-mapa-brasil" class="mapa-wrapper-dinamico">
-                            <p style="margin-bottom: 15px; font-weight: bold;">Selecione o Estado para Análise:</p>
-                            <div class="quiz-opcoes" style="margin-top: 0;">
-                                <button class="quiz-btn-opcao estado-path" data-estado="PR">🌾 Paraná (PR)</button>
-                                <button class="quiz-btn-opcao estado-path" data-estado="MT">🚜 Mato Grosso (MT)</button>
-                                <button class="quiz-btn-opcao estado-path" data-estado="SP">🍊 São Paulo (SP)</button>
-                            </div>
-                        </div>
-
-                        <div id="wrapper-mapa-parana" class="mapa-wrapper-dinamico" style="display: none;">
-                            <p style="margin-bottom: 15px; font-weight: bold;">Selecione a Região do PR:</p>
-                            <div class="quiz-opcoes" style="margin-top: 0;">
-                                <button class="quiz-btn-opcao regiao-path" data-regiao="norte">🟢 Região Norte</button>
-                                <button class="quiz-btn-opcao regiao-path" data-regiao="oeste">🔵 Região Oeste</button>
-                                <button class="quiz-btn-opcao regiao-path" data-regiao="sul">🟣 Região Sul & Campos Gerais</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="painel-info-mapa" class="card-tech-interativo painel-mapa" aria-live="polite">
-                        <h3>📋 Painel de Indicadores Agro</h3>
-                        <p id="mapa-placeholder-texto" style="margin-top: 15px; color: #666;">Selecione uma localidade ao lado para carregar o balanço estatístico.</p>
-                        
-                        <div id="mapa-dados-conteudo" style="display: none; margin-top: 15px;">
-                            <h4 id="mapa-nome-regiao" style="color: var(--cor-secundaria); font-size: 1.3rem; margin-bottom: 10px;">Localidade</h4>
-                            <hr style="margin-bottom: 15px; border: 0; height: 1px; background: #ddd;">
-                            
-                            <p><strong>🌾 Produção Agrícola:</strong> <span id="mapa-producao">...</span></p>
-                            <p style="margin-top: 10px;"><strong>🌳 Gestão Ambiental:</strong> <span id="mapa-ambiental">...</span></p>
-                            <p style="margin-top: 10px;"><strong>💡 Inovação Tecnológica:</strong> <span id="mapa-curiosidade">...</span></p>
-                        </div>
-                    </div>
+                <div class="card-pratica">
+                    <div class="icone-pratica">🐞</div>
+                    <h3>Controle Biológico</h3>
+                    <p>Uso inteligente da própria natureza para combater pragas. Insetos benéficos atacam lagartas sem contaminar os alimentos ou as águas.</p>
                 </div>
             </div>
         </section>
 
-        <section id="flashcards" class="section-padding bg-light">
-            <div class="interface animar-scroll">
-                <div class="section-title">
-                    <h2>💡 Flashcards de Práticas Agroecológicas</h2>
-                    <p>Estude os conceitos fundamentais para a conservação e regeneração dos ecossistemas de plantio.</p>
+        <section id="calculadora" class="animar-scroll card-section">
+            <h2>Calculadora de Bioinsumos baseada em Hectares</h2>
+            <p class="descricao-contexto">Insira o tamanho da sua área agrícola e selecione a cultura para descobrir a quantidade recomendada de adubação sustentável.</p>
+            <div class="form-grupo">
+                <label for="hectares">Tamanho da Fazenda / Área (Hectares):</label>
+                <input type="number" id="hectares" min="1" step="any" placeholder="Ex: 50" aria-required="true">
+            </div>
+            <div class="form-grupo">
+                <label for="cultura">Cultura Desejada:</label>
+                <select id="cultura">
+                    <option value="soja">Soja (Fixação Natural de Nitrogênio)</option>
+                    <option value="milho">Milho (Exigência Moderada de Composto)</option>
+                    <option value="trigo">Trigo (Nutrição Estrutural do Solo)</option>
+                </select>
+            </div>
+            <button class="btn-acao" onclick="calcularBioinsumos()">Calcular Insumos Ecológicos</button>
+            <div class="resultado-box" id="resultado-calc" aria-live="polite"></div>
+        </section>
+
+        <section id="sensor" class="animar-scroll card-section">
+            <h2>Simulador de Sensor de Umidade de Solo</h2>
+            <p class="descricao-contexto">Simule o comportamento de uma sonda IoT instalada na lavoura diante de eventos climáticos extremos.</p>
+            <div class="botoes-clima">
+                <button class="btn-clima calor" onclick="mudarUmidade(12)">☀️ Onda de Calor Extrema</button>
+                <button class="btn-clima ideal" onclick="mudarUmidade(52)">🌤️ Clima Ideal / Estável</button>
+                <button class="btn-clima chuva" onclick="mudarUmidade(88)">🌧️ Chuva Forte Torrencial</button>
+            </div>
+            <div class="sensor-display" id="sensorDisplay" aria-live="polite">
+                Aguardando leitura do sensor remoto...
+            </div>
+        </section>
+
+        <section id="rpg" class="animar-scroll card-section">
+            <h2>Mini-RPG "Decisão no Campo": A Jornada do Produtor</h2>
+            <p class="descricao-contexto">Tome decisões difíceis no comando de uma propriedade e equilibre seus recursos para vencer de forma sustentável!</p>
+            <div class="rpg-box">
+                <div class="status-rpg" role="status" aria-label="Painel de Recursos da Fazenda">
+                    <div class="status-item">🌾 Safra: <span id="rpg-safra">100%</span></div>
+                    <div class="status-item">🌳 Eco: <span id="rpg-eco">100%</span></div>
+                    <div class="status-item">💰 Caixa: R$ <span id="rpg-caixa">10000</span></div>
                 </div>
+                <div class="rpg-cenario">
+                    <p id="rpg-texto">Cenário: Uma forte infestação de lagartas ameaça destruir sua plantação de milho. Qual estratégia você adota?</p>
+                </div>
+                <ul class="opcoes-list" id="rpg-opcoes">
+                    <li><button class="btn-opcao" onclick="jogarRPG('biologico')">Opção Sustentável: Aplicar Controle Biológico com liberação de vespas parasitoides.</button></li>
+                    <li><button class="btn-opcao" onclick="jogarRPG('quimico')">Opção Tradicional: Pulverizar agrotóxico químico pesado de choque imediato.</button></li>
+                </ul>
+            </div>
+        </section>
 
-                <div class="grid-flashcards">
-                    <div class="card-agro-premium-estatico">
-                        <div class="icone-box">🌱</div>
-                        <h3>Plantio Direto na Palhada</h3>
-                        <p>Consiste em semear diretamente sobre os resíduos vegetais da colheita anterior. Essa cobertura protege a terra contra o impacto direto da chuva, controla erosões, reduz a temperatura interna do solo e retém umidade por muito mais tempo.</p>
-                    </div>
-
-                    <div class="card-agro-premium-estatico">
-                        <div class="icone-box">🔄</div>
-                        <h3>Rotação de Culturas</h3>
-                        <p>Alternar diferentes espécies de plantas (como a sucessão de soja com milho ou braquiária) na mesma área. Isso quebra o ciclo biológico de pragas, diversifica a absorção de minerais e melhora a fixação natural de nitrogênio na terra.</p>
-                    </div>
-
-                    <div class="card-agro-premium-estatico">
-                        <div class="icone-box">🐝</div>
-                        <h3>Controle Biológico</h3>
-                        <p>Utilização de inimigos naturais (como insetos predadores benéficos, fungos específicos ou vespinhas) para combater ameaças às plantações. Minimiza os custos financeiros e protege os agentes polinizadores essenciais do campo.</p>
-                    </div>
+        <section id="quiz" class="animar-scroll card-section">
+            <h2>Quiz Avançado do Agrinho 2026</h2>
+            <p class="descricao-contexto">Responda corretamente para acumular pontos técnicos e conquistar o seu lugar no Painel de Medalhas!</p>
+            <div class="quiz-box">
+                <div id="quiz-pergunta-container">
+                    <p class="pergunta-texto"><strong>Pergunta:</strong> No sistema de Plantio Direto, qual o principal objetivo de manter a palhada sobre a superfície do solo após a colheita?</p>
+                    <ul class="opcoes-list" id="quiz-opcoes">
+                        <li><button class="btn-opcao" onclick="responderQuiz(false, this)">A) Acelerar o processo de compactação profunda do terreno.</button></li>
+                        <li><button class="btn-opcao" onclick="responderQuiz(true, this)">B) Proteger a terra contra erosão, reter umidade e alimentar a microbiota do solo.</button></li>
+                        <li><button class="btn-opcao" onclick="responderQuiz(false, this)">C) Permitir a queima controlada dos resíduos para limpar o campo mais rápido.</button></li>
+                    </ul>
+                </div>
+                <div class="medalha-container" id="painelMedalha" aria-live="polite">
+                    <div class="medalha-emblema">🎖️</div>
+                    <h3>Sua Conquista Certificada</h3>
+                    <p id="nomeMedalha">Engenheiro Agrônomo do Futuro!</p>
+                    <small>Pontuação máxima obtida nas diretrizes ecológicas do Agrinho.</small>
                 </div>
             </div>
         </section>
 
-        <section id="simuladores" class="section-padding interface animar-scroll">
-            <div class="section-title">
-                <h2>Laboratório Tech e Gestão de Riscos</h2>
-                <p>Simule variáveis climáticas e teste seu raciocínio lógico liderando escolhas agronômicas sustentáveis.</p>
-            </div>
-
-            <div class="grid-cards">
-                <div id="simulador-sensor-card" class="card-tech-interativo">
-                    <h3>Monitoramento de Umidade de Solo</h3>
-                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Simule extremos ecológicos para testar a resposta automática do sistema de irrigação.</p>
-                    
-                    <div class="botoes-clima-container">
-                        <button id="btn-seca" class="btn-clima-evento" style="background-color: #e67e22; color: #fff;">🔥 Onda de Calor</button>
-                        <button id="btn-chuva" class="btn-clima-evento" style="background-color: #3498db; color: #fff;">🌧️ Chuva Forte</button>
-                    </div>
-
-                    <label for="input-umidade" style="margin-top: 15px;">Ajuste Fino Manual:</label>
-                    <input type="range" id="input-umidade" min="0" max="100" value="50" class="slider">
-                    
-                    <p class="resultado-painel">Leitura Atual: <span id="valor-umidade" style="font-weight: bold;">50</span>%</p>
-                    <div id="status-lavoura" class="status-alerta" aria-live="polite">🌱 Condição Ideal: Solo equilibrado e planta saudável.</div>
-                </div>
-
-                <div class="card-tech-interativo" id="card-jornada-rpg">
-                    <h3>Simulador de Gestão: Decisão no Campo</h3>
-                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">Monitore o impacto econômico e socioambiental de cada diretriz adotada.</p>
-                    
-                    <div class="status-jornada-container">
-                        <div class="status-item">🌾 Safra: <span id="status-producao" style="font-weight:bold; color:#27ae60;">100%</span></div>
-                        <div class="status-item">🌳 Eco: <span id="status-natureza" style="font-weight:bold; color:#2ecc71;">100%</span></div>
-                        <div class="status-item">💰 Caixa: <span id="status-caixa" style="font-weight:bold; color:#f1c40f;">R$ 50.000</span></div>
-                    </div>
-
-                    <div class="narrativa-box" id="narrativa-texto" aria-live="polite" style="background: rgba(0,0,0,0.04); padding: 15px; border-radius: 6px; margin: 15px 0; min-height: 80px;">
-                        Fase Inicial: A safra está prestes a começar. Qual será seu direcionamento ecológico e de investimentos?
-                    </div>
-
-                    <div id="jornada-botoes" class="quiz-opcoes">
-                        <button class="quiz-btn-opcao" data-escolha="arvores">🌳 Reflorestar matas ciliares nativas próximas às águas</button>
-                        <button class="quiz-btn-opcao" data-escolha="desmatar">🪓 Retirar mata de reserva legal para abrir novos alqueires</button>
-                        <button class="quiz-btn-opcao" data-escolha="irrigacao">💧 Implantar gotejamento computadorizado por telemetria</button>
-                    </div>
-
-                    <button id="btn-reiniciar-jornada" class="btn-primary" style="display: none; width: 100%; margin-top: 15px;">Reiniciar Simulação</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="quiz-section" class="section-padding bg-light">
-            <div class="quiz-container" aria-live="polite">
-                <div class="section-title">
-                    <h2>Desafio Sustentável Agrinho</h2>
-                    <p>Avalie seus conhecimentos consolidados e receba feedbacks instantâneos.</p>
-                </div>
-                
-                <div id="quiz-box">
-                    <h3 id="pergunta">Carregando questionário técnico...</h3>
-                    <div id="opcoes" class="quiz-opcoes"></div>
-                </div>
-
-                <div id="resultado-quiz" class="resultado-oculto">
-                    <h3>Avaliação Encerrada!</h3>
-                    <p id="placar">Você acertou 0 de 0.</p>
-                    <div id="badge-container" style="margin: 20px 0;"></div>
-                    <button id="btn-reiniciar" class="btn-primary">Refazer Desafio</button>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <footer class="footer">
-        <div class="interface footer-container">
-            <p>&copy; 2026 Projeto Agrinho Escolar - Conhecimento, Tecnologia e Preservação Coletiva.</p>
-        </div>
+    <footer>
+        <p>&copy; 2026 Projeto Agrinho - Tecnologia e Consciência Ecológica. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

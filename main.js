@@ -1,355 +1,265 @@
-document.addEventListener("DOMContentLoaded", () => {
-    inicializarClimaDinamico();
-    carregarConfiguracoesAcessibilidade();
-    inicializarMenuMobile();
-    inicializarComparadorImagens();
-    inicializarCalculadoraInsumosReal();
-    inicializarAbasIndicadores();
-    inicializarSimuladorUmidade();
-    inicializarMiniRpgCampos();
-    inicializarAnimacaoDeScroll();
-    inicializarQuizSustentavel();
+/* ==========================================================================
+   CATEGORIA 3: COMPONENTES VISUAIS (Menu Sanduíche Mobile)
+   ========================================================================== */
+function toggleMenu() {
+    const menuLinks = document.getElementById('menu-links');
+    const btnMenu = document.getElementById('btn-menu');
+    
+    menuLinks.classList.toggle('ativo');
+    
+    // Atualiza estados do leitor de tela para acessibilidade
+    const estaAtivo = menuLinks.classList.contains('ativo');
+    btnMenu.setAttribute('aria-expanded', estaAtivo);
+}
+
+/* ==========================================================================
+   CATEGORIA 2 & CATEGORIA 7: RECURSOS DE ACESSIBILIDADE & LOCALSTORAGE
+   ========================================================================== */
+function alternarModoEscuro() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('agrinho_darkMode', document.body.classList.contains('dark-mode'));
+}
+
+function alternarAltoContraste() {
+    document.body.classList.toggle('alto-contraste');
+    localStorage.setItem('agrinho_altoContraste', document.body.classList.contains('alto-contraste'));
+}
+
+function alternarDislexia() {
+    document.body.classList.toggle('fonte-dislexia');
+    localStorage.setItem('agrinho_dislexia', document.body.classList.contains('fonte-dislexia'));
+}
+
+// Executado de forma automática assim que a página é lida pelo navegador
+window.addEventListener('DOMContentLoaded', () => {
+    // Carrega preferências salvas no Banco de Dados Local do usuário
+    if (localStorage.getItem('agrinho_darkMode') === 'true') document.body.classList.add('dark-mode');
+    if (localStorage.getItem('agrinho_altoContraste') === 'true') document.body.classList.add('alto-contraste');
+    if (localStorage.getItem('agrinho_dislexia') === 'true') document.body.classList.add('fonte-dislexia');
+    
+    // Ativa as rotinas de verificação climática e efeitos visuais
+    verificarHorarioEClimaDinamico();
+    checarScrollEvent();
 });
 
-/* 1. SISTEMA AUTOMÁTICO DE CLIMA POR HORÁRIO */
-function inicializarClimaDinamico() {
-    const hora = new Date().getHours();
-    const body = document.body;
-    body.classList.remove("clima-manha", "clima-tarde", "clima-noite");
-
-    if (hora >= 6 && hora < 12) {
-        body.classList.add("clima-manha");
-    } else if (hora >= 12 && hora < 18) {
-        body.classList.add("clima-tarde");
+/* ==========================================================================
+   CATEGORIA 7: CONTROLE DE HORÁRIO DO SISTEMA (Clima Dinâmico)
+   ========================================================================== */
+function verificarHorarioEClimaDinamico() {
+    const horaAtual = new Date().getHours();
+    const banner = document.getElementById('hero-banner');
+    
+    if (horaAtual >= 6 && horaAtual < 12) {
+        // Manhã: Tons claros/verdes
+        banner.style.background = "linear-gradient(rgba(27, 94, 32, 0.45), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad451?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat";
+    } else if (horaAtual >= 12 && horaAtual < 18) {
+        // Tarde: Tons alaranjados
+        banner.style.background = "linear-gradient(rgba(230, 126, 34, 0.45), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat";
     } else {
-        body.classList.add("clima-noite");
+        // Noite: Tons azulados escuros
+        banner.style.background = "linear-gradient(rgba(38, 50, 56, 0.7), rgba(0, 0, 0, 0.85)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat";
     }
 }
 
-/* 2. BARRA DE ACESSIBILIDADE */
-function carregarConfiguracoesAcessibilidade() {
-    if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
-    if (localStorage.getItem("contrast") === "active") document.body.classList.add("alto-contraste");
-    if (localStorage.getItem("dyslexia") === "active") document.body.classList.add("fonte-dislexia");
-
-    document.getElementById("btn-dark-mode")?.addEventListener("click", () => {
-        const atv = document.body.classList.toggle("dark-mode");
-        document.body.classList.remove("alto-contraste");
-        localStorage.setItem("theme", atv ? "dark" : "light");
-        localStorage.setItem("contrast", "inactive");
-    });
-
-    document.getElementById("btn-alto-contraste")?.addEventListener("click", () => {
-        const atv = document.body.classList.toggle("alto-contraste");
-        document.body.classList.remove("dark-mode");
-        localStorage.setItem("contrast", atv ? "active" : "inactive");
-        localStorage.setItem("theme", "light");
-    });
-
-    document.getElementById("btn-dislexia")?.addEventListener("click", () => {
-        const atv = document.body.classList.toggle("fonte-dislexia");
-        localStorage.setItem("dyslexia", atv ? "active" : "inactive");
-    });
+/* ==========================================================================
+   CATEGORIA 3: EFEITO SLIDE DE COMPARAÇÃO (Antes e Depois)
+   ========================================================================== */
+function moverSlider(evento) {
+    const container = evento.currentTarget.getBoundingClientRect();
+    let clienteX = evento.clientX;
+    
+    // Suporte para telas de toque (Mobile)
+    if (evento.touches && evento.touches.length > 0) {
+        clienteX = evento.touches[0].clientX;
+    }
+    
+    let posicaoX = clienteX - container.left;
+    
+    // Impede transbordo visual das bordas
+    if (posicaoX < 0) posicaoX = 0;
+    if (posicaoX > container.width) posicaoX = container.width;
+    
+    const porcentagem = (posicaoX / container.width) * 100;
+    
+    document.getElementById('imgAntes').style.width = porcentagem + '%';
+    document.getElementById('barraSlider').style.left = porcentagem + '%';
 }
 
-/* 3. MENU MOBILE */
-function inicializarMenuMobile() {
-    const menuToggle = document.getElementById("menuToggle");
-    const navbar = document.getElementById("navbar");
-    if (menuToggle && navbar) {
-        menuToggle.addEventListener("click", () => navbar.classList.toggle("active"));
+/* ==========================================================================
+   CATEGORIA 4: ELEMENTOS EDUCATIVOS (Abas de Indicadores)
+   ========================================================================== */
+const bancoDadosRegioes = {
+    pr: {
+        titulo: "Paraná (Macro polo do Sul)",
+        producao: "Líder nacional na produção integrada de soja, milho safrinha e cooperativismo forte.",
+        gestao: "Referência em Plantio Direto na Palhada, protegendo microbacias hidrográficas contra a erosão.",
+        inovacao: "Uso de sensores de telemetria em tempo real para controle de insumos e drones agrícolas de pulverização precisa."
+    },
+    mt: {
+        titulo: "Mato Grosso (Gigante do Centro-Oeste)",
+        producao: "Maior produtor nacional de grãos de alta escala, algodão de exportação e pecuária integrada.",
+        gestao: "Expansão massiva de sistemas ILPF (Integração Lavoura-Pecuária-Floresta) para recuperação de pastagens degradadas.",
+        inovacao: "Sistemas ERP em nuvem de ponta no monitoramento de maquinários via satélite e tratores autônomos por GPS."
+    },
+    sp: {
+        titulo: "São Paulo (Potência Tecnológica do Sudeste)",
+        producao: "Líder global do setor sucroenergético (cana, etanol, açúcar) e polo dominante na citricultura.",
+        gestao: "Certificações rígidas de emissão zero de carbono e eliminação total da prática de queimadas nas colheitas.",
+        inovacao: "Uso em massa de biofábricas para multiplicação de macrobiológicos e inteligência artificial na previsão climática."
+    }
+};
+
+function mostrarAba(chaveRegiao, elementoBotao) {
+    document.querySelectorAll('.btn-aba').forEach(btn => {
+        btn.classList.remove('ativo');
+        btn.setAttribute('aria-selected', 'false');
+    });
+    
+    elementoBotao.classList.add('ativo');
+    elementoBotao.setAttribute('aria-selected', 'true');
+    
+    const dados = bancoDadosRegioes[chaveRegiao];
+    const painel = document.getElementById('painel-exibicao');
+    
+    painel.innerHTML = `
+        <h3>${dados.titulo}</h3>
+        <p><strong>Produção:</strong> ${dados.producao}</p>
+        <p><strong>Gestão Ambiental:</strong> ${dados.gestao}</p>
+        <p><strong>Inovações Tech:</strong> ${dados.inovacao}</p>
+    `;
+}
+
+/* ==========================================================================
+   CATEGORIA 5: CALCULADORA DE BIOINSUMOS INTELIGENTE
+   ========================================================================== */
+function calcularBioinsumos() {
+    const campoHectares = document.getElementById('hectares').value;
+    const hectares = parseFloat(campoHectares);
+    const cultura = document.getElementById('cultura').value;
+    const resultadoBox = document.getElementById('resultado-calc');
+    
+    if (!hectares || hectares <= 0) {
+        alert("Por favor, digite uma quantidade de hectares válida.");
+        return;
+    }
+    
+    let taxaComposto = 0;
+    let taxaBiofertilizante = 0;
+    
+    if (cultura === 'soja') {
+        taxaComposto = 2.0; taxaBiofertilizante = 12.0;
+    } else if (cultura === 'milho') {
+        taxaComposto = 3.0; taxaBiofertilizante = 20.0;
+    } else if (cultura === 'trigo') {
+        taxaComposto = 2.5; taxaBiofertilizante = 15.0;
+    }
+    
+    const totalComposto = hectares * taxaComposto;
+    const totalBio = hectares * taxaBiofertilizante;
+    
+    resultadoBox.style.display = "block";
+    resultadoBox.innerHTML = `
+        <strong>📋 Relatório de Insumos Sustentáveis para sua Área (${hectares} ha):</strong><br>
+        <br>
+        🌱 <strong>Composto Orgânico Regenerativo:</strong> ${totalComposto.toFixed(1)} Toneladas.<br>
+        💧 <strong>Biofertilizante Líquido Inoculante:</strong> ${totalBio.toFixed(0)} Litros.<br>
+        <br>
+        <em>Benefício Técnico: Esta combinação reduz a dependência de adubos industriais e promove a proliferação de microrganismos benéficos!</em>
+    `;
+}
+
+/* ==========================================================================
+   CATEGORIA 5: SIMULADOR DE SENSOR DE UMIDADE DE SOLO
+   ========================================================================== */
+function mudarUmidade(porcentagem) {
+    const display = document.getElementById('sensorDisplay');
+    
+    if (porcentagem <= 20) {
+        display.innerText = `🚨 Umidade: ${porcentagem}% - Alerta Crítico: Solo Seco! Risco de estresse hídrico. Ative o gotejamento remoto.`;
+        display.style.backgroundColor = "#ffcdd2"; display.style.color = "#b71c1c"; display.style.borderColor = "#e53935";
+    } else if (porcentagem >= 75) {
+        display.innerText = `⚠️ Umidade: ${porcentagem}% - Alerta Climático: Solo Encharcado. Perigo de lixiviação e apodrecimento radicular!`;
+        display.style.backgroundColor = "#bbdefb"; display.style.color = "#0d47a1"; display.style.borderColor = "#1e88e5";
+    } else {
+        display.innerText = `✅ Umidade: ${porcentagem}% - Leitura Ideal. Condições perfeitas para o desenvolvimento estável.`;
+        display.style.backgroundColor = "#c8e6c9"; display.style.color = "#1b5e20"; display.style.borderColor = "#4caf50";
     }
 }
 
-/* 4. SLIDER COMPARADOR VISUAL */
-function inicializarComparadorImagens() {
-    const slider = document.getElementById("slider-divisor");
-    const fotoDegradada = document.getElementById("foto-degradada");
-    const wrapper = document.querySelector(".comparador-wrapper");
-
-    if (!slider || !fotoDegradada || !wrapper) return;
-
-    slider.addEventListener("input", () => {
-        fotoDegradada.style.width = `${slider.value}%`;
-    });
-
-    const ajustarLarguraInterna = () => {
-        const img = fotoDegradada.querySelector("img");
-        if (img) img.style.width = `${wrapper.offsetWidth}px`;
-    };
-    ajustarLarguraInterna();
-    window.addEventListener("resize", ajustarLarguraInterna);
-}
-
-/* 5. SISTEMA DA CALCULADORA DE BIOINSUMOS AGRÍCOLAS RECONSTRUÍDO */
-function inicializarCalculadoraInsumosReal() {
-    const btn = document.getElementById("btn-calcular-insumos");
-    if (!btn) return;
-
-    btn.addEventListener("click", () => {
-        const area = parseFloat(document.getElementById("calc-area").value);
-        const cultura = document.getElementById("calc-cultura").value;
-        const placeholder = document.getElementById("resultado-vazio");
-        const dadosBox = document.getElementById("resultado-dados");
-
-        if (isNaN(area) || area <= 0) {
-            alert("Por favor, insira uma quantidade de hectares válida.");
-            return;
-        }
-
-        let proPorcaoComposto = 0; // toneladas por hectare
-        let proPorcaoLiquido = 0;   // litros por hectare
-
-        if (cultura === "soja") {
-            proPorcaoComposto = 2.5; proPorcaoLiquido = 15;
-        } else if (cultura === "milho") {
-            proPorcaoComposto = 4.0; proPorcaoLiquido = 25;
-        } else {
-            proPorcaoComposto = 3.0; proPorcaoLiquido = 20;
-        }
-
-        placeholder.style.display = "none";
-        dadosBox.style.display = "block";
-
-        document.getElementById("res-composto").innerText = (area * proPorcaoComposto).toFixed(1);
-        document.getElementById("res-liquido").innerText = (area * proPorcaoLiquido).toFixed(0);
-    });
-}
-
-/* 6. CENTRAL DE INDICADORES DE PRODUÇÃO E CONTEXTO REGIONAL */
-function inicializarAbasIndicadores() {
-    const dadosBrasil = {
-        PR: {
-            nome: "Estado do Paraná 🌾",
-            producao: "Líder expressivo em complexos de grãos (soja, trigo, milho) e forte cadeia de avicultura.",
-            ambiental: "Referência absoluta na conservação de bacias via plantio direto contínuo na palhada.",
-            curiosidade: "Possui cooperativas gigantes que usam big data para planejar os dias exatos de colheita coletiva."
-        },
-        MT: {
-            nome: "Mato Grosso 🚜",
-            producao: "Maior produtor nacional isolado de grãos de alta escala comercial.",
-            ambiental: "Uso pioneiro de bioinsumos microbiológicos integrados em grandes pivôs centrais.",
-            curiosidade: "Usa telemetria automatizada em comboios de colheitadeiras sem condutores humanos locais."
-        },
-        SP: {
-            nome: "São Paulo 🍊",
-            producao: "Cinturão citrícola mundial, exportações de suco de laranja e canaviais extensos.",
-            ambiental: "Reaproveitamento energético de subprodutos, gerando eletricidade limpa por biomassa do bagaço.",
-            curiosidade: "Sede das principais Agtechs de desenvolvimento de softwares para drones no hemisfério sul."
-        }
-    };
-
-    const dadosParana = {
-        norte: {
-            nome: "Região Norte do Paraná 🟢",
-            producao: "Polo de cafés especiais de alto valor e diversificação em fruticultura de cooperativa.",
-            ambiental: "Manejo integrado de pragas diminuindo a carga química para salvaguardar lençóis freáticos.",
-            curiosidade: "Sensores em drones mapeiam falhas de plantio foliar logo na brotação da muda."
-        },
-        oeste: {
-            nome: "Região Oeste Paranaense 🔵",
-            producao: "Potência em piscicultura automatizada (tilápias) e avicultura integrada complexa.",
-            ambiental: "Sistemas de biodigestores convertendo dejetos orgânicos animais em gás e biofertilizante.",
-            curiosidade: "Pequenas propriedades rurais geram energia elétrica própria convertendo biomassa de suínos."
-        },
-        sul: {
-            nome: "Sul e Campos Gerais do PR 🟣",
-            producao: "Culturas de inverno qualificadas (trigo e cevada) e bacia leiteira de precisão.",
-            ambiental: "Reflorestamento intensivo das matas ciliares ao longo dos rios locais.",
-            curiosidade: "Região considerada o berço histórico da implantação da agricultura de conservação na palha."
-        }
-    };
-
-    const btnB = document.getElementById("btn-aba-brasil");
-    const btnP = document.getElementById("btn-aba-parana");
-    const wrapB = document.getElementById("wrapper-mapa-brasil");
-    const wrapP = document.getElementById("wrapper-mapa-parana");
-    const placeholder = document.getElementById("mapa-placeholder-texto");
-    const conteudo = document.getElementById("mapa-dados-conteudo");
-
-    if (!btnB || !btnP) return;
-
-    const alternarAba = (aba) => {
-        if (aba === "brasil") {
-            btnB.classList.add("ativo"); btnP.classList.remove("ativo");
-            wrapB.style.display = "block"; wrapP.style.display = "none";
-        } else {
-            btnP.classList.add("ativo"); btnB.classList.remove("ativo");
-            wrapP.style.display = "block"; wrapB.style.display = "none";
-        }
-        placeholder.style.display = "block"; conteudo.style.display = "none";
-    };
-
-    btnB.addEventListener("click", () => alternarAba("brasil"));
-    btnP.addEventListener("click", () => alternarAba("parana"));
-
-    function exibirPainel(fonte, id) {
-        const item = fonte[id];
-        if (item) {
-            placeholder.style.display = "none";
-            conteudo.style.display = "block";
-            document.getElementById("mapa-nome-regiao").innerText = item.nome;
-            document.getElementById("mapa-producao").innerText = item.producao;
-            document.getElementById("mapa-ambiental").innerText = item.ambiental;
-            document.getElementById("mapa-curiosidade").innerText = item.curiosidade;
-        }
+/* ==========================================================================
+   CATEGORIA 5: MINI-RPG "DECISÃO NO CAMPO" (Lógica do Jogo)
+   ========================================================================== */
+function jogarRPG(opcaoEscolhida) {
+    const textoCenario = document.getElementById('rpg-texto');
+    const boxOpcoes = document.getElementById('rpg-opcoes');
+    
+    const medidorSafra = document.getElementById('rpg-safra');
+    const medidorEco = document.getElementById('rpg-eco');
+    const medidorCaixa = document.getElementById('rpg-caixa');
+    
+    if (opcaoEscolhida === 'biologico') {
+        medidorSafra.innerText = "95%"; medidorEco.innerText = "100%"; medidorCaixa.innerText = "8500";
+        textoCenario.innerHTML = "🎯 <strong>Resultado: Excelente decisão!</strong> As microvespas controlaram a lagarta sem resíduos tóxicos. Sua biodiversidade local continuou intacta e o solo totalmente preservado.";
+    } else if (opcaoEscolhida === 'quimico') {
+        medidorSafra.innerText = "100%"; medidorEco.innerText = "35%"; medidorCaixa.innerText = "11500";
+        textoCenario.innerHTML = "⚠️ <strong>Resultado: Alerta Ecológico!</strong> O defensivo de choque matou as pragas rápido. Porém, dizimou abelhas polinizadoras e poluiu o lençol freático local.";
     }
-
-    document.querySelectorAll(".estado-path").forEach(b => b.addEventListener("click", () => exibirPainel(dadosBrasil, b.getAttribute("data-estado"))));
-    document.querySelectorAll(".regiao-path").forEach(b => b.addEventListener("click", () => exibirPainel(dadosParana, b.getAttribute("data-regiao"))));
+    
+    boxOpcoes.innerHTML = `<li><button class="btn-opcao" style="text-align:center; font-weight:700;" onclick="reiniciarRPG()">Reiniciar Simulação RPG</button></li>`;
 }
 
-/* 7. SIMULADOR DA LEITURA DE SENSORES */
-function inicializarSimuladorUmidade() {
-    const input = document.getElementById("input-umidade");
-    const txtValor = document.getElementById("valor-umidade");
-    const txtStatus = document.getElementById("status-lavoura");
-    const btnS = document.getElementById("btn-seca");
-    const btnC = document.getElementById("btn-chuva");
-
-    function processarMudanca(umidade) {
-        if (!input || !txtValor || !txtStatus) return;
-        input.value = umidade;
-        txtValor.innerText = umidade;
-
-        if (umidade < 30) {
-            txtStatus.innerHTML = "🥀 <b>Alerta Crítico: Solo Seco!</b> Disparando gotejadores de precisão.";
-            txtStatus.style.color = "#ea580c";
-        } else if (umidade >= 30 && umidade <= 70) {
-            txtStatus.innerHTML = "🌱 <b>Equilíbrio Perfeito:</b> Condição ideal para o desenvolvimento radicular.";
-            txtStatus.style.color = "#16a34a";
-        } else {
-            txtStatus.innerHTML = "💧 <b>Aviso: Solo Saturado!</b> Risco de asfixia radicular, válvulas fechadas.";
-            txtStatus.style.color = "#2563eb";
-        }
-    }
-
-    input?.addEventListener("input", (e) => processarMudanca(e.target.value));
-    btnS?.addEventListener("click", () => processarMudanca(12));
-    btnC?.addEventListener("click", () => processarMudanca(92));
+function reiniciarRPG() {
+    document.getElementById('rpg-safra').innerText = "100%";
+    document.getElementById('rpg-eco').innerText = "100%";
+    document.getElementById('rpg-caixa').innerText = "10000";
+    document.getElementById('rpg-texto').innerText = "Cenário: Uma forte infestação de lagartas ameaça destruir sua plantação de milho. Qual estratégia você adota?";
+    document.getElementById('rpg-opcoes').innerHTML = `
+        <li><button class="btn-opcao" onclick="jogarRPG('biologico')">Opção Sustentável: Aplicar Controle Biológico com liberação de vespas parasitoides.</button></li>
+        <li><button class="btn-opcao" onclick="jogarRPG('quimico')">Opção Tradicional: Pulverizar agrotóxico químico pesado de choque imediato.</button></li>
+    `;
 }
 
-/* 8. MINI-RPG JORNADA DO PRODUTOR */
-function inicializarMiniRpgCampos() {
-    let safra = 100, natureza = 100, verba = 50000;
-    const elS = document.getElementById("status-producao");
-    const elN = document.getElementById("status-natureza");
-    const elV = document.getElementById("status-caixa");
-    const elTxt = document.getElementById("narrativa-texto");
-    const containerBtns = document.getElementById("jornada-botoes");
-    const btnRst = document.getElementById("btn-reiniciar-jornada");
-
-    const caminhos = {
-        arvores: {
-            relato: "🌲 <b>Manejo Conservacionista de Sucesso!</b> A mata ciliar barrou detritos de chuvas, evitou assoreamentos e trouxe predadores benéficos, equilibrando a plantação de forma orgânica.",
-            dS: 5, dN: 20, dV: -6000
-        },
-        desmatar: {
-            relato: "🪓 <b>Foco Exclusivo em Lucro Imediato:</b> A abertura de área trouxe colheita recorde no ano um, mas gerou clareiras de erosão profundas que desestruturaram o relevo produtivo no longo prazo.",
-            dS: -20, dN: -40, dV: 18000
-        },
-        irrigacao: {
-            relato: "💧 <b>Inovação Tecnológica Implementada!</b> Aspersores computadorizados monitoram o estresse hídrico com precisão celular, promovendo economia severa e produção constante.",
-            dS: 25, dN: 10, dV: -14000
-        }
-    };
-
-    if (!containerBtns) return;
-
-    containerBtns.querySelectorAll(".quiz-btn-opcao").forEach(b => {
-        b.addEventListener("click", () => {
-            const decisao = caminhos[b.getAttribute("data-escolha")];
-            if (decisao) {
-                safra = Math.max(0, safra + decisao.dS);
-                natureza = Math.max(0, Math.min(100, natureza + decisao.dN));
-                verba += decisao.dV;
-
-                elS.innerText = `${safra}%`;
-                elN.innerText = `${natureza}%`;
-                elV.innerText = `R$ ${verba.toLocaleString('pt-BR')}`;
-                elTxt.innerHTML = `${decisao.relato}<br><br><b>Resultado:</b> Avalie os indicadores acima!`;
-
-                containerBtns.style.display = "none";
-                btnRst.style.display = "block";
+/* ==========================================================================
+   CATEGORIA 6: QUIZ AVANÇADO COM FEEDBACK INSTANTÂNEO & MEDALHAS
+   ========================================================================== */
+function responderQuiz(isCorreto, elementoBotao) {
+    const blocoOpcoes = elementoBotao.closest('#quiz-opcoes');
+    const todosBotoes = blocoOpcoes.querySelectorAll('.btn-opcao');
+    
+    todosBotoes.forEach(btn => btn.disabled = true);
+    
+    if (isCorreto) {
+        elementoBotao.style.backgroundColor = "#2e7d32";
+        elementoBotao.style.color = "#ffffff";
+        document.getElementById('painelMedalha').style.display = "block";
+    } else {
+        elementoBotao.style.backgroundColor = "#c62828";
+        elementoBotao.style.color = "#ffffff";
+        
+        // Destaca visualmente a alternativa correta em verde para aprendizado imediato
+        todosBotoes.forEach(btn => {
+            if (btn.textContent.includes("Proteger a terra contra erosão")) {
+                btn.style.backgroundColor = "#2e7d32";
+                btn.style.color = "#ffffff";
             }
         });
-    });
-
-    btnRst?.addEventListener("click", () => {
-        safra = 100; natureza = 100; verba = 50000;
-        elS.innerText = "100%"; elN.innerText = "100%"; elV.innerText = "R$ 50.000";
-        elTxt.innerHTML = "Fase Inicial: A safra está prestes a começar. Qual será seu direcionamento ecológico e de investimentos?";
-        containerBtns.style.display = "flex";
-        btnRst.style.display = "none";
-    });
-}
-
-/* 9. ANIMAÇÃO AO ROLAR PÁGINA */
-function inicializarAnimacaoDeScroll() {
-    const verificar = () => {
-        document.querySelectorAll(".animar-scroll").forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight * 0.88) {
-                el.classList.add("visivel");
-            }
-        });
-    };
-    verificar();
-    window.addEventListener("scroll", verificar);
-}
-
-/* 10. QUIZ TÉCNICO E CONVENÇÃO DE MEDALHAS */
-function inicializarQuizSustentavel() {
-    const questoes = [
-        { enunciado: "Qual técnica protege o solo contra impactos diretos da chuva e erosões severas?", alternativas: ["Plantio Direto na Palhada", "Aração profunda contínua", "Queimada controlada do resto de safra"], correta: 0 },
-        { enunciado: "Qual o principal benefício agronômico do sistema de rotação de culturas?", alternativas: ["Esgotar minerais superficiais", "Quebrar ciclos de pragas e fixar nitrogênio biologicamente", "Substituir maquinários pesados"], correta: 1 },
-        { enunciado: "O uso de predadores biológicos contra lagartas na lavoura visa prioritariamente o quê?", alternativas: ["Eliminar totalmente a necessidade de água", "Aumentar os custos", "Reduzir o uso de defensivos químicos sintéticos agressivos"], correta: 2 }
-    ];
-
-    let indice = 0, escore = 0;
-    const pElement = document.getElementById("pergunta");
-    const oElement = document.getElementById("opcoes");
-    const bQuiz = document.getElementById("quiz-box");
-    const bRes = document.getElementById("resultado-quiz");
-
-    function renderizarQuestao() {
-        if (!pElement || !oElement) return;
-        if (indice < questoes.length) {
-            pElement.innerText = questoes[indice].enunciado;
-            oElement.innerHTML = "";
-            questoes[indice].alternativas.forEach((opcao, idx) => {
-                const btnOpt = document.createElement("button");
-                btnOpt.innerText = opcao;
-                btnOpt.classList.add("quiz-btn-opcao");
-                btnOpt.addEventListener("click", () => {
-                    oElement.querySelectorAll(".quiz-btn-opcao").forEach(b => b.disabled = true);
-                    if (idx === questoes[indice].corrita || idx === questoes[indice].correct || idx === questoes[indice].correta) {
-                        escore++;
-                        btnOpt.style.backgroundColor = "#10b981"; btnOpt.style.color = "#fff";
-                    } else {
-                        btnOpt.style.backgroundColor = "#ef4444"; btnOpt.style.color = "#fff";
-                        oElement.querySelectorAll(".quiz-btn-opcao")[questoes[indice].correta].style.backgroundColor = "#10b981";
-                        oElement.querySelectorAll(".quiz-btn-opcao")[questoes[indice].correta].style.color = "#fff";
-                    }
-                    setTimeout(() => { indice++; renderizarQuestao(); }, 1600);
-                });
-                oElement.appendChild(btnOpt);
-            });
-        } else {
-            if (bQuiz && bRes) {
-                bQuiz.style.display = "none"; bRes.style.display = "block";
-                document.getElementById("placar").innerText = `Você computou ${escore} de ${questoes.length} acertos técnicos.`;
-                let honra = escore === 3 ? "🏆 Gestor Agroecológico do Amanhã!" : escore === 2 ? "🚜 Consultor de Conservação" : "🌱 Estudante Sustentável";
-                let corHonra = escore === 3 ? "#eab308" : escore === 2 ? "#0284c7" : "#64748b";
-                document.getElementById("badge-container").innerHTML = `<span style="display:inline-block; padding:10px 20px; border:3px solid ${corHonra}; color:${corHonra}; border-radius:20px; font-weight:bold;">${honra}</span>`;
-            }
-        }
     }
-
-    document.getElementById("btn-reiniciar")?.addEventListener("click", () => {
-        indice = 0; escore = 0;
-        bRes.style.display = "none"; bQuiz.style.display = "block";
-        renderizarQuestao();
-    });
-
-    renderizarQuestao();
 }
+
+/* ==========================================================================
+   CATEGORIA 3: ANIMAÇÃO DE SURGIMENTO AO ROLAR A TELA (Scroll Animation)
+   ========================================================================== */
+const cardsParaAnimar = document.querySelectorAll('.animar-scroll');
+
+function checarScrollEvent() {
+    const gatilhoJanela = window.innerHeight - 60;
+    
+    cardsParaAnimar.forEach(card => {
+        const topoCard = card.getBoundingClientRect().top;
+        if (topoCard < gatilhoJanela) {
+            card.classList.add('visivel');
+        }
+    });
+}
+
+window.addEventListener('scroll', checarScrollEvent);
