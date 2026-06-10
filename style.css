@@ -1,540 +1,381 @@
 /* ==========================================================================
-   CATEGORIA 1: TECNOLOGIAS DE BASE & PALETA DE CORES (CSS3)
+   PALETA DE CORES ORIGINAL DO SEU SITE (Tons de Azul, Escuros e Gradientes)
    ========================================================================== */
 :root {
-    --bg-principal: #fafbfc;
-    --texto-principal: #2c3e50;
-    --cor-primaria: #1b5e20; /* Verde escuro folha */
-    --cor-secundaria: #4caf50; /* Verde brilhante ecológico */
-    --cor-accent: #81c784;
-    --card-bg: #ffffff;
-    --borda-foco: #ffb300; /* Amarelo ouro para acessibilidade */
-    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --bg-gradiente-topo: #1a2a6c;
+    --bg-gradiente-meio: #275d8c;
+    --bg-gradiente-fim: #0f2027;
+    --azul-card: rgba(255, 255, 255, 0.07);
+    --azul-card-borda: rgba(255, 255, 255, 0.15);
+    --cor-texto: #ffffff;
+    --cor-texto-sub: #b0bec5;
+    --verde-agua-foco: #00e5ff;
+    --botao-mapa-bg: #40c4ff;
+    --fonte-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Modificações visuais do Modo Escuro (LocalStorage) */
-body.dark-mode {
-    --bg-principal: #121212;
-    --texto-principal: #eceff1;
-    --card-bg: #1e1e1e;
-    --cor-primaria: #81c784;
-    --cor-secundaria: #a5d6a7;
-    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-/* Modificações visuais do Alto Contraste */
-body.alto-contraste {
-    --bg-principal: #000000;
-    --texto-principal: #ffff00; /* Texto amarelo puro no fundo preto */
-    --card-bg: #000000;
-    --cor-primaria: #ffff00;
-    --cor-secundaria: #ffffff;
-    --cor-accent: #ffff00;
-    --borda-foco: #ffffff;
-}
-
-body.alto-contraste .card-section {
-    border: 2px solid #ffff00 !important;
-}
-
-body.alto-contraste button, body.alto-contraste select, body.alto-contraste input {
-    border: 2px solid #ffff00 !important;
-    background: #000000 !important;
-    color: #ffff00 !important;
-}
-
-/* Modificação de Fonte para Dislexia */
-body.fonte-dislexia {
-    font-family: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif !important;
-}
-
-/* Reset Geral Avançado */
-*, *::before, *::after {
-    box-sizing: border-box;
+/* RESET E CONFIGURAÇÃO GERAL */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg-principal);
-    color: var(--texto-principal);
+    font-family: var(--fonte-principal);
+    background: linear-gradient(to bottom, #111e38, #182848);
+    color: var(--cor-texto);
+    min-height: 100vh;
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-/* Estilo visual tátil para navegação por teclado (Tab) */
-*:focus-visible {
-    outline: 3px solid var(--borda-foco) !important;
-    outline-offset: 3px;
-}
-
 .container {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Barra Superior de Acessibilidade */
-.barra-acessibilidade {
-    background-color: #263238;
-    padding: 8px 20px;
+/* OUTLINE BRILHANTE EXIGIDO NA SUA NAVEGAÇÃO MOTORIZADA */
+*:focus-visible {
+    outline: 3px solid var(--verde-agua-foco) !important;
+    outline-offset: 2px;
+}
+
+/* CLASSES DE ACESSIBILIDADE ATIVADAS POR JS */
+body.dark-mode {
+    background: #05050a !important;
+    --azul-card: #121214;
+    --azul-card-borda: #26262b;
+}
+
+body.alto-contraste {
+    background: #000000 !important;
+    color: #ffff00 !important;
+}
+body.alto-contraste .card-recurso, 
+body.alto-contraste .card-cognitivo, 
+body.alto-contraste .caixa-transcricao,
+body.alto-contraste .painel-indicators {
+    background: #000000 !important;
+    border: 2px solid #ffff00 !important;
+    color: #ffff00 !important;
+}
+body.alto-contraste a, body.alto-contraste button {
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+    background: #000000 !important;
+}
+
+body.fonte-dislexia {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+}
+
+body.sem-animacao * {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* BARRA DE FERRAMENTAS SUPERIOR */
+.barra-acessibilidade-topo {
+    background-color: #0b1326;
+    padding: 5px 20px;
     display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 1px solid var(--azul-card-borda);
 }
 
-.btn-acessivel {
-    background-color: #37474f;
+.barra-acessibilidade-topo button {
+    background: transparent;
+    border: 1px solid var(--azul-card-borda);
     color: #ffffff;
-    border: none;
-    padding: 6px 14px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    border-radius: 3px;
 }
 
-.btn-acessivel:hover {
-    background-color: #455a64;
+.barra-acessibilidade-topo button:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
-/* ==========================================================================
-   CATEGORIA 3: COMPONENTES VISUAIS (Header, Menu e Banner Hero)
-   ========================================================================== */
+/* HEADER DO SITE ORIGINAL */
 header {
-    background-color: var(--cor-primaria);
-    color: #ffffff;
-    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    padding: 20px 40px;
+    background-color: rgba(13, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--azul-card-borda);
 }
 
-.logo {
-    font-size: 1.3rem;
-    font-weight: 800;
-    letter-spacing: 0.5px;
+.logo-agrinho {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ffffff;
 }
 
-.menu-sanduiche {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 26px;
-    height: 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-.menu-sanduiche span {
-    width: 100%;
-    height: 3px;
-    background-color: #ffffff;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-}
-
-nav ul {
+header nav ul {
     display: flex;
     list-style: none;
     gap: 20px;
 }
 
-nav a {
+header nav a {
     color: #ffffff;
     text-decoration: none;
-    font-weight: 600;
     font-size: 0.95rem;
-    padding: 6px 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    font-weight: 500;
+    opacity: 0.85;
+    transition: opacity 0.2s;
 }
 
-nav a:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+header nav a:hover {
+    opacity: 1;
 }
 
-/* Banner Tecnológico Hero */
+/* HERO BANNER - COM SUPORTE ÀS IMAGENS DE FUNDO POR HORÁRIO */
 .banner-hero {
-    height: 380px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 80px 40px;
     text-align: center;
-    padding: 20px;
-    color: #ffffff;
-    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad451?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
-    transition: background 0.8s ease-in-out;
+    background-size: cover !important;
+    background-position: center !important;
+    border-bottom: 1px solid var(--azul-card-borda);
+    transition: background 0.8s ease;
 }
 
 .hero-conteudo h1 {
-    font-size: 2.2rem;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-weight: bold;
 }
 
 .hero-conteudo p {
-    font-size: 1.1rem;
-    max-width: 700px;
-    margin: 0 auto;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    font-size: 1.15rem;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    color: var(--cor-texto-sub);
 }
 
-/* Layout das Seções Gerais */
-.card-section {
-    background-color: var(--card-bg);
-    padding: 30px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    border-radius: 8px;
-    box-shadow: var(--sombra-card);
-}
-
-h2 {
-    color: var(--cor-primaria);
-    margin-bottom: 8px;
-    font-size: 1.5rem;
-}
-
-.descricao-contexto {
-    font-size: 0.95rem;
-    margin-bottom: 22px;
-    opacity: 0.85;
-}
-
-/* Container do Slide Antes e Depois */
-.slider-container {
-    position: relative;
-    width: 100%;
-    height: 320px;
-    overflow: hidden;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    user-select: none;
-}
-
-.slider-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center no-repeat;
-}
-
-.img-depois {
-    background-image: url('https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&w=1100&q=80');
-}
-
-.img-antes {
-    background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1100&q=80');
-    width: 50%; /* Inicialmente em 50% */
-    border-right: 3px solid #ffffff;
-}
-
-.slider-barra {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 4px;
-    background-color: #ffffff;
-    cursor: ew-resize;
-    z-index: 10;
-}
-
-.slider-botao {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 36px;
-    height: 36px;
-    background-color: var(--cor-primaria);
+.btn-explorar {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #38b6ff;
     color: #ffffff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-decoration: none;
     font-weight: bold;
-    font-size: 1.1rem;
-    border: 2px solid #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(56, 182, 255, 0.3);
 }
 
-/* ==========================================================================
-   CATEGORIA 4: ELEMENTOS EDUCATIVOS AGRÍCOLAS (Abas e Mural)
-   ========================================================================== */
-.abas-botoes {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+/* SUB BANNER (Abaixo do Hero) */
+.sub-banner {
+    text-align: center;
+    margin: 40px 0;
 }
 
-.btn-aba {
-    padding: 10px 20px;
-    font-weight: 700;
-    background-color: #e0e0e0;
-    color: #424242;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
+.sub-banner h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
 }
 
-.btn-aba.ativo {
-    background-color: var(--cor-primaria);
-    color: #ffffff;
+.sub-banner p {
+    color: var(--cor-texto-sub);
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-#painel-exibicao {
-    background-color: rgba(0, 0, 0, 0.03);
-    padding: 20px;
-    border-left: 5px solid var(--cor-primaria);
-    border-radius: 0 6px 6px 0;
+/* ESTRUTURAÇÃO DOS CARDS DO SEU DESIGN ORIGINAL */
+.secao-recurso {
+    margin-bottom: 50px;
 }
 
-body.dark-mode #painel-exibicao {
-    background-color: rgba(255, 255, 255, 0.05);
+.titulo-numerado {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-#painel-exibicao h3 { margin-bottom: 10px; font-size: 1.2rem; }
-#painel-exibicao p { margin-bottom: 8px; }
+.sub-titulo-secao {
+    color: var(--cor-texto-sub);
+    margin-bottom: 25px;
+}
 
-/* Grid do Mural */
-.mural-grid {
+.grid-dois-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
-.card-pratica {
-    background-color: var(--bg-principal);
-    padding: 25px;
-    border-radius: 6px;
-    border-top: 5px solid var(--cor-primaria);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+.card-recurso {
+    background: var(--azul-card);
+    border: 1px solid var(--azul-card-borda);
+    padding: 30px;
+    border-radius: 12px;
 }
 
-.icone-pratica {
-    font-size: 2.2rem;
+.card-recurso h3 {
+    font-size: 1.3rem;
     margin-bottom: 12px;
 }
 
-/* ==========================================================================
-   CATEGORIA 5: FERRAMENTAS INTERATIVAS & SIMULADORES
-   ========================================================================== */
-.form-grupo {
-    margin-bottom: 18px;
+/* MAPA DE INDICADORES INCLUSIVO */
+.secao-mapa {
+    background: var(--azul-card);
+    border: 1px solid var(--azul-card-borda);
+    padding: 40px;
+    border-radius: 16px;
+    margin-bottom: 50px;
 }
 
-.form-grupo label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 700;
-}
-
-.form-grupo input, .form-grupo select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cccccc;
-    background-color: var(--card-bg);
-    color: var(--texto-principal);
-    border-radius: 4px;
-    font-size: 1rem;
-}
-
-.btn-acao {
-    background-color: var(--cor-primaria);
-    color: #ffffff;
-    font-weight: 700;
-    border: none;
-    padding: 14px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    width: 100%;
-    transition: background 0.2s;
-}
-
-.btn-acao:hover { background-color: var(--cor-secundaria); }
-
-.resultado-box {
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 6px;
-    font-weight: 600;
-    display: none;
-    background-color: rgba(46, 204, 113, 0.15);
-    border: 1px solid var(--cor-secundaria);
-    color: var(--texto-principal);
-}
-
-/* Simulador do Sensor de Umidade */
-.botoes-clima {
-    display: flex;
-    gap: 12px;
+.instrucao-mapa {
+    color: var(--cor-texto-sub);
     margin-bottom: 20px;
-    flex-wrap: wrap;
 }
 
-.btn-clima {
-    flex: 1;
-    min-width: 200px;
-    padding: 12px;
+.botoes-mapa-controle {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn-mapa {
+    padding: 10px 25px;
     border: none;
-    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    color: #ffffff;
 }
 
-.btn-clima.calor { background-color: #e67e22; }
-.btn-clima.ideal { background-color: #27ae60; }
-.btn-clima.chuva { background-color: #2980b9; }
-
-.sensor-display {
-    text-align: center;
-    padding: 25px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    border-radius: 6px;
-    background-color: #eceff1;
-    color: #37474f;
-    border: 2px dashed #b0bec5;
+.btn-mapa.ativo {
+    background-color: #00e5ff;
+    color: #0d1b2a;
 }
 
-body.dark-mode .sensor-display {
-    background-color: #263238;
-    color: #eceff1;
-    border-color: #455a64;
+.mapa-flex-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
 }
 
-/* Caixa do RPG */
-.rpg-box {
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+/* Representação das caixas do mapa da foto */
+.mapa-grafico-box {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    height: 250px;
+    position: relative;
     padding: 20px;
-    border-radius: 6px;
-}
-
-body.dark-mode .rpg-box {
-    background-color: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-.status-rpg {
     display: flex;
-    justify-content: space-around;
-    background-color: var(--card-bg);
-    padding: 12px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 
-.status-item { font-weight: 700; font-size: 1.05rem; }
-.rpg-cenario { font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; }
-.opcoes-list { list-style: none; }
-.opcoes-list li { margin-bottom: 12px; }
-
-.btn-opcao {
-    width: 100%;
-    padding: 14px;
-    text-align: left;
-    background-color: var(--card-bg);
-    color: var(--texto-principal);
-    border: 1px solid var(--cor-primaria);
-    border-radius: 4px;
+.bloco-mapa {
+    width: 100px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: background 0.2s;
 }
 
-.btn-opcao:hover {
-    background-color: var(--cor-primaria);
-    color: #ffffff;
+.bloco-mapa:hover, .bloco-mapa:focus {
+    background-color: #00e5ff;
 }
 
-/* ==========================================================================
-   CATEGORIA 6: MECANISMOS DE GAMIFICAÇÃO (Quiz e Medalhas)
-   ========================================================================== */
-.pergunta-texto { font-size: 1.15rem; font-weight: 600; margin-bottom: 18px; }
-
-.medalha-container {
-    text-align: center;
-    background: linear-gradient(135deg, #fff9c4, #fffde7);
-    border: 2px solid #fbc02d;
+.painel-indicadores {
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--azul-card-borda);
     padding: 25px;
-    border-radius: 8px;
-    margin-top: 25px;
-    color: #c62828;
-    display: none; /* Controlado via JS */
-    animation: surgirMedalha 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 12px;
 }
 
-body.dark-mode .medalha-container {
-    background: linear-gradient(135deg, #fbc02d, #f9a825);
-    color: #000000;
+.painel-indicadores h3 {
+    margin-bottom: 15px;
 }
 
-.medalha-emblema { font-size: 3.5rem; margin-bottom: 10px; }
-#nomeMedalha { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
-
-@keyframes surgirMedalha {
-    from { transform: scale(0.7); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+/* RECURSOS DA SEÇÃO DE SURDOS (Podcast) */
+.card-unico-largo {
+    background: var(--azul-card);
+    border: 1px solid var(--azul-card-borda);
+    padding: 35px;
+    border-radius: 12px;
 }
 
-/* Animações ao Rolamento da Página */
-.animar-scroll {
-    opacity: 0;
-    transform: translateY(25px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.animar-scroll.visivel {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-footer {
-    background-color: #263238;
-    color: #ffffff;
-    text-align: center;
+.caixa-transcricao {
+    background: rgba(0, 0, 0, 0.25);
+    border-left: 4px solid #38b6ff;
     padding: 20px;
-    margin-top: 50px;
+    border-radius: 4px;
+    margin-top: 20px;
 }
 
-/* ==========================================================================
-   RECURSOS VISUAIS DE RESPONSIVIDADE (Telas menores)
-   ========================================================================== */
+/* DESIGN COGNITIVO */
+.lista-cards-cognitivos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-cognitivo {
+    background: var(--azul-card);
+    border: 1px solid var(--azul-card-borda);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.botoes-rodape-acoes {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-pdf {
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: #a7ffeb;
+    color: #004d40;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+/* BOTOES FLUTUANTES ADICIONAIS DAS IMAGENS */
+.botao-flutuante-acessibilidade {
+    position: fixed;
+    bottom: 20px;
+    right: 90px; /* Para não colidir com o botão nativo do VLibras */
+    background-color: #00e5ff;
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* RESPONSIVIDADE */
 @media (max-width: 768px) {
-    .menu-sanduiche { display: flex; }
-
-    nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: var(--cor-primaria);
-        padding: 15px 30px;
-        gap: 10px;
-    }
-
-    nav ul.ativo { display: flex; }
-    nav a { display: block; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .hero-conteudo h1 { font-size: 1.7rem; }
+    header { flex-direction: column; gap: 15px; }
+    .grid-dois-cards, .mapa-flex-container { grid-template-columns: 1fr; }
+    .hero-conteudo h1 { font-size: 2rem; }
 }

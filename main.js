@@ -1,265 +1,75 @@
 /* ==========================================================================
-   CATEGORIA 3: COMPONENTES VISUAIS (Menu Sanduíche Mobile)
+   FUNÇÃO DO MODO COR DO HORÁRIO DINÂMICO (TROCA DE FUNDO E ESTILO)
    ========================================================================== */
-function toggleMenu() {
-    const menuLinks = document.getElementById('menu-links');
-    const btnMenu = document.getElementById('btn-menu');
+function aplicarCorBaseadaNoHorario() {
+    const banner = document.getElementById('bannerHero');
+    if (!banner) return;
+
+    const horaAtual = new Date().getHours();
     
-    menuLinks.classList.toggle('ativo');
-    
-    // Atualiza estados do leitor de tela para acessibilidade
-    const estaAtivo = menuLinks.classList.contains('ativo');
-    btnMenu.setAttribute('aria-expanded', estaAtivo);
+    // Configura os backgrounds gradientes transparentes somados com imagens reais do Unsplash
+    if (horaAtual >= 6 && horaAtual < 12) {
+        // MANHÃ: Tons suaves de azul e verde claro
+        banner.style.background = "linear-gradient(135deg, rgba(26, 74, 115, 0.85), rgba(43, 134, 196, 0.75)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80')";
+    } else if (horaAtual >= 12 && horaAtual < 18) {
+        // TARDE: O tom de azul vibrante e iluminado das suas fotos principais
+        banner.style.background = "linear-gradient(135deg, #1a2a6c, #275d8c), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad451?auto=format&fit=crop&w=1200&q=80')";
+    } else {
+        // NOITE: Tons de azul escuro profundo quase preto
+        banner.style.background = "linear-gradient(135deg, #0f2027, #203a43, #2c5364), url('https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1200&q=80')";
+    }
 }
 
 /* ==========================================================================
-   CATEGORIA 2 & CATEGORIA 7: RECURSOS DE ACESSIBILIDADE & LOCALSTORAGE
+   CONTROLES DO PAINEL DE RECURSOS PCD (BOTÕES DO TOPO)
    ========================================================================== */
 function alternarModoEscuro() {
     document.body.classList.toggle('dark-mode');
-    localStorage.setItem('agrinho_darkMode', document.body.classList.contains('dark-mode'));
+    document.body.classList.remove('alto-contraste'); // Limpa conflitos
 }
 
 function alternarAltoContraste() {
     document.body.classList.toggle('alto-contraste');
-    localStorage.setItem('agrinho_altoContraste', document.body.classList.contains('alto-contraste'));
+    document.body.classList.remove('dark-mode'); // Limpa conflitos
 }
 
 function alternarDislexia() {
     document.body.classList.toggle('fonte-dislexia');
-    localStorage.setItem('agrinho_dislexia', document.body.classList.contains('fonte-dislexia'));
 }
 
-// Executado de forma automática assim que a página é lida pelo navegador
-window.addEventListener('DOMContentLoaded', () => {
-    // Carrega preferências salvas no Banco de Dados Local do usuário
-    if (localStorage.getItem('agrinho_darkMode') === 'true') document.body.classList.add('dark-mode');
-    if (localStorage.getItem('agrinho_altoContraste') === 'true') document.body.classList.add('alto-contraste');
-    if (localStorage.getItem('agrinho_dislexia') === 'true') document.body.classList.add('fonte-dislexia');
-    
-    // Ativa as rotinas de verificação climática e efeitos visuais
-    verificarHorarioEClimaDinamico();
-    checarScrollEvent();
-});
+function alternarAnimacoes() {
+    document.body.classList.toggle('sem-animacao');
+}
 
-/* ==========================================================================
-   CATEGORIA 7: CONTROLE DE HORÁRIO DO SISTEMA (Clima Dinâmico)
-   ========================================================================== */
-function verificarHorarioEClimaDinamico() {
-    const horaAtual = new Date().getHours();
-    const banner = document.getElementById('hero-banner');
-    
-    if (horaAtual >= 6 && horaAtual < 12) {
-        // Manhã: Tons claros/verdes
-        banner.style.background = "linear-gradient(rgba(27, 94, 32, 0.45), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad451?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat";
-    } else if (horaAtual >= 12 && horaAtual < 18) {
-        // Tarde: Tons alaranjados
-        banner.style.background = "linear-gradient(rgba(230, 126, 34, 0.45), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat";
-    } else {
-        // Noite: Tons azulados escuros
-        banner.style.background = "linear-gradient(rgba(38, 50, 56, 0.7), rgba(0, 0, 0, 0.85)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat";
-    }
+function abrirPainelAcessibilidade() {
+    alert("Recursos de acessibilidade ativos! Utilize a barra superior ou navegue pelo teclado (Tab) para gerenciar as funções.");
 }
 
 /* ==========================================================================
-   CATEGORIA 3: EFEITO SLIDE DE COMPARAÇÃO (Antes e Depois)
+   LÓGICA DINÂMICA DO MAPA DE INDICADORES INCLUSIVO
    ========================================================================== */
-function moverSlider(evento) {
-    const container = evento.currentTarget.getBoundingClientRect();
-    let clienteX = evento.clientX;
-    
-    // Suporte para telas de toque (Mobile)
-    if (evento.touches && evento.touches.length > 0) {
-        clienteX = evento.touches[0].clientX;
-    }
-    
-    let posicaoX = clienteX - container.left;
-    
-    // Impede transbordo visual das bordas
-    if (posicaoX < 0) posicaoX = 0;
-    if (posicaoX > container.width) posicaoX = container.width;
-    
-    const porcentagem = (posicaoX / container.width) * 100;
-    
-    document.getElementById('imgAntes').style.width = porcentagem + '%';
-    document.getElementById('barraSlider').style.left = porcentagem + '%';
-}
-
-/* ==========================================================================
-   CATEGORIA 4: ELEMENTOS EDUCATIVOS (Abas de Indicadores)
-   ========================================================================== */
-const bancoDadosRegioes = {
-    pr: {
-        titulo: "Paraná (Macro polo do Sul)",
-        producao: "Líder nacional na produção integrada de soja, milho safrinha e cooperativismo forte.",
-        gestao: "Referência em Plantio Direto na Palhada, protegendo microbacias hidrográficas contra a erosão.",
-        inovacao: "Uso de sensores de telemetria em tempo real para controle de insumos e drones agrícolas de pulverização precisa."
-    },
-    mt: {
-        titulo: "Mato Grosso (Gigante do Centro-Oeste)",
-        producao: "Maior produtor nacional de grãos de alta escala, algodão de exportação e pecuária integrada.",
-        gestao: "Expansão massiva de sistemas ILPF (Integração Lavoura-Pecuária-Floresta) para recuperação de pastagens degradadas.",
-        inovacao: "Sistemas ERP em nuvem de ponta no monitoramento de maquinários via satélite e tratores autônomos por GPS."
-    },
-    sp: {
-        titulo: "São Paulo (Potência Tecnológica do Sudeste)",
-        producao: "Líder global do setor sucroenergético (cana, etanol, açúcar) e polo dominante na citricultura.",
-        gestao: "Certificações rígidas de emissão zero de carbono e eliminação total da prática de queimadas nas colheitas.",
-        inovacao: "Uso em massa de biofábricas para multiplicação de macrobiológicos e inteligência artificial na previsão climática."
-    }
+const dadosRegioes = {
+    brasil: "<h3>Visão Geral Brasil</h3><p>O país expandiu em 25% o uso de tecnologias inclusivas e monitoramento de biomas no campo nesta safra.</p>",
+    pr: "<h3>Indicadores Macrorregiões PR</h3><p>Aguardando a seleção de uma região específica do estado no painel gráfico ao lado.</p>",
+    norte: "<h3>Região Norte do Paraná</h3><p><strong>Solo:</strong> Alta fertilidade (Terra Roxa).<p><strong>Uso de Água:</strong> Redução drástica por gotejamento monitorado via IoT.</p>",
+    centro: "<h3>Região Central do Paraná</h3><p><strong>Manejo:</strong> Destaque em agricultura familiar sustentável e projetos agroecológicos de proteção de bacias.</p>",
+    sul: "<h3>Região Sul do Paraná</h3><p><strong>Estatísticas:</strong> Controle biológico integrado adotado em larga escala, reduzindo defensivos químicos tradicionais.</p>"
 };
 
-function mostrarAba(chaveRegiao, elementoBotao) {
-    document.querySelectorAll('.btn-aba').forEach(btn => {
-        btn.classList.remove('ativo');
-        btn.setAttribute('aria-selected', 'false');
-    });
-    
-    elementoBotao.classList.add('ativo');
-    elementoBotao.setAttribute('aria-selected', 'true');
-    
-    const dados = bancoDadosRegioes[chaveRegiao];
-    const painel = document.getElementById('painel-exibicao');
-    
-    painel.innerHTML = `
-        <h3>${dados.titulo}</h3>
-        <p><strong>Produção:</strong> ${dados.producao}</p>
-        <p><strong>Gestão Ambiental:</strong> ${dados.gestao}</p>
-        <p><strong>Inovações Tech:</strong> ${dados.inovacao}</p>
-    `;
-}
-
-/* ==========================================================================
-   CATEGORIA 5: CALCULADORA DE BIOINSUMOS INTELIGENTE
-   ========================================================================== */
-function calcularBioinsumos() {
-    const campoHectares = document.getElementById('hectares').value;
-    const hectares = parseFloat(campoHectares);
-    const cultura = document.getElementById('cultura').value;
-    const resultadoBox = document.getElementById('resultado-calc');
-    
-    if (!hectares || hectares <= 0) {
-        alert("Por favor, digite uma quantidade de hectares válida.");
-        return;
+function carregarIndicadores(regiao) {
+    const conteudoPainel = document.getElementById('conteudo-painel');
+    if (conteudoPainel && dadosRegioes[regiao]) {
+        conteudoPainel.innerHTML = dadosRegioes[regiao];
     }
     
-    let taxaComposto = 0;
-    let taxaBiofertilizante = 0;
-    
-    if (cultura === 'soja') {
-        taxaComposto = 2.0; taxaBiofertilizante = 12.0;
-    } else if (cultura === 'milho') {
-        taxaComposto = 3.0; taxaBiofertilizante = 20.0;
-    } else if (cultura === 'trigo') {
-        taxaComposto = 2.5; taxaBiofertilizante = 15.0;
-    }
-    
-    const totalComposto = hectares * taxaComposto;
-    const totalBio = hectares * taxaBiofertilizante;
-    
-    resultadoBox.style.display = "block";
-    resultadoBox.innerHTML = `
-        <strong>📋 Relatório de Insumos Sustentáveis para sua Área (${hectares} ha):</strong><br>
-        <br>
-        🌱 <strong>Composto Orgânico Regenerativo:</strong> ${totalComposto.toFixed(1)} Toneladas.<br>
-        💧 <strong>Biofertilizante Líquido Inoculante:</strong> ${totalBio.toFixed(0)} Litros.<br>
-        <br>
-        <em>Benefício Técnico: Esta combinação reduz a dependência de adubos industriais e promove a proliferação de microrganismos benéficos!</em>
-    `;
-}
-
-/* ==========================================================================
-   CATEGORIA 5: SIMULADOR DE SENSOR DE UMIDADE DE SOLO
-   ========================================================================== */
-function mudarUmidade(porcentagem) {
-    const display = document.getElementById('sensorDisplay');
-    
-    if (porcentagem <= 20) {
-        display.innerText = `🚨 Umidade: ${porcentagem}% - Alerta Crítico: Solo Seco! Risco de estresse hídrico. Ative o gotejamento remoto.`;
-        display.style.backgroundColor = "#ffcdd2"; display.style.color = "#b71c1c"; display.style.borderColor = "#e53935";
-    } else if (porcentagem >= 75) {
-        display.innerText = `⚠️ Umidade: ${porcentagem}% - Alerta Climático: Solo Encharcado. Perigo de lixiviação e apodrecimento radicular!`;
-        display.style.backgroundColor = "#bbdefb"; display.style.color = "#0d47a1"; display.style.borderColor = "#1e88e5";
-    } else {
-        display.innerText = `✅ Umidade: ${porcentagem}% - Leitura Ideal. Condições perfeitas para o desenvolvimento estável.`;
-        display.style.backgroundColor = "#c8e6c9"; display.style.color = "#1b5e20"; display.style.borderColor = "#4caf50";
+    // Atualiza o estado dos botões de controle de visão superior
+    if(regiao === 'brasil' || regiao === 'pr') {
+        document.querySelectorAll('.btn-mapa').forEach(btn => btn.classList.remove('ativo'));
+        event.currentTarget.classList.add('ativo');
     }
 }
 
-/* ==========================================================================
-   CATEGORIA 5: MINI-RPG "DECISÃO NO CAMPO" (Lógica do Jogo)
-   ========================================================================== */
-function jogarRPG(opcaoEscolhida) {
-    const textoCenario = document.getElementById('rpg-texto');
-    const boxOpcoes = document.getElementById('rpg-opcoes');
-    
-    const medidorSafra = document.getElementById('rpg-safra');
-    const medidorEco = document.getElementById('rpg-eco');
-    const medidorCaixa = document.getElementById('rpg-caixa');
-    
-    if (opcaoEscolhida === 'biologico') {
-        medidorSafra.innerText = "95%"; medidorEco.innerText = "100%"; medidorCaixa.innerText = "8500";
-        textoCenario.innerHTML = "🎯 <strong>Resultado: Excelente decisão!</strong> As microvespas controlaram a lagarta sem resíduos tóxicos. Sua biodiversidade local continuou intacta e o solo totalmente preservado.";
-    } else if (opcaoEscolhida === 'quimico') {
-        medidorSafra.innerText = "100%"; medidorEco.innerText = "35%"; medidorCaixa.innerText = "11500";
-        textoCenario.innerHTML = "⚠️ <strong>Resultado: Alerta Ecológico!</strong> O defensivo de choque matou as pragas rápido. Porém, dizimou abelhas polinizadoras e poluiu o lençol freático local.";
-    }
-    
-    boxOpcoes.innerHTML = `<li><button class="btn-opcao" style="text-align:center; font-weight:700;" onclick="reiniciarRPG()">Reiniciar Simulação RPG</button></li>`;
-}
-
-function reiniciarRPG() {
-    document.getElementById('rpg-safra').innerText = "100%";
-    document.getElementById('rpg-eco').innerText = "100%";
-    document.getElementById('rpg-caixa').innerText = "10000";
-    document.getElementById('rpg-texto').innerText = "Cenário: Uma forte infestação de lagartas ameaça destruir sua plantação de milho. Qual estratégia você adota?";
-    document.getElementById('rpg-opcoes').innerHTML = `
-        <li><button class="btn-opcao" onclick="jogarRPG('biologico')">Opção Sustentável: Aplicar Controle Biológico com liberação de vespas parasitoides.</button></li>
-        <li><button class="btn-opcao" onclick="jogarRPG('quimico')">Opção Tradicional: Pulverizar agrotóxico químico pesado de choque imediato.</button></li>
-    `;
-}
-
-/* ==========================================================================
-   CATEGORIA 6: QUIZ AVANÇADO COM FEEDBACK INSTANTÂNEO & MEDALHAS
-   ========================================================================== */
-function responderQuiz(isCorreto, elementoBotao) {
-    const blocoOpcoes = elementoBotao.closest('#quiz-opcoes');
-    const todosBotoes = blocoOpcoes.querySelectorAll('.btn-opcao');
-    
-    todosBotoes.forEach(btn => btn.disabled = true);
-    
-    if (isCorreto) {
-        elementoBotao.style.backgroundColor = "#2e7d32";
-        elementoBotao.style.color = "#ffffff";
-        document.getElementById('painelMedalha').style.display = "block";
-    } else {
-        elementoBotao.style.backgroundColor = "#c62828";
-        elementoBotao.style.color = "#ffffff";
-        
-        // Destaca visualmente a alternativa correta em verde para aprendizado imediato
-        todosBotoes.forEach(btn => {
-            if (btn.textContent.includes("Proteger a terra contra erosão")) {
-                btn.style.backgroundColor = "#2e7d32";
-                btn.style.color = "#ffffff";
-            }
-        });
-    }
-}
-
-/* ==========================================================================
-   CATEGORIA 3: ANIMAÇÃO DE SURGIMENTO AO ROLAR A TELA (Scroll Animation)
-   ========================================================================== */
-const cardsParaAnimar = document.querySelectorAll('.animar-scroll');
-
-function checarScrollEvent() {
-    const gatilhoJanela = window.innerHeight - 60;
-    
-    cardsParaAnimar.forEach(card => {
-        const topoCard = card.getBoundingClientRect().top;
-        if (topoCard < gatilhoJanela) {
-            card.classList.add('visivel');
-        }
-    });
-}
-
-window.addEventListener('scroll', checarScrollEvent);
+/* INICIALIZAÇÃO DA PÁGINA */
+window.addEventListener('DOMContentLoaded', () => {
+    aplicarCorBaseadaNoHorario();
+});
