@@ -1,447 +1,317 @@
 /**
  * ARQUIVO: main.js
- * FUNÇÃO: Processar toda a lógica interativa, acessibilidade e simuladores do Agrinho 2026.
+ * FUNCIONALIDADE: Correção e Inicialização Automática do VLibras, Lógica de Largura 
+ * para o Slider de Imagens e Temas de Acessibilidade.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
     
     // ==========================================================================
-    // 1. SISTEMA DE CONTROLE DE HORÁRIO (CLIMA DINÂMICO AUTOMÁTICO)
+    // 1. INICIALIZAÇÃO E CORREÇÃO DO BOTÃO DO VLIBRAS
     // ==========================================================================
-    const aplicarClimaPorHorario = () => {
-        const hora = new Date().getHours();
-        const heroSection = document.querySelector(".hero");
-        
-        if (!heroSection) return;
-
-        if (hora >= 6 && hora < 12) {
-            // Manhã: Tons dourados e ensolarados
-            heroSection.style.background = "linear-gradient(135deg, rgba(239, 172, 53, 0.8), rgba(24, 78, 41, 0.85)), url('https://images.unsplash.com/photo-1592982537447-744077110b90?q=80&w=1200') center/cover no-repeat";
-        } else if (hora >= 12 && hora < 18) {
-            // Tarde: Tons intensos de céu aberto
-            heroSection.style.background = "linear-gradient(135deg, rgba(40, 145, 108, 0.8), rgba(16, 42, 23, 0.9)), url('https://images.unsplash.com/photo-1592982537447-744077110b90?q=80&w=1200') center/cover no-repeat";
-        } else {
-            // Noite: Visual noturno azulado/estrelado
-            heroSection.style.background = "linear-gradient(135deg, rgba(10, 27, 40, 0.9), rgba(20, 40, 30, 0.95)), url('https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=1200') center/cover no-repeat";
+    // Garante que o plugin seja construído na tela assim que a página carregar
+    window.addEventListener('load', () => {
+        if (window.VLibras) {
+            new window.VLibras.Widget('https://vlibras.gov.br/app');
         }
-    };
-    aplicarClimaPorHorario();
+    });
+
+    const btnLibras = document.getElementById("btn-libras");
+    btnLibras.addEventListener("click", () => {
+        // Dispara a abertura ou fechamento oficial da janela do boneco virtual
+        if (window.vlibrasWidget) {
+            window.vlibrasWidget.toggleOpen();
+        } else {
+            alert("O sistema de Libras ainda está carregando os servidores públicos do Governo. Por favor, aguarde 3 segundos e clique novamente.");
+        }
+    });
 
     // ==========================================================================
-    // 2. SISTEMA DE ACESSIBILIDADE COM GRAVAÇÃO LOCAL (LOCALSTORAGE)
+    // 2. CORREÇÃO DEFINITIVA DO SLIDER DE IMAGENS (LARGURA DINÂMICA)
     // ==========================================================================
-    const setupAcessibilidade = (btnId, className) => {
-        const btn = document.getElementById(btnId);
+    const sliderSolo = document.getElementById("slider-solo");
+    const imgAfterBox = document.getElementById("img-after-box");
+    const separatorLine = document.getElementById("slider-separator-line");
+
+    if (sliderSolo && imgAfterBox && separatorLine) {
+        // Alinha a imagem interna para manter o tamanho real correto no corte
+        const internalImg = imgAfterBox.querySelector("img");
         
-        // Verifica se a preferência já estava salva no navegador
+        const redimensionarSlider = () => {
+            const containerWidth = sliderSolo.offsetWidth;
+            internalImg.style.width = `${containerWidth}px`;
+        };
+
+        // Roda ao carregar e se a tela mudar de tamanho (responsividade)
+        redimensionarSlider();
+        window.addEventListener("resize", redimensionarSlider);
+
+        sliderSolo.addEventListener("input", (e) => {
+            const valorPosicao = e.target.value;
+            
+            // Ajusta a largura da caixa de cima
+            imgAfterBox.style.width = `${valorPosicao}%`;
+            // Move a linha divisória centralizada com o indicador
+            separatorLine.style.left = `${valorPosicao}%`;
+        });
+    }
+
+    // ==========================================================================
+    // 3. MENU EXPANSÍVEL DE CONFIGURAÇÕES DE ACESSIBILIDADE
+    // ==========================================================================
+    const trigger = document.getElementById("accessibility-trigger");
+    const menu = document.getElementById("accessibility-menu");
+
+    trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const visivel = menu.style.display === "flex";
+        menu.style.display = visivel ? "none" : "flex";
+        trigger.setAttribute("aria-expanded", !visivel);
+        menu.setAttribute("aria-hidden", visivel);
+    });
+
+    document.addEventListener("click", () => {
+        menu.style.display = "none";
+        trigger.setAttribute("aria-expanded", "false");
+        menu.setAttribute("aria-hidden", "true");
+    });
+    menu.addEventListener("click", (e) => e.stopPropagation());
+
+    // ==========================================================================
+    // 4. CHANGER DE TEMAS (MODO ESCURO, CONTRASTE, DISLEXIA)
+    // ==========================================================================
+    const gerenciarTema = (btnId, className) => {
+        const btn = document.getElementById(btnId);
         if (localStorage.getItem(className) === "true") {
             document.body.classList.add(className);
         }
-
         btn.addEventListener("click", () => {
-            const ativo = document.body.classList.toggle(className);
-            localStorage.setItem(className, ativo); // Salva o estado atual
+            const estado = document.body.classList.toggle(className);
+            localStorage.setItem(className, estado);
         });
     };
 
-    setupAcessibilidade("btn-dark", "dark-mode");
-    setupAcessibilidade("btn-contrast", "high-contrast");
-    setupAcessibilidade("btn-dyslexia", "dyslexia-font");
+    gerenciarTema("btn-dark", "dark-mode");
+    gerenciarTema("btn-contrast", "high-contrast");
+    gerenciarTema("btn-dyslexia", "dyslexia-font");
 
     // ==========================================================================
-    // 3. MENU RESPONSÍVEL (MOBILE TOGGLE)
+    // 5. REDIMENSIONADOR DE TEXTOS (A+ / A-)
+    // ==========================================================================
+    const btnFontPlus = document.getElementById("btn-font-plus");
+    const btnFontMinus = document.getElementById("btn-font-minus");
+    let rootSize = 16;
+
+    btnFontPlus.addEventListener("click", () => {
+        if (rootSize < 24) {
+            rootSize += 2;
+            document.documentElement.style.setProperty('--tamanho-base', `${rootSize}px`);
+        }
+    });
+
+    btnFontMinus.addEventListener("click", () => {
+        if (rootSize > 12) {
+            rootSize -= 2;
+            document.documentElement.style.setProperty('--tamanho-base', `${rootSize}px`);
+        }
+    });
+
+    // ==========================================================================
+    // 6. MINI MAPA DO PARANÁ INTERATIVO
+    // ==========================================================================
+    const dadosRegioes = {
+        "pr": { 
+            titulo: "Estado do Paraná (Geral)", 
+            prod: "Referência histórica na produção sustentável de grãos. O estado é pioneiro absoluto na técnica de Plantio Direto na Palhada, protegendo o solo contra o desgaste climático.", 
+            gestao: "Implementação das diretrizes do Código Florestal através de monitoramento por satélite de rios, impedindo contaminações e assoreamento.", 
+            tech: "Infraestrutura avançada de sensores IoT coletando dados de umidade e acidez em tempo real para cooperativas locais." 
+        },
+        "mt": { 
+            titulo: "Estado do Mato Grosso", 
+            prod: "Maior produtor nacional de biomassa vegetal, soja e milho safrinha de alta performance tecnológica.", 
+            gestao: "Adoção pioneira de créditos de carbono no mercado internacional, certificando propriedades com desmatamento zero.", 
+            tech: "Frotas pesadas de maquinários e tratores autônomos operando via georreferenciamento e GPS de precisão milimétrica." 
+        },
+        "sp": { 
+            titulo: "Estado de São Paulo", 
+            prod: "Líder global na cadeia produtiva do açúcar, da laranja e na produção de etanol limpo (Biocombustíveis).", 
+            gestao: "Tratamento e reutilização de 100% da água industrial usada na lavagem e processamento dos insumos agrícolas nas usinas.", 
+            tech: "Maior adensamento de AgTechs (startups agrícolas) desenvolvendo inteligências artificiais analíticas exclusivas." 
+        },
+        "pr-norte": { 
+            titulo: "Macrorregião Norte do Paraná", 
+            prod: "Polo tradicional de cafeicultura especial e produção frutífera integrada sob malhas de proteção estrutural.", 
+            gestao: "Programas de recuperação biológica de solos arenosos por meio de adubação verde e microbiologia regenerativa.", 
+            tech: "Estações meteorológicas compactas compartilhadas emitindo boletins instantâneos via aplicativos móveis aos pequenos produtores." 
+        },
+        "pr-oeste": { 
+            titulo: "Macrorregião Oeste do Paraná", 
+            prod: "Gigante econômico na produção de proteína animal e rações balanceadas de alta conversão alimentar.", 
+            gestao: "Transformação de dejetos orgânicos animais em Biogás altamente rentável, gerando autossuficiência energética nas fazendas.", 
+            tech: "Sistemas robotizados automáticos para climatização e alimentação precisa nos galpões de criação inteligente." 
+        },
+        "pr-sul": { 
+            titulo: "Sul e Campos Gerais (PR)", 
+            prod: "Excelência técnica na produção de grãos de inverno (trigo e cevada) e bacia leiteira de padrão internacional.", 
+            gestao: "Rotação intensiva e científica de culturas agrícolas que impede o esgotamento químico dos nutrientes do solo.", 
+            tech: "Uso de drones multiespectrais operando mapeamentos aéreos com relatórios automáticos gerados por IA." 
+        }
+    };
+
+    const painel = document.getElementById("painel-indicadores");
+    const botoesGeo = document.querySelectorAll(".btn-geo, .map-node");
+
+    const atualizarPainelGeo = (idRegiao) => {
+        const dados = dadosRegioes[idRegiao];
+        if (!dados) return;
+        painel.innerHTML = `
+            <h3>${dados.titulo}</h3>
+            <p style="margin-top: 12px; font-size:1.05rem;"><strong>🌾 Cenário de Produção:</strong> ${dados.prod}</p>
+            <p style="margin-top: 8px; font-size:1.05rem;"><strong>💧 Ação e Gestão Ambiental:</strong> ${dados.gestao}</p>
+            <p style="margin-top: 8px; font-size:1.05rem;"><strong>⚡ Tecnologia de Ponta Aplicada:</strong> ${dados.tech}</p>
+        `;
+    };
+
+    botoesGeo.forEach(el => {
+        el.addEventListener("click", () => {
+            botoesGeo.forEach(b => b.classList.remove("active"));
+            const regiao = el.getAttribute("data-region");
+            if (el.classList.contains("btn-geo")) el.classList.add("active");
+            atualizarPainelGeo(regiao);
+        });
+    });
+    atualizarPainelGeo("pr");
+
+    // ==========================================================================
+    // 7. MENUS E ACORDIONS SECUNDÁRIOS
     // ==========================================================================
     const menuToggle = document.querySelector(".menu-toggle");
     const navMenu = document.querySelector(".nav-menu");
 
     menuToggle.addEventListener("click", () => {
-        const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", !expanded);
+        const exp = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", !exp);
         navMenu.classList.toggle("active");
     });
 
-    // Fecha o menu ao clicar em qualquer link (Melhoria de UX no Mobile)
-    document.querySelectorAll(".nav-menu a").forEach(link => {
-        link.addEventListener("click", () => {
-            navMenu.classList.remove("active");
-            menuToggle.setAttribute("aria-expanded", "false");
-        });
-    });
-
-    // ==========================================================================
-    // 4. SLIDE DE COMPARAÇÃO DE SOLO (ANTES E DEPOIS)
-    // ==========================================================================
-    const sliderSolo = document.getElementById("slider-solo");
-    const imgAfter = document.querySelector(".image-after");
-
-    if (sliderSolo && imgAfter) {
-        sliderSolo.addEventListener("input", (e) => {
-            const valor = e.target.value;
-            imgAfter.style.width = `${valor}%`;
-        });
-    }
-
-    // ==========================================================================
-    // 5. ACCORDION EXPANSÍVEL (SEÇÃO TECNOLOGIA)
-    // ==========================================================================
     document.querySelectorAll(".accordion-header").forEach(header => {
         header.addEventListener("click", () => {
             const content = header.nextElementSibling;
-            
-            // Fecha outros itens abertos se houver
-            document.querySelectorAll(".accordion-content").forEach(item => {
-                if (item !== content) {
-                    item.style.maxHeight = null;
-                    item.style.padding = "0 15px";
-                }
-            });
-
-            // Alterna o item clicado
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                content.style.padding = "0 15px";
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                content.style.padding = "15px";
-            }
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
         });
     });
 
     // ==========================================================================
-    // 6. CENTRAL DE INDICADORES REGIONAIS (BOTÕES DINÂMICOS)
-    // ==========================================================================
-    const dadosRegioes = {
-        "pr": {
-            titulo: "Estado do Paraná",
-            prod: "Maior produtor de soja sustentável e grãos em sistema de plantio direto.",
-            gestao: "Programas estaduais focados na proteção de nascentes e bacias hidrográficas.",
-            tech: "Mais de 60% das fazendas integradas cooperativamente usam sensores de campo."
-        },
-        "mt": {
-            titulo: "Estado do Mato Grosso",
-            prod: "Líder nacional na produção de grãos e fibras vegetais em larga escala.",
-            gestao: "Forte investimento no mercado de créditos de carbono agrícolas.",
-            tech: "Pioneiro no uso massivo de drones de pulverização e imagens orbitais de alta definição."
-        },
-        "sp": {
-            titulo: "Estado de São Paulo",
-            prod: "Referência global em cana-de-açúcar, bioenergia e citricultura.",
-            gestao: "Zonamento agroecológico restrito para expansão limpa industrial.",
-            tech: "Sede dos principais hubs de AgTechs e institutos de bioengenharia agrícola."
-        },
-        "pr-norte": {
-            titulo: "Norte do Paraná",
-            prod: "Histórico polo cafeeiro, hoje diversificado com grãos e fruticultura.",
-            gestao: "Recuperação ativa de solos arenosos vulneráveis.",
-            tech: "Uso crescente de IA para monitoramento climático regional."
-        },
-        "pr-oeste": {
-            titulo: "Oeste do Paraná",
-            prod: "Gigante na produção integrada de proteína animal, milho e milheto.",
-            gestao: "Uso maciço de dejetos animais para produção de Biogás e Biofertilizantes.",
-            tech: "Uso de automação pesada e robótica no manejo animal e de grãos."
-        },
-        "pr-sul": {
-            titulo: "Sul / Campos Gerais (PR)",
-            prod: "Excelência nacional em trigo, cevada e bacia leiteira de alta produtividade.",
-            gestao: "Berço do Sistema de Plantio Direto e rotação rigorosa de culturas.",
-            tech: "Tratores e colheitadeiras 100% autônomos guiados por GPS RTX de alta precisão."
-        }
-    };
-
-    const painel = document.getElementById("painel-indicadores");
-    const botoesGeo = document.querySelectorAll(".btn-geo");
-
-    const atualizarPainelGeo = (idRegiao) => {
-        const dados = dadosRegioes[idRegiao];
-        if (!dados) return;
-
-        painel.innerHTML = `
-            <h3>${dados.titulo}</h3>
-            <p style="margin-top: 10px;"><strong>🌾 Produção:</strong> ${dados.prod}</p>
-            <p><strong>🍃 Gestão Ambiental:</strong> ${dados.gestao}</p>
-            <p><strong>⚡ Inovação Tech:</strong> ${dados.tech}</p>
-        `;
-    };
-
-    botoesGeo.forEach(botao => {
-        botao.addEventListener("click", () => {
-            botoesGeo.forEach(b => b.classList.remove("active"));
-            botao.classList.add("active");
-            atualizarPainelGeo(botao.getAttribute("data-region"));
-        });
-    });
-    // Inicializa o primeiro painel (Paraná) por padrão
-    atualizarPainelGeo("pr");
-
-    // ==========================================================================
-    // 7. CALCULADORA DE BIOINSUMOS BASEADA EM HECTARES
+    // 8. CALCULADORA DE BIOINSUMOS
     // ==========================================================================
     const btnCalcular = document.getElementById("btn-calcular");
-    const inputHectares = document.getElementById("calc-hec");
-    const selectCultura = document.getElementById("calc-cultura");
-    const resultCalc = document.getElementById("result-calc");
-
     if (btnCalcular) {
         btnCalcular.addEventListener("click", () => {
-            const ha = parseFloat(inputHectares.value);
-            const cultura = selectCultura.value;
+            const ha = parseFloat(document.getElementById("calc-hec").value);
+            const cult = document.getElementById("calc-cultura").value;
+            const resultCalc = document.getElementById("result-calc");
 
-            if (isNaN(ha) || ha <= 0) {
-                alert("Por favor, digite um valor válido de hectares.");
-                return;
-            }
+            if(isNaN(ha) || ha <= 0) return alert("Por favor, digite um hectare válido.");
 
-            let fatorComposto = 2; // Toneladas por Hectare padrão
-            let fatorBiofertilizante = 15; // Litros por Hectare padrão
-
-            if (cultura === "milho") { fatorComposto = 2.5; fatorBiofertilizante = 20; }
-            if (cultura === "trigo") { fatorComposto = 1.8; fatorBiofertilizante = 12; }
-
-            const totalComposto = (ha * fatorComposto).toFixed(1);
-            const totalBio = (ha * fatorBiofertilizante).toFixed(0);
-
+            let compostoFator = cult === "milho" ? 2.5 : (cult === "soja" ? 2.0 : 1.8);
             resultCalc.innerHTML = `
-                <h4>Dosagem Ecológica Recomendada:</h4>
-                <p>📍 Área Informada: <strong>${ha} Hectares</strong></p>
-                <p>🪱 Composto Orgânico: <strong>${totalComposto} Toneladas</strong></p>
-                <p>🧪 Biofertilizantes Líquidos: <strong>${totalBio} Litros</strong></p>
-                <small style="display:block; margin-top:8px; color:gray;">*Cálculo gerado para substituição regenerativa de NPK químico.</small>
+                <h4>Dosagem Recomendada:</h4>
+                <p>📍 Área de Trabalho: <strong>${ha} Hectares</strong></p>
+                <p>🪱 Composto Orgânico: <strong> ${(ha * compostoFator).toFixed(1)} Toneladas</strong></p>
+                <p>🧪 Biofertilizantes: <strong> ${(ha * 15).toFixed(0)} Litros</strong></p>
             `;
             resultCalc.style.display = "block";
         });
     }
 
     // ==========================================================================
-    // 8. SIMULADOR DE SENSOR DE UMIDADE DO SOLO
+    // 9. SIMULADOR DO SENSOR DE UMIDADE
     // ==========================================================================
     const sliderUmidade = document.getElementById("slider-umidade");
     const valUmidade = document.getElementById("val-umidade");
     const sensorStatus = document.getElementById("sensor-status");
-    const btnCalor = document.getElementById("btn-calor");
-    const btnChuva = document.getElementById("btn-chuva");
 
-    const atualizarStatusSensor = (valor) => {
-        valUmidade.textContent = valor;
-        sensorStatus.className = "sensor-display"; // Reseta classes
-
-        if (valor < 30) {
-            sensorStatus.textContent = "ALERTA CRÍTICO: Solo Seco. Ative a Irrigação de Emergência!";
+    const checarSensor = (val) => {
+        valUmidade.textContent = val;
+        sensorStatus.className = "sensor-display";
+        if(val < 30) {
+            sensorStatus.textContent = "Alerta Crítico: Solo Seco! Abrindo gotejamento automático."; 
             sensorStatus.classList.add("status-perigo");
-        } else if (valor >= 30 && valor <= 70) {
-            sensorStatus.textContent = "Status: Solo Ideal para Desenvolvimento da Planta.";
-            sensorStatus.classList.add("status-ideal");
-        } else {
-            sensorStatus.textContent = "ALERTA: Solo Saturado/Alagado. Risco de asfixia radicular!";
+        } else if(val > 70) {
+            sensorStatus.textContent = "Alerta Hídrico: Solo Saturado. Desligando aspersores."; 
             sensorStatus.classList.add("status-alerta");
+        } else {
+            sensorStatus.textContent = "Status: Umidade Perfeita. Economia ativa."; 
+            sensorStatus.classList.add("status-ideal");
         }
     };
-
     if (sliderUmidade) {
-        sliderUmidade.addEventListener("input", (e) => atualizarStatusSensor(e.target.value));
-        
-        btnCalor.addEventListener("click", () => {
-            sliderUmidade.value = 15;
-            atualizarStatusSensor(15);
-        });
-
-        btnChuva.addEventListener("click", () => {
-            sliderUmidade.value = 85;
-            atualizarStatusSensor(85);
-        });
+        sliderUmidade.addEventListener("input", (e) => checarSensor(e.target.value));
+        document.getElementById("btn-calor").addEventListener("click", () => { sliderUmidade.value = 12; checarSensor(12); });
+        document.getElementById("btn-chuva").addEventListener("click", () => { sliderUmidade.value = 88; checarSensor(88); });
     }
 
     // ==========================================================================
-    // 9. QUIZ AVANÇADO COM FEEDBACK INSTANTÂNEO E MEDALHAS
+    // 10. QUIZ E RPG RURAL
     // ==========================================================================
-    const dadosQuiz = [
-        {
-            q: "Qual prática evita a exaustão do solo e quebra o ciclo biológico de pragas?",
-            o: ["Uso de fertilizantes químicos puros", "Rotação de Culturas", "Monocultura contínua", "Queimada controlada"],
-            a: 1
-        },
-        {
-            q: "Como os drones auxiliam diretamente na sustentabilidade do campo?",
-            o: ["Substituindo o trabalho dos tratores", "Espantando pássaros nocivos", "Mapeando pragas com precisão e reduzindo o desperdício de defensivos", "Colhendo frutos pesados"],
-            a: 2
-        },
-        {
-            q: "Qual o principal benefício do uso de Bioinsumos na lavoura?",
-            o: ["Aumentar o custo de produção", "Substituir defensivos químicos sintéticos agressivos por agentes e fungos biológicos naturais", "Acelerar a erosão de forma controlada", "Tornar a planta dependente de irrigação constante"],
-            a: 1
-        }
+    const quizD = [
+        { q: "Qual a vantagem biológica de proteger as matas ciliares?", o: ["Evita o assoreamento de rios e resguarda as nascentes d'água", "Aumenta o espaço para circulação de tratores grandes", "Impede o crescimento de mato"], a: 0 },
+        { q: "O que caracteriza a tecnologia de precisão adotada no Agrinho?", o: ["O uso manual de ferramentas rudimentares", "A aplicação uniforme sem critérios", "A aplicação cirúrgica baseada em dados reais de sensores e satélites"], a: 2 }
     ];
-
-    let perguntaAtual = 0;
-    let pontosQuiz = 0;
-
-    const quizQuestion = document.getElementById("quiz-question");
-    const quizOptions = document.getElementById("quiz-options");
-    const quizBody = document.getElementById("quiz-body");
-    const quizResult = document.getElementById("quiz-result");
-    const medalTitle = document.getElementById("medal-title");
-    const medalDesc = document.getElementById("medal-desc");
-    const btnResetQuiz = document.getElementById("btn-reset-quiz");
-
-    const carregarQuestaoQuiz = () => {
-        if (perguntaAtual < dadosQuiz.length) {
-            const item = dadosQuiz[perguntaAtual];
-            quizQuestion.textContent = `${perguntaAtual + 1}. ${item.q}`;
-            quizOptions.innerHTML = "";
-            
-            item.o.forEach((opcao, idx) => {
-                const btn = document.createElement("button");
-                btn.className = "btn-opt";
-                btn.textContent = opcao;
-                btn.addEventListener("click", () => checarRespostaQuiz(idx, btn));
-                quizOptions.appendChild(btn);
+    let qAt = 0;
+    const carregarQ = () => {
+        const qB = document.getElementById("quiz-question");
+        const oB = document.getElementById("quiz-options");
+        if(!qB) return;
+        if(qAt < quizD.length) {
+            qB.textContent = quizD[qAt].q; oB.innerHTML = "";
+            quizD[qAt].o.forEach((o, i) => {
+                const b = document.createElement("button"); b.className = "btn-opt"; b.textContent = o;
+                b.addEventListener("click", () => {
+                    b.classList.add(i === quizD[qAt].a ? "correct" : "wrong");
+                    setTimeout(() => { qAt++; carregarQ(); }, 1500);
+                });
+                oB.appendChild(b);
             });
         } else {
-            exibirResultadoQuiz();
+            document.getElementById("quiz-body").style.display = "none";
+            document.getElementById("quiz-result").style.display = "block";
+            document.getElementById("medal-title").textContent = "Quiz Concluído!";
+            document.getElementById("medal-desc").textContent = "🏅 Excelente! Você domina os fundamentos do Agrinho!";
         }
     };
+    carregarQ();
 
-    const checarRespostaQuiz = (escolha, botaoClicado) => {
-        const item = dadosQuiz[perguntaAtual];
-        const botoes = quizOptions.querySelectorAll(".btn-opt");
-        
-        // Desativa todos para evitar múltiplos cliques do usuário
-        botoes.forEach(b => b.disabled = true);
-
-        if (escolha === item.a) {
-            botaoClicado.classList.add("correct");
-            pontosQuiz++;
-        } else {
-            botaoClicado.classList.add("wrong");
-            botoes[item.a].classList.add("correct"); // Mostra a correta para o estudante aprender
-        }
-
-        setTimeout(() => {
-            perguntaAtual++;
-            carregarQuestaoQuiz();
-        }, 1500);
-    };
-
-    const exibirResultadoQuiz = () => {
-        quizBody.style.display = "none";
-        quizResult.style.display = "block";
-        
-        medalTitle.textContent = `Você acertou ${pontosQuiz} de ${dadosQuiz.length} perguntas!`;
-        
-        if (pontosQuiz === 3) {
-            medalDesc.textContent = "🥇 Medalha: Engenheiro Agrônomo do Futuro!";
-        } else if (pontosQuiz === 2) {
-            medalDesc.textContent = "🥈 Medalha: Técnico Agrícola Consciente!";
-        } else {
-            medalDesc.textContent = "🥉 Medalha: Produtor Iniciante Aprendiz!";
-        }
-    };
-
-    if (btnResetQuiz) {
-        btnResetQuiz.addEventListener("click", () => {
-            perguntaAtual = 0;
-            pontosQuiz = 0;
-            quizBody.style.display = "block";
-            quizResult.style.display = "none";
-            carregarQuestaoQuiz();
-        });
-    }
-    carregarQuestaoQuiz();
-
-    // ==========================================================================
-    // 10. MINI-RPG "DECISÃO NO CAMPO" (JORNADA DO PRODUTOR)
-    // ==========================================================================
-    let rpgStatus = { safra: 50, eco: 50, caixa: 5000 };
-
-    const fasesRpg = [
-        {
-            texto: "Fase 1: Pragas invasoras ameaçam sua plantação de soja no início do ciclo. O que fazer?",
-            escolhas: [
-                { t: "Aplicar defensivo químico pesado (Rápido e Barato)", delta: { safra: 20, eco: -25, caixa: -500 } },
-                { t: "Liberar macrovespas biológicas (Controle Regenerativo)", delta: { safra: 15, eco: 25, caixa: -1000 } }
-            ]
-        },
-        {
-            texto: "Fase 2: Período de estiagem prolongada previsto pelo radar meteorológico. Qual investimento priorizar?",
-            escolhas: [
-                { t: "Instalar Irrigação por Gotejamento Inteligente automatizado", delta: { safra: 25, eco: 10, caixa: -2500 } },
-                { t: "Manter sistema tradicional por aspersão e torcer pelo clima", delta: { safra: -20, eco: -15, caixa: 0 } }
-            ]
-        },
-        {
-            texto: "Fase 3: Sobrou área de reserva legal desmatada na fazenda pelas gestões anteriores. Qual seu plano?",
-            escolhas: [
-                { t: "Reflorestar com mudas nativas cumprindo o Código Florestal", delta: { safra: 0, eco: 30, caixa: -800 } },
-                { t: "Ignorar e plantar mais área de grãos para aumentar lucro rápido", delta: { safra: 15, eco: -40, caixa: 1500 } }
-            ]
-        }
-    ];
-
-    let faseRpgAtual = 0;
-    const rpgText = document.getElementById("rpg-text");
-    const rpgChoices = document.getElementById("rpg-choices");
-
-    const atualizarDashboardRpg = () => {
-        document.getElementById("rpg-safra").textContent = rpgStatus.safra;
-        document.getElementById("rpg-eco").textContent = rpgStatus.eco;
-        document.getElementById("rpg-caixa").textContent = rpgStatus.caixa;
-    };
-
+    let rpg = { safra: 50, eco: 50, caixa: 5000 };
     const rodarRpg = () => {
-        atualizarDashboardRpg();
-
-        if (faseRpgAtual < fasesRpg.length) {
-            const fase = fasesRpg[faseRpgAtual];
-            rpgText.textContent = fase.texto;
-            rpgChoices.innerHTML = "";
-
-            fase.escolhas.forEach(escolha => {
-                const btn = document.createElement("button");
-                btn.className = "btn-opt";
-                btn.textContent = escolha.t;
-                btn.addEventListener("click", () => processarEscolhaRpg(escolha.delta));
-                rpgChoices.appendChild(btn);
-            });
-        } else {
-            // Fim de jogo - Avaliação de Desempenho do Produtor
-            rpgChoices.innerHTML = "";
-            if (rpgStatus.eco >= 60 && rpgStatus.caixa > 2000) {
-                rpgText.innerHTML = "🎉 <strong>Fim de Jogo: Fazenda de Sucesso Absoluto!</strong> Você provou que a tecnologia e a sustentabilidade andam juntas. Sua terra está rica e seu caixa equilibrado.";
-            } else if (rpgStatus.eco < 40) {
-                rpgText.innerHTML = "⚠️ <strong>Fim de Jogo: Colapso Ecológico!</strong> Embora você tenha lucrado inicialmente, o solo esgotou e sua fazenda sofreu multas ambientais severas. Revise seus conceitos de agroecologia!";
-            } else {
-                rpgText.innerHTML = "🏁 <strong>Fim de Jogo: Fazenda Estável.</strong> Sua propriedade sobreviveu, mas equilibrar melhor seus investimentos trará melhores colheitas no futuro.";
-            }
-        }
+        const txt = document.getElementById("rpg-text");
+        if(!txt) return;
+        document.getElementById("rpg-safra").textContent = rpg.safra;
+        document.getElementById("rpg-eco").textContent = rpg.eco;
+        document.getElementById("rpg-caixa").textContent = rpg.caixa;
+        
+        txt.textContent = "Decisão de Gestão: Investir R$ 2.000 para cobrir o reservatório de irrigação com painéis solares flutuantes?";
+        const ch = document.getElementById("rpg-choices"); ch.innerHTML = "";
+        
+        const b1 = document.createElement("button"); b1.className = "btn-opt"; b1.textContent = "Sim (Gera energia própria e diminui a perda de água por evaporação)";
+        b1.addEventListener("click", () => { rpg.eco += 25; rpg.caixa -= 2000; rpg.safra += 10; txt.textContent = "Sucesso! Custos reduzidos e água protegida."; ch.innerHTML = ""; });
+        
+        const b2 = document.createElement("button"); b2.className = "btn-opt"; b2.textContent = "Não (Manter dinheiro em caixa)";
+        b2.addEventListener("click", () => { rpg.eco -= 15; txt.textContent = "A forte evaporação do verão reduziu seu estoque de água."; ch.innerHTML = ""; });
+        
+        ch.appendChild(b1); ch.appendChild(b2);
     };
-
-    const processarEscolhaRpg = (delta) => {
-        rpgStatus.safra = Math.max(0, Math.min(100, rpgStatus.safra + delta.safra));
-        rpgStatus.eco = Math.max(0, Math.min(100, rpgStatus.eco + delta.eco));
-        rpgStatus.caixa += delta.caixa;
-
-        faseRpgAtual++;
-        rodarRpg();
-    };
-
     rodarRpg();
 
     // ==========================================================================
-    // 11. ANIMAÇÃO SUAVE DE SURGIMENTO AO ROLAR PÁGINA (SCROLL ANIMATION)
+    // 11. ANIMAÇÃO DE SCROLL
     // ==========================================================================
-    const elementosScroll = document.querySelectorAll(".animar-scroll");
-
+    const elScroll = document.querySelectorAll(".animar-scroll");
     const checkScroll = () => {
-        const gatilhoJanela = window.innerHeight * 0.85;
-
-        elementosScroll.forEach(el => {
-            const topoElemento = el.getBoundingClientRect().top;
-            if (topoElemento < gatilhoJanela) {
-                el.classList.add("ativo");
-            }
+        elScroll.forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add("ativo");
         });
     };
-
     window.addEventListener("scroll", checkScroll);
-    checkScroll(); // Executa uma vez no início caso haja elementos visíveis
+    checkScroll();
 });
